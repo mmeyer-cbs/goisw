@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_SalesRep
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2020 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <bss_salesrep>
+            <general>
+                <enable>1</enable>
+            </general>
+            <salesrep_email_config>
+                <sender_email_identity>general</sender_email_identity>
+                <assign_salesrep>bss_salesrep_salesrep_email_config_assign_salesrep</assign_salesrep>
+                <unassign_salesrep>bss_salesrep_salesrep_email_config_unassign_salesrep</unassign_salesrep>
+            </salesrep_email_config>
+        </bss_salesrep>
+    </default>
+</config>

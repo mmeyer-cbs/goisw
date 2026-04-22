@@ -1,0 +1,107 @@
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_QuoteExtension
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2018-2022 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+-->
+<div class="shipping-address-item" css="'selected-item' : isSelected() , 'not-selected-item':!isSelected()">
+    <text args="address().prefix"></text> <text args="address().firstname"></text> <text args="address().middlename"></text>
+    <text args="address().lastname"></text> <text args="address().suffix"></text><br>
+    <text args="_.values(address().street).join(', ')"></text><br>
+    <text args="address().city "></text>, <span html="address().region"></span> <text args="address().postcode"></text><br>
+    <text args="getCountryName(address().countryId)"></text><br>
+    <a if="address().telephone" attr="'href': 'tel:' + address().telephone" text="address().telephone"></a><br>
+
+    <each args="data: address().customAttributes, as: 'element'">
+        <each args="data: Object.keys(element), as: 'attribute'">
+            <if args="typeof element[attribute] === 'object'">
+                <if args="element[attribute].label">
+                    <text args="element[attribute].label"></text>
+                </if>
+                <ifnot args="element[attribute].label">
+                    <if args="element[attribute].value">
+                        <text args="element[attribute].value"></text>
+                    </if>
+                </ifnot>
+            </if>
+            <if args="typeof element[attribute] === 'string'">
+                <text args="element[attribute]"></text>
+            </if><br>
+        </each>
+    </each>
+    <if args="isSelected()" >
+        <if args="address().prefix" >
+            <input type="hidden" name="address[prefix]" data-bind="value:address().prefix" >
+        </if>
+        <input type="hidden" name="address[firstname]" data-bind="value:address().firstname" >
+        <input type="hidden" name="address[lastname]" data-bind="value:address().lastname" >
+        <if args="address().middlename" >
+            <input type="hidden" name="address[middlename]" data-bind="value:address().middlename" >
+        </if>
+        <if args="address().suffix" >
+            <input type="hidden" name="address[suffix]" data-bind="value:address().suffix" >
+        </if>
+        <if args="address().customerAddressId">
+            <input type="hidden" name="address[customer_address_id]" data-bind="value:address().customerAddressId" >
+        </if>
+        <if args="address().saveInAddressBook">
+            <input type="hidden" name="address[save_in_address_book]" data-bind="value:address().saveInAddressBook" >
+        </if>
+        <ifnot args="address().saveInAddressBook">
+            <input type="hidden" name="address[save_in_address_book]" value="0" >
+        </ifnot>
+        <if args="address().company">
+            <input type="hidden" name="address[company]" data-bind="value:address().company" >
+        </if>
+
+        <each args="data: address().street, as: 'element'">
+            <input type="hidden" name="address[street][]" data-bind="value:element" >
+        </each>
+        <input type="hidden" name="address[region]" data-bind="value:address().region" >
+        <if args="address().regionId">
+            <input type="hidden" name="address[region_id]" data-bind="value:address().regionId" >
+        </if>
+        <input type="hidden" name="address[city]" data-bind="value:address().city" >
+        <input type="hidden" name="address[postcode]" data-bind="value:address().postcode" >
+        <input type="hidden" name="address[country_id]" data-bind="value:address().countryId" >
+        <input type="hidden" name="address[telephone]" data-bind="value:address().telephone" >
+        <each args="data: address().customAttributes, as: 'element'">
+            <each args="data: Object.keys(element), as: 'attribute'">
+                <if args="typeof element[attribute] === 'object'">
+                    <if args="element[attribute].label">
+                        <input type="hidden" data-bind="value:element[attribute].label, name:attribute" >
+                    </if>
+                    <ifnot args="element[attribute].label">
+                        <if args="element[attribute].value">
+                            <input type="hidden" data-bind="value:element[attribute].value, name:attribute" >
+                        </if>
+                    </ifnot>
+                </if>
+                <if args="typeof element[attribute] === 'string'">
+                    <input type="hidden" data-bind="value:element[attribute], name:attribute" >
+                </if><br>
+            </each>
+        </each>
+    </if>
+
+    <button visible="address().isEditable()" type="button"
+            class="action edit-address-link"
+            click="editAddress">
+        <span translate="'Edit'"></span>
+    </button>
+    <button type="button" click="selectAddress" class="action action-select-shipping-item">
+        <span translate="'Ship Here'"></span>
+    </button>
+</div>

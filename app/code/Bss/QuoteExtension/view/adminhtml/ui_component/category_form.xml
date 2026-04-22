@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_QuoteExtension
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2018-2019 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+-->
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <fieldset name="general">
+    	<container name="quote_category_group" component="Magento_Ui/js/form/components/group" sortOrder="90">
+	        <field name="quote_category" sortOrder="40" formElement="select">
+	        	<argument name="data" xsi:type="array">
+	        		<item name="options" xsi:type="object">Bss\QuoteExtension\Model\Config\Source\ProductRequest4Quote</item>
+	                <item name="config" xsi:type="array">
+	                    <item name="default" xsi:type="number">0</item>
+	                </item>
+	            </argument>
+	            <settings>
+	                <label translate="true">Request for Quote Enable</label>
+                    <componentType>fieldset</componentType>
+	            </settings>
+	        </field>
+        </container>
+        <container name="group_quote_category_cus_group" component="Magento_Ui/js/form/components/group" sortOrder="90">
+            <field name="quote_category_cus_group" sortOrder="40" formElement="multiselect">
+                <argument name="data" xsi:type="array">
+                    <item name="options" xsi:type="object">Bss\QuoteExtension\Model\Config\Source\ApplyQuoteforCustomerGroup</item>
+                </argument>
+                <settings>
+                    <additionalClasses>
+                        <class name="admin__field-default">true</class>
+                    </additionalClasses>
+                    <label translate="true">Request for Quote Customer Group</label>
+                </settings>
+            </field>
+        </container>
+    </fieldset>
+</form>

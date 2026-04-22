@@ -1,0 +1,86 @@
+Statistic,Statistic
+Balance,Balance
+Website,Website
+"Select Website","Select Website"
+"Update Value","Update Value"
+"Update Amount. Prefix - for down.","Update Amount. Prefix - for down."
+Comment,Comment
+"Notify Customer","Notify Customer"
+"Send mail to customer.","Send mail to customer."
+"Send from store","Send from store"
+"Select Store","Select Store"
+History,History
+"Credit Information","Credit Information"
+"Store Credit","Store Credit"
+"Transaction ID","Transaction ID"
+Type,Type
+Change,Change
+"Is Notified","Is Notified"
+No,No
+Yes,Yes
+"Updated At","Updated At"
+"Additional Info","Additional Info"
+"There are no items.","There are no items."
+"Order # %1","Order # %1"
+"Credit Memo # %1","Credit Memo # %1"
+"Current Balance","Current Balance"
+"Refund to Store Credit","Refund to Store Credit"
+Day,Day
+Month,Month
+Year,Year
+Action,Action
+Customer,Customer
+Email,Email
+"Balance Change","Balance Change"
+Date,Date
+Report,Report
+Transactions,Transactions
+"Something went wrong. Please enter a value again","Something went wrong. Please enter a value again"
+Success.,Success.
+"My Store Credit","My Store Credit"
+Refund,Refund
+"Used in order","Used in order"
+Update,Update
+"%1 (Default)","%1 (Default)"
+"Balance Up","Balance Up"
+"Balance Down","Balance Down"
+"History doesn't exist","History doesn't exist"
+Error,Error
+"Customer Credit Balance:","Customer Credit Balance:"
+Apply,Apply
+"Remove Store Credit","Remove Store Credit"
+Remove,Remove
+From,From
+To,To
+"Show By","Show By"
+Refresh,Refresh
+"Apply Store Credit","Apply Store Credit"
+"Your Store Credit:","Your Store Credit:"
+"Enter Value","Enter Value"
+Cancel,Cancel
+"Your balance is: %1","Your balance is: %1"
+"Balance History","Balance History"
+"Addition Info","Addition Info"
+"%store_name: Store credit update","%store_name: Store credit update"
+"Hi %customer","Hi %customer"
+"Your Store Credit Has Been Updated: %balance_change","Your Store Credit Has Been Updated: %balance_change"
+"Your Store Credit Current Balance: %balance_amount","Your Store Credit Current Balance: %balance_amount"
+"Select Date","Select Date"
+"Please enter from < to","Please enter from < to"
+"Please enter again","Please enter again"
+"Store Credit Report","Store Credit Report"
+Price,Price
+General,General
+Enabled,Enabled
+"Use Store Credit in Checkout Page","Use Store Credit in Checkout Page"
+"Use Store Credit in Shopping Cart","Use Store Credit in Shopping Cart"
+"Allow Applying Store Credit to Shipping","Allow Applying Store Credit to Shipping"
+"Allow Applying Store Credit to Tax","Allow Applying Store Credit to Tax"
+"Email Configuration","Email Configuration"
+"Store Credit Update Email Sender","Store Credit Update Email Sender"
+"Store Credit Update Email Template","Store Credit Update Email Template"
+"All Websites","All Websites"
+"Store Credit Information","Store Credit Information"
+"Success! Note: Store credit is not applied to tax & shipping fee.","Success! Note: Store credit is not applied to tax & shipping fee."
+"Success! Note: Store credit is not applied to tax.","Success! Note: Store credit is not applied to tax."
+"Success! Note: Store credit is not applied to shipping fee.","Success! Note: Store credit is not applied to shipping fee."

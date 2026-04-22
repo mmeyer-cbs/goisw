@@ -1,0 +1,91 @@
+# --------------------------------------------------
+# Magento 2 .gitignore
+# Recommended for Magento Open Source / Adobe Commerce
+# --------------------------------------------------
+
+# OS / Editor files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Logs
+*.log
+var/log/*
+var/report/*
+var/debug/*
+phpserver.log
+
+# Cache / Generated / Temp
+var/cache/*
+var/page_cache/*
+var/view_preprocessed/*
+var/tmp/*
+generated/code/*
+generated/metadata/*
+pub/static/_cache/*
+pub/static/adminhtml/*
+pub/static/frontend/*
+pub/static/deployed_version.txt
+
+# Keep required pub/static folders
+!pub/static/.htaccess
+
+# Media uploads (optional)
+# Uncomment if media is managed separately
+pub/media/*
+!/pub/media/.htaccess
+
+# Node / Frontend tooling
+node_modules/
+npm-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+
+# Composer
+vendor/
+composer.phar
+
+# Environment / Sensitive files
+app/etc/env.php
+auth.json
+.env
+.env.local
+
+# Backup / Archive files
+*.zip
+*.tar.gz
+*.sql
+*.bak
+*.old
+
+# PHPUnit / Testing output
+phpunit.xml.cache
+coverage/
+.clover/
+
+# Magento import/export temp files
+var/importexport/*
+var/export/*
+
+# Elasticsearch / OpenSearch temp files
+*.pid
+
+# Ignore static deployed assets but keep folders
+pub/static/*/*
+!pub/static/.htaccess
+
+# If using Grunt / Gulp
+.grunt/
+dist/
+
+# Optional: ignore sample data generated files
+setup/src/Magento/Setup/Fixtures/_files/*.csv
+
+#Other Misc
+var/*.pdf
+var/.regenerate.lock
+var/resource_config.json

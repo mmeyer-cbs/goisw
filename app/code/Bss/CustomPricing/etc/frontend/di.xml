@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_CustomPricing
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2020 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Catalog\Block\Product\AbstractProduct">
+        <plugin name="bss-add-new-identifier" type="Bss\CustomPricing\Plugin\Pricing\Render\FinalPriceBox" sortOrder="20" />
+    </type>
+    <type name="Magento\Catalog\Pricing\Render\FinalPriceBox">
+        <plugin name="bss-add-new-identifier" type="Bss\CustomPricing\Plugin\Pricing\Render\FinalPriceBox" sortOrder="20" />
+    </type>
+    <type name="Magento\ConfigurableProduct\Pricing\Price\ConfigurablePriceResolver">
+        <plugin name="chang-price-as-low-as" type="Bss\CustomPricing\Plugin\ConfigurableProduct\Pricing\ConfigurablePriceResolver" sortOrder="20" />
+    </type>
+    <type name="Magento\Catalog\Pricing\Price\SpecialPrice">
+        <plugin name="bss-check-special-price" type="Bss\CustomPricing\Plugin\Pricing\Price\SpecialPrice" sortOrder="20" />
+    </type>
+    <type name="Magento\Catalog\Pricing\Price\TierPrice">
+        <plugin name="bss-check-tier-price" type="Bss\CustomPricing\Plugin\Pricing\Price\TierPriceValue" sortOrder="20" />
+    </type>
+    <type name="Magento\Framework\App\ActionInterface">
+        <plugin name="set_applied_custom_price_rule_ids_cache_identifier"
+                type="Bss\CustomPricing\Plugin\SetAppliedCustomPriceRules"
+                sortOrder="50" />
+    </type>
+
+    <type name="Magento\Customer\Model\Session">
+        <plugin name="set_applied_rule_ids_after_login"
+                type="Bss\CustomPricing\Plugin\SetAppliedCustomPriceRules"
+                sortOrder="50" />
+    </type>
+</config>

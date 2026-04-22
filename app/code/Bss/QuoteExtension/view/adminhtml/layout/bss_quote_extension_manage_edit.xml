@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_QuoteExtension
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2018-2019 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="sales_order_transactions_grid_block"/>
+    <update handle="sales_order_create_item_price"/>
+    <body>
+        <referenceContainer name="after.body.start">
+            <block class="Magento\Backend\Block\Template" name="optional_zip_countries" as="optional_zip_countries" template="Magento_Directory::js/optional_zip_countries.phtml"/>
+            <block class="Magento\Catalog\Block\Adminhtml\Product\Composite\Configure" name="after.body.start.product_composite_configure" template="Magento_Catalog::catalog/product/composite/configure.phtml"/>
+        </referenceContainer>
+        <referenceContainer name="js">
+            <block class="Magento\Backend\Block\Template" template="Magento_Sales::order/create/js.phtml" name="create"/>
+        </referenceContainer>
+        <referenceContainer name="content">
+            <block class="Bss\QuoteExtension\Block\Adminhtml\QuoteExtension\Edit" name="quote_extension_form_edit"/>
+        </referenceContainer>
+        <referenceContainer name="left">
+            <block class="Bss\QuoteExtension\Block\Adminhtml\QuoteExtension\Edit\Tabs" name="quote_extension_edit_tabs">
+                <block class="Bss\QuoteExtension\Block\Adminhtml\QuoteExtension\Edit\Tab\Info" name="quote_extension_tab_info" template="quoteextension/view/tab/info.phtml">
+                    <block class="Bss\QuoteExtension\Block\Adminhtml\QuoteExtension\Edit\Info" name="quote_extension_info" template="quoteextension/view/info.phtml"/>
+                    <block class="Bss\QuoteExtension\Block\Adminhtml\QuoteExtension\Edit\History" name="quote_extension_history" template="quoteextension/view/history.phtml"/>
+                    <block class="Bss\QuoteExtension\Block\Adminhtml\QuoteExtension\Edit\Search" template="Magento_Sales::order/create/abstract.phtml" name="quote_extension_search">
+                        <block class="Bss\QuoteExtension\Block\Adminhtml\QuoteExtension\Edit\Search\Grid" name="search_grid" as="grid"/>
+                    </block>
+                    <block class="Bss\QuoteExtension\Block\Adminhtml\QuoteExtension\Edit\Items" template="Bss_QuoteExtension::quoteextension/view/items.phtml" name="quote_extension_items">
+                        <block class="Bss\QuoteExtension\Block\Adminhtml\QuoteExtension\Edit\Items\Grid" template="Bss_QuoteExtension::quoteextension/view/items/grid.phtml" name="items_grid">
+                            <block class="Magento\Sales\Block\Adminhtml\Order\Create\Coupons" template="Magento_Sales::order/create/coupons/form.phtml" name="coupons">
+                                <block class="Magento\Sales\Block\Adminhtml\Order\Create\Coupons\Form" template="Magento_Sales::order/create/coupons/form.phtml" name="order_create_coupons_form" as="form"/>
+                            </block>
+                        </block>
+                    </block>
+                    <!--<block class="Bss\QuoteExtension\Block\Adminhtml\QuoteExtension\Edit\SelectRate" name="quote_select_rate" template="quoteextension/view/selectRate.phtml"/>-->
+                    <block class="Bss\QuoteExtension\Block\Adminhtml\QuoteExtension\Edit\Shipping\Method" template="quoteextension/view/abstract.phtml" name="shipping_method">
+                        <block class="Bss\QuoteExtension\Block\Adminhtml\QuoteExtension\Edit\Shipping\Method\Form" name="quote.view.shipping.method.form" as="form">
+                            <block class="Bss\QuoteExtension\Block\Adminhtml\QuoteExtension\Edit\Shipping\Method\Form\QuoteExtension" template="quoteextension/view/shipping/method/form/quoteExtension.phtml" name="quote.view.shipping.method.form.quoteextension"/>
+                        </block>
+                    </block>
+                    <block class="Bss\QuoteExtension\Block\Adminhtml\QuoteExtension\Edit\Info" name="quote_address" template="quoteextension/view/address.phtml">
+                        <block class="Bss\QuoteExtension\Block\Adminhtml\QuoteExtension\Edit\Info" name="quote_address_shipping" template="quoteextension/view/address/shipping.phtml"/>
+                    </block>
+                    <block class="Magento\Framework\View\Element\Text\ListText" name="order_item_extra_info"/>
+                    <block class="Bss\QuoteExtension\Block\Adminhtml\QuoteExtension\Edit\Info" name="quote_extension_total" template="quoteextension/view/quote-totals.phtml">
+                        <block class="Bss\QuoteExtension\Block\Adminhtml\QuoteExtension\Edit\Totals" name="totals" template="quoteextension/view/totals.phtml">
+                            <block class="Bss\QuoteExtension\Block\Adminhtml\QuoteExtension\Edit\Totals\Shipping" template="Magento_Sales::order/create/totals/shipping.phtml" name="shipping_total_renderer"/>
+                            <block class="Bss\QuoteExtension\Block\Adminhtml\QuoteExtension\Edit\Totals\Discount" template="Magento_Sales::order/create/totals/default.phtml" name="discount_total_renderer"/>
+                            <block class="Bss\QuoteExtension\Block\Adminhtml\QuoteExtension\Edit\Totals\Grandtotal" template="Magento_Sales::order/create/totals/grandtotal.phtml" name="grand_total_total_renderer"/>
+                            <block class="Bss\QuoteExtension\Block\Adminhtml\QuoteExtension\Edit\Totals\Subtotal" template="Magento_Sales::order/create/totals/subtotal.phtml" name="subtotal_total_renderer"/>
+                            <block class="Bss\QuoteExtension\Block\Adminhtml\QuoteExtension\Edit\Totals\Tax" template="Magento_Sales::order/create/totals/tax.phtml" name="tax_total_renderer"/>
+                        </block>
+                    </block>
+                </block>
+                <action method="addTab">
+                    <argument name="name" xsi:type="string">quote_extension_info</argument>
+                    <argument name="block" xsi:type="string">quote_extension_tab_info</argument>
+                </action>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

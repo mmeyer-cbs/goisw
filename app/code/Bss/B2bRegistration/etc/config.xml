@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_B2bRegistration
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2017-2018 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+	<default>
+		<b2b>
+			<general>
+				<enable>1</enable>
+			</general>
+			<register>
+				<b2b_url>b2b-customer-create</b2b_url>
+				<shortcut_link>1</shortcut_link>
+				<shortcut_link_text>Create B2B Account</shortcut_link_text>
+				<title>Create New B2B Customer Account</title>
+				<date>1</date>
+				<tax>1</tax>
+				<gender>1</gender>
+				<address>1</address>
+				<customer_group>2</customer_group>
+			</register>
+			<approval>
+				<auto_approval>0</auto_approval>
+				<pending_message>Please give us time to verify your account. Thanks for visiting us.</pending_message>
+				<disapprove_message>Something went wrong with your account! Please contact us for more information.</disapprove_message>
+			</approval>
+			<admin_notification>
+				<admin_notification_enable>0,1</admin_notification_enable>
+			</admin_notification>
+			<email_setting>
+				<customer_email_enable>1</customer_email_enable>
+                <customer_pending_templates>b2b_email_setting_customer_pending_templates</customer_pending_templates>
+			</email_setting>
+		</b2b>
+	</default>
+</config>

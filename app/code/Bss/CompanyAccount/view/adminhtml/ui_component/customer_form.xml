@@ -1,0 +1,208 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_CompanyAccount
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2020 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+ -->
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <fieldset name="bss_company_account_manage_role" class="Bss\CompanyAccount\Ui\Component\Customer\Form\ManageRoleFieldSet">
+        <settings>
+            <collapsible>false</collapsible>
+            <label translate="true">Manage Role</label>
+            <componentType>fieldset</componentType>
+            <additionalClasses>
+                <class name="customer-ca-roles-form">true</class>
+            </additionalClasses>
+        </settings>
+        <button name="add_role" component="Bss_CompanyAccount/js/role/default-role">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="formElement" xsi:type="string">container</item>
+                    <item name="buttonClasses" xsi:type="string">add-new-role-button</item>
+                    <item name="actions" xsi:type="array">
+                        <item name="0" xsi:type="array">
+                            <item name="targetName" xsi:type="string">${ $.parentName}.bss_companyaccount_customer_listroles_update_modal.update_bss_companyaccount_customer_listroles_form_loader</item>
+                            <item name="actionName" xsi:type="string">destroyInserted</item>
+                        </item>
+                        <item name="1" xsi:type="array">
+                            <item name="targetName" xsi:type="string">${ $.parentName}.bss_companyaccount_customer_listroles_update_modal</item>
+                            <item name="actionName" xsi:type="string">openModal</item>
+                        </item>
+                        <item name="2" xsi:type="array">
+                            <item name="targetName" xsi:type="string">${ $.parentName}.bss_companyaccount_customer_listroles_update_modal.update_bss_companyaccount_customer_listroles_form_loader</item>
+                            <item name="actionName" xsi:type="string">render</item>
+                        </item>
+                    </item>
+                </item>
+            </argument>
+            <settings>
+                <title translate="true">Add New Role</title>
+                <imports>
+                    <link name="customerId">${ $.provider}:data.customer_id</link>
+                </imports>
+            </settings>
+        </button>
+        <modal name="bss_companyaccount_customer_listroles_update_modal">
+            <settings>
+                <options>
+                    <option name="title" xsi:type="string" translate="true">Add/Update Role</option>
+                </options>
+            </settings>
+            <insertForm name="update_bss_companyaccount_customer_listroles_form_loader" component="Bss_CompanyAccount/js/role/form/components/insert-form">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="roleListingProvider" xsi:type="string">ns = bss_companyaccount_customer_listroles_listing, index = bss_companyaccount_customer_listroles_listing</item>
+                        <item name="roleModalProvider" xsi:type="string">${ $.parentName }</item>
+                    </item>
+                </argument>
+                <settings>
+                    <formSubmitType>ajax</formSubmitType>
+                    <renderUrl path="mui/index/render_handle">
+                        <param name="handle">bss_companyaccount_customer_listroles_edit</param>
+                        <param name="buttons">1</param>
+                    </renderUrl>
+                    <loading>true</loading>
+                    <toolbarContainer>${ $.parentName }</toolbarContainer>
+                    <externalProvider>${ $.ns }.bss_companyaccount_customer_listroles_form_data_source</externalProvider>
+                    <ns>bss_companyaccount_customer_listroles_form</ns>
+                    <exports>
+                        <link name="parentId">${ $.externalProvider }:data.parent_id</link>
+                    </exports>
+                    <imports>
+                        <link name="parentId">${ $.provider}:data.role_id</link>
+                        <link name="onRoleDelete">${ $.ns }.${ $.ns }:deleteRoleAction</link>
+                    </imports>
+                </settings>
+            </insertForm>
+        </modal>
+        <insertListing name="bss_companyaccount_customer_listroles_listing">
+            <settings>
+                <dataLinks>
+                    <exports>false</exports>
+                    <imports>true</imports>
+                </dataLinks>
+                <externalProvider>bss_companyaccount_customer_listroles_listing.bss_companyaccount_customer_listroles_listing_data_source</externalProvider>
+                <selectionsProvider>bss_companyaccount_customer_listroles_listing.bss_companyaccount_customer_listroles_listing.bss_companyaccount_customer_listroles_listing_columns.ids</selectionsProvider>
+                <autoRender>true</autoRender>
+                <dataScope>bss_companyaccount_customer_listroles_listing</dataScope>
+                <ns>bss_companyaccount_customer_listroles_listing</ns>
+                <exports>
+                    <link name="parent_id">${ $.externalProvider }:params.parent_id</link>
+                </exports>
+                <imports>
+                    <link name="parent_id">${ $.provider }:data.customer.entity_id</link>
+                    <link name="onAction">ns = ${ $.ns }, index = actions:action</link>
+                    <link name="onMassAction">ns = ${ $.ns }, index = listing_massaction:massaction</link>
+                </imports>
+            </settings>
+        </insertListing>
+    </fieldset>
+
+    <fieldset name="bss_company_account_manage_sub_user"
+              class="Bss\CompanyAccount\Ui\Component\Customer\Form\ManageSubUserFieldSet">
+        <settings>
+            <collapsible>false</collapsible>
+            <label translate="true">Manage Sub-user</label>
+            <componentType>fieldset</componentType>
+            <additionalClasses>
+                <class name="customer-ca-sub-user-form">true</class>
+            </additionalClasses>
+        </settings>
+        <button name="add_sub_user"
+                component="Bss_CompanyAccount/js/sub-user/default-sub-user">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="formElement" xsi:type="string">container</item>
+                    <item name="buttonClasses" xsi:type="string">add-new-sub-user-button</item>
+                    <item name="actions" xsi:type="array">
+                        <item name="0" xsi:type="array">
+                            <item name="targetName" xsi:type="string">${ $.parentName}.bss_companyaccount_customer_subuser_update_modal.update_bss_companyaccount_customer_subuser_form_loader</item>
+                            <item name="actionName" xsi:type="string">destroyInserted</item>
+                        </item>
+                        <item name="1" xsi:type="array">
+                            <item name="targetName" xsi:type="string">${ $.parentName}.bss_companyaccount_customer_subuser_update_modal</item>
+                            <item name="actionName" xsi:type="string">openModal</item>
+                        </item>
+                        <item name="2" xsi:type="array">
+                            <item name="targetName" xsi:type="string">${ $.parentName}.bss_companyaccount_customer_subuser_update_modal.update_bss_companyaccount_customer_subuser_form_loader</item>
+                            <item name="actionName" xsi:type="string">render</item>
+                        </item>
+                    </item>
+                </item>
+            </argument>
+            <settings>
+                <title translate="true">Add New Sub-user</title>
+                <imports>
+                    <link name="customerId">${ $.provider}:data.customer_id</link>
+                </imports>
+            </settings>
+        </button>
+        <modal name="bss_companyaccount_customer_subuser_update_modal">
+            <settings>
+                <options>
+                    <option name="title" xsi:type="string" translate="true">Add/Update Sub-user</option>
+                </options>
+            </settings>
+            <insertForm name="update_bss_companyaccount_customer_subuser_form_loader" component="Bss_CompanyAccount/js/sub-user/form/components/insert-form">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="subUserListingProvider" xsi:type="string">ns = bss_companyaccount_customer_subuser_listing, index = bss_companyaccount_customer_subuser_listing</item>
+                        <item name="subUserModalProvider" xsi:type="string">${ $.parentName }</item>
+                    </item>
+                </argument>
+                <settings>
+                    <formSubmitType>ajax</formSubmitType>
+                    <renderUrl path="mui/index/render_handle">
+                        <param name="handle">bss_companyaccount_customer_subuser_edit</param>
+                        <param name="buttons">1</param>
+                    </renderUrl>
+                    <loading>true</loading>
+                    <toolbarContainer>${ $.parentName }</toolbarContainer>
+                    <externalProvider>${ $.ns }.bss_companyaccount_customer_subuser_form_data_source</externalProvider>
+                    <ns>bss_companyaccount_customer_subuser_form</ns>
+                    <exports>
+                        <link name="parentId">${ $.externalProvider }:data.parent_id</link>
+                    </exports>
+                    <imports>
+                        <link name="parentId">${ $.provider}:data.sub_id</link>
+                        <link name="onSubUserDelete">${ $.ns }.${ $.ns }:deleteSubUserAction</link>
+                    </imports>
+                </settings>
+            </insertForm>
+        </modal>
+        <insertListing name="bss_companyaccount_customer_subuser_listing">
+            <settings>
+                <dataLinks>
+                    <exports>false</exports>
+                    <imports>true</imports>
+                </dataLinks>
+                <externalProvider>bss_companyaccount_customer_subuser_listing.bss_companyaccount_customer_subuser_listing_data_source</externalProvider>
+                <selectionsProvider>bss_companyaccount_customer_subuser_listing.bss_companyaccount_customer_subuser_listing.bss_companyaccount_customer_subuser_listing_columns.ids</selectionsProvider>
+                <autoRender>true</autoRender>
+                <dataScope>bss_companyaccount_customer_subuser_listing</dataScope>
+                <ns>bss_companyaccount_customer_subuser_listing</ns>
+                <exports>
+                    <link name="parent_id">${ $.externalProvider }:params.parent_id</link>
+                </exports>
+                <imports>
+                    <link name="parent_id">${ $.provider }:data.customer.entity_id</link>
+                    <link name="onAction">ns = ${ $.ns }, index = actions:action</link>
+                    <link name="onMassAction">ns = ${ $.ns }, index = listing_massaction:massaction</link>
+                </imports>
+            </settings>
+        </insertListing>
+    </fieldset>
+</form>

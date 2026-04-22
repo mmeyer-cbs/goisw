@@ -1,0 +1,32 @@
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_CompanyAccount
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2020 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+-->
+<!--@subject {{trans "A role has been %changed!" changed=$changed}} @-->
+{{template config_path="design/email/header_template"}}
+
+<p class="greeting">{{trans "Hello %name," name=$name}}</p>
+<p>{{trans "A role has been %changed in your company:" changed=$changed}}</p>
+<p>{{trans "Role name: %role_name." role_name=$role}}</p>
+<p>{{trans "Permissions: %permissions." permissions=$permissions}}</p>
+<p>{{trans "You can view and manage roles in your company by click " }}
+    <a href="{{var this.getUrl($store,'companyaccount/role/'}}"
+       target="_blank">{{trans "here"}}</a>.</p>
+<p>{{trans 'If you have not authorized this action, please contact us immediately at <a href="mailto:%store_email">%store_email</a>'
+    store_email=$store_email |raw}}</p>
+
+{{template config_path="design/email/footer_template"}}

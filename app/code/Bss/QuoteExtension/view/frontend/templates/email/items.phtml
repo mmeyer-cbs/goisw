@@ -1,0 +1,68 @@
+<?php
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_QuoteExtension
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2018-2019 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+?>
+<?php // @codingStandardsIgnoreFile ?>
+
+<?php $quote = $block->getQuote();
+$viewModel = $block->getViewModel();
+if ($viewModel) {
+    $quote = $viewModel->getQuoteById($block->getQuoteId());
+}
+?>
+<?php if ($quote): ?>
+    <?php $_items = $quote->getAllItems(); ?>
+    <table class="email-items">
+        <thead>
+        <tr>
+            <th class="item-info">
+                <?= /* @escapeNotVerified */  $block->escapeHtml(__('Name')); ?>
+            </th>
+            <th class="item-info">
+                <?= /* @escapeNotVerified */  $block->escapeHtml(__('SKU')); ?>
+            </th>
+            <th class="item-qty">
+                <?= /* @escapeNotVerified */  $block->escapeHtml(__('Qty')); ?>
+            </th>
+            <th class="item-price">
+                <?= /* @escapeNotVerified */  $block->escapeHtml(__('Price')); ?>
+            </th>
+        </tr>
+        </thead>
+        <?php foreach ($_items as $_item): ?>
+            <?php
+            $comment = $viewModel->getQEComment($_item->getId());
+            if ($_item->getParentItem()) {
+                continue;
+            }
+            ?>
+            <tbody>
+            <?= $block->getItemHtml($_item) ?>
+            <?php if ($comment !== '') : ?>
+            <tr>
+                <td style="font-size: 12px; padding-top: 0">
+                    <?= $block->escapeHtml(__('Comment: '. $comment)) ?>
+                </td>
+            </tr>
+            <?php endif; ?>
+            </tbody>
+        <?php endforeach; ?>
+        <tfoot class="quote-totals">
+        <?= $block->getChildHtml('quote_totals') ?>
+        </tfoot>
+    </table>
+<?php endif; ?>

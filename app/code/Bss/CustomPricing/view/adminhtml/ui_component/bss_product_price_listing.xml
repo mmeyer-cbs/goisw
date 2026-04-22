@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_CustomPricing
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2020 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+-->
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">bss_product_price_listing.bss_product_price_listing_data_source</item>
+        </item>
+    </argument>
+    <settings>
+        <spinner>bss_product_price_columns</spinner>
+        <deps>
+            <dep>bss_product_price_listing.bss_product_price_listing_data_source</dep>
+        </deps>
+    </settings>
+    <dataSource name="bss_product_price_listing_data_source" component="Magento_Ui/js/grid/provider">
+        <settings>
+            <updateUrl path="mui/index/render"/>
+            <storageConfig>
+                <param name="indexField" xsi:type="string">id</param>
+            </storageConfig>
+        </settings>
+        <aclResource>Bss_CustomPricing::custom_pricing_edit_rule</aclResource>
+        <dataProvider class="Bss\CustomPricing\Ui\Component\Listing\ProductPrice\DataProvider" name="bss_product_price_listing_data_source">
+            <settings>
+                <requestFieldName>id</requestFieldName>
+                <primaryFieldName>id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <listingToolbar name="listing_top">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="sticky" xsi:type="boolean">false</item>
+            </item>
+        </argument>
+        <bookmark name="bookmarks"/>
+        <columnsControls name="columns_controls"/>
+        <filterSearch name="fulltext"/>
+        <filters name="listing_filters" />
+        <massaction name="listing_massaction" component="Bss_CustomPricing/js/grid/massactions">
+            <action name="edit">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="isAjax" xsi:type="boolean">true</item>
+                    </item>
+                </argument>
+                <settings>
+                    <callback>
+                        <target>openModal</target>
+                        <provider>bss_price_rule_form.areas.product_price.product_price.multiple_update_custom_price_modal</provider>
+                    </callback>
+                    <type>multiple_update_form</type>
+                    <label translate="true">Update Price</label>
+                </settings>
+            </action>
+            <action name="delete">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="isAjax" xsi:type="boolean">true</item>
+                    </item>
+                </argument>
+                <settings>
+                    <url path="custom_pricing/productPrice/MassRemovePrice"/>
+                    <type>delete</type>
+                    <label translate="true">Remove Custom Price</label>
+                    <confirm>
+                        <message translate="true">Are you sure you want to remove custom price of selected product?</message>
+                        <title translate="true">Remove Custom Price</title>
+                    </confirm>
+                </settings>
+            </action>
+        </massaction>
+        <paging name="listing_paging"/>
+    </listingToolbar>
+    <columns name="bss_product_price_columns">
+        <selectionsColumn name="ids" sortOrder="10">
+            <settings>
+                <indexField>id</indexField>
+            </settings>
+        </selectionsColumn>
+        <column name="name" sortOrder="20">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Product Name</label>
+            </settings>
+        </column>
+        <column name="type_id" sortOrder="30" component="Magento_Ui/js/grid/columns/select">
+            <settings>
+                <options class="Magento\Catalog\Model\Product\Type"/>
+                <filter>select</filter>
+                <dataType>select</dataType>
+                <label translate="true">Product Type</label>
+            </settings>
+        </column>
+        <column name="product_sku" sortOrder="40">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Product Sku</label>
+            </settings>
+        </column>
+        <column name="origin_price" sortOrder="50" class="Bss\CustomPricing\Ui\Component\Listing\ProductPrice\Column\Price">
+            <settings>
+                <filter>textRange</filter>
+                <label translate="true">Original Price</label>
+            </settings>
+        </column>
+
+        <column name="price_type" sortOrder="60" component="Magento_Ui/js/grid/columns/select">
+            <settings>
+                <options class="Bss\CustomPricing\Model\Config\Source\PriceTypeOption"/>
+                <dataType>select</dataType>
+                <label translate="true">Price Type</label>
+            </settings>
+        </column>
+
+        <column name="price_value" sortOrder="70" class="Bss\CustomPricing\Ui\Component\Listing\ProductPrice\Column\Price">
+            <settings>
+                <filter>textRange</filter>
+                <label translate="true">Price Value</label>
+            </settings>
+        </column>
+
+        <column name="custom_price" sortOrder="80" class="Bss\CustomPricing\Ui\Component\Listing\ProductPrice\Column\Price">
+            <settings>
+                <filter>textRange</filter>
+                <label translate="true">Expected Price</label>
+            </settings>
+        </column>
+        <actionsColumn sortOrder="90" name="actions" class="Bss\CustomPricing\Ui\Component\Listing\ProductPrice\Column\Actions" component="Bss_CustomPricing/js/grid/columns/actions">
+            <settings>
+                <indexField>id</indexField>
+            </settings>
+        </actionsColumn>
+    </columns>
+</listing>

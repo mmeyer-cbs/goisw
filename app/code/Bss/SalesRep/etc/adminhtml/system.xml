@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_SalesRep
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2020-2022 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="bss" translate="label" sortOrder="300">
+            <label><![CDATA[Bss Commerce]]></label>
+        </tab>
+        <section id="bss_salesrep" translate="label" sortOrder="200" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Sales Rep</label>
+            <tab>bss</tab>
+            <resource>Bss_SalesRep::config_salesrep</resource>
+            <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>General</label>
+                <field id="enable" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Enable</label>
+                    <comment><![CDATA[Version  1.1.3]]></comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+            <group id="salesrep_email_config" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label><![CDATA[Sales Rep Email Config]]></label>
+                <field id="sender_email_identity" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label><![CDATA[Email Sender]]></label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Identity</source_model>
+                </field>
+                <field id="send_email_copy" translate="label comment" type="text" sortOrder="30" showInDefault="20" showInWebsite="1" showInStore="1">
+                    <label><![CDATA[Send Email Copy to]]></label>
+                    <comment>Separate multiple emails with a comma</comment>
+                </field>
+                <field id="assign_salesrep" translate="label comment" type="select" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1" >
+                    <label><![CDATA[Assign Sales Rep to Customer]]></label>
+                    <comment>Email template chosen based on theme fallback when "Default" option is selected.</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                </field>
+                <field id="unassign_salesrep" translate="label comment" type="select" sortOrder="45" showInDefault="1" showInWebsite="1" showInStore="1" >
+                    <label><![CDATA[Unassign Sales Rep to Customer]]></label>
+                    <comment>Email template chosen based on theme fallback when "Default" option is selected.</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

@@ -1,0 +1,272 @@
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_CompanyAccount
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2020 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+& when (@media-common = true) {
+    @font-face {
+        font-family: 'material-icons';
+        font-style: normal;
+        font-weight: 400;
+        src: url("@{baseDir}Bss_CompanyAccount/fonticons/MaterialIcons-Regular.eot");
+        src: url("@{baseDir}Bss_CompanyAccount/fonticons/MaterialIcons-Regular.eot?#iefix") format('embedded-opentype'),
+        url("@{baseDir}Bss_CompanyAccount/fonticons/MaterialIcons-Regular.woff2") format('woff2'),
+        url("@{baseDir}Bss_CompanyAccount/fonticons/MaterialIcons-Regular.woff") format('woff'),
+        url("@{baseDir}Bss_CompanyAccount/fonticons/MaterialIcons-Regular.ttf") format('truetype');
+    }
+
+    div.bss-help-block {
+        font-size: 1.2rem;
+        margin-top: 5px;
+    }
+
+    .float-left {
+        float: left;
+    }
+
+    .padding-top-bottom-7 {
+        padding-top: 7px;
+        padding-bottom: 7px;
+    }
+
+    .padding-left-right-15 {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .material-icons {
+        font-family: 'material-icons';
+        font-weight: normal;
+        font-style: normal;
+        font-size: 1.4rem; /* Preferred icon size */
+        display: inline-block;
+        text-transform: none;
+        vertical-align: middle;
+        text-align: center;
+        overflow: hidden;
+        speak: none;
+        letter-spacing: normal;
+        word-wrap: normal;
+        white-space: nowrap;
+        direction: ltr;
+
+        /* Support for all WebKit browsers. */
+        -webkit-font-smoothing: antialiased;
+        /* Support for Safari and Chrome. */
+        text-rendering: optimizeLegibility;
+
+        /* Support for Firefox. */
+        -moz-osx-font-smoothing: grayscale;
+
+        /* Support for IE. */
+        font-feature-settings: 'liga';
+    }
+
+    .block-order-details-view {
+        &.sub-user {
+            margin-left: 0;
+
+            .block-title {
+                padding-left: 0;
+            }
+        }
+    }
+
+    ul {
+        list-style: none;
+    }
+
+    .tab-switcher {
+        display: inline-block;
+        cursor: pointer;
+        margin-right: 25px;
+    }
+}
+
+.date-filter {
+    width: 30%;
+    float: right;
+
+    .btn-filter {
+        width: 45%;
+        float: left;
+        margin-right: 5%;
+
+        input {
+            width: 100%;
+            height: 31px;
+
+            &:hover {
+                background: #A9A9A9;
+                border: none;
+            }
+        }
+    }
+}
+
+.bss-filter-nav {
+    margin-left: 40%;
+    margin-top: 1%;
+
+    .date-input {
+        width: 45%;
+        float: left;
+        margin-right: 5%;
+    }
+}
+
+#bss-filter-nav{
+    margin: 1% 0 1% 0;
+    border-top: 1px solid #007bdb;
+    border-bottom: 1px solid #007bdb;
+}
+
+.bss-action-nav {
+    margin-left: 60%;
+    margin-top: 2%;
+    padding-bottom: 1%;
+
+    .bss-cancel-action {
+        width: 45%;
+        float: left;
+        margin-right: 5%;
+
+        input {
+            border: none;
+            height: 30px;
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            color: #007bdb;
+
+            &:hover{
+                text-decoration: underline;
+            }
+        }
+    }
+
+    .bss-filter-action {
+        width: 45%;
+        float: right;
+        margin-right: 5%;
+
+        input {
+            width: 100%;
+            border: none;
+            border-radius: 20px;
+            height: 30px;
+
+            &:hover{
+                background: #A9A9A9;
+            }
+        }
+    }
+}
+
+.clear-float {
+    clear: both;
+}
+
+.order-products-toolbar {
+    padding-top: 20px;
+    margin-bottom: 0;
+}
+
+.jstree-check-role {
+    a {
+        color: gray;
+    }
+}
+
+.bss-action-order {
+    text-align: right;
+    height: 50px;
+
+}
+
+.bss-btn-action {
+    width: 12%;
+    float: right;
+    margin-left: 1%;
+    input {
+        height: 30px;
+        width: 100%;
+    }
+    &:hover{
+        background: #454547;
+    }
+
+    .approve {
+        background: #2ba33a;
+    }
+    .reject {
+        background: #db3636;
+    }
+
+    .bss-btn {
+        font-size: 14px;
+        color: white;
+        border: none;
+    }
+}
+
+.bss-btn-checkout {
+    background: #1979c3;
+    color: white;
+    border: none;
+
+    &:hover {
+        background: #006bb4;
+    }
+}
+.bss.checkout.noti{
+    padding: 2% 0 10% 0;
+    color: red;
+}
+#bss-back-to-quote {
+    &:hover {
+        cursor: pointer;
+    }
+}
+#bss-back-to-cart {
+    &:hover {
+        cursor: pointer;
+    }
+}
+.bss-confirm .modal-inner-wrap{
+    width: 40%;
+}
+
+#ca-my-orders-table {
+    .actions {
+        color: #046bc5
+    }
+}
+
+.action-back {
+    margin-top: 25px;
+}
+
+.color-black {
+    color: black !important;
+
+    :visited {
+        color: black;
+    }
+}
+.order-request {
+    height: 40px;
+    margin-top: 0;
+    font-weight: 400;
+}

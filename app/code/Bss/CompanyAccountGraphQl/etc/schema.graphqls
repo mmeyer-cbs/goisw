@@ -1,0 +1,177 @@
+# BSS Commerce Co.
+#
+# NOTICE OF LICENSE
+#
+# This source file is subject to the EULA
+# that is bundled with this package in the file LICENSE.txt.
+# It is also available through the world-wide-web at this URL:
+# http://bsscommerce.com/Bss-Commerce-License.txt
+#
+# @category   BSS
+# @package    Bss_CompanyAccountGraphQl
+# @author     Extension Team
+# @copyright  Copyright (c) 2021 BSS Commerce Co. ( http://bsscommerce.com )
+# @license    http://bsscommerce.com/Bss-Commerce-License.txt
+
+type Query {
+    bssCompanyAccountGetRole(role_id: Int!): SubRole
+        @doc(description: "Get role by id")
+        @resolver(class: "\\Bss\\CompanyAccountGraphQl\\Model\\Resolver\\GetRole")
+    bssCompanyAccountGetSubUsersByRole(role_id: Int!): [SubUser]
+        @doc(description: "Get role by id")
+        @resolver(class: "\\Bss\\CompanyAccountGraphQl\\Model\\Resolver\\GetSubUsersByRole")
+    bssSubUser: SubUser
+        @doc(description: "Get current auth subuser")
+        @resolver(class: "\\Bss\\CompanyAccountGraphQl\\Model\\Resolver\\GetSubUser")
+    bssCompanyAccountGetSubUser(sub_id: Int!): SubUser
+        @doc(description: "Get sub-user by id")
+        @resolver(class: "\\Bss\\CompanyAccountGraphQl\\Model\\Resolver\\GetSubUser")
+    bssSubUserCart: Cart! @resolver (class: "\\Bss\\CompanyAccountGraphQl\\Model\\Resolver\\SubUserCart") @doc(description:"Returns information about the sub-user shopping cart") @cache(cacheable: false)
+}
+
+type Mutation {
+    bssUpdateToCompanyAccount(customer_id: Int, is_company_account: Int): Customer
+        @doc(description: "Update company to company account or not")
+        @resolver(class: "\\Bss\\CompanyAccountGraphQl\\Model\\Resolver\\UpdateCompanyAccount")
+    bssCompanyAccountSaveRole(input: SubRoleInput): SubRole
+        @doc(description: "Create/update role")
+        @resolver(class: "\\Bss\\CompanyAccountGraphQl\\Model\\Resolver\\SaveRole")
+    bssCompanyAccountDeleteRole(role_id: Int!): Boolean
+        @doc(description: "Delete role")
+        @resolver(class: "\\Bss\\CompanyAccountGraphQl\\Model\\Resolver\\DeleteRole")
+    bssGenerateSubUserToken(email: String!, password: String!): SubUserToken
+        @doc(description: "Generate the sub-user token")
+        @resolver(class: "\\Bss\\CompanyAccountGraphQl\\Model\\Resolver\\GenerateSubUserToken")
+    bssRevokeSubUserToken: RevokeSubUserTokenOutput
+        @resolver(class: "\\Bss\\CompanyAccountGraphQl\\Model\\Resolver\\RevokeSubUserToken")
+        @doc(description:"Revoke the sub-user token")
+    bssCompanyAccountDeleteSubUser(sub_id: Int!): Boolean
+        @doc(description: "Delete sub-user by id")
+        @resolver(class: "\\Bss\\CompanyAccountGraphQl\\Model\\Resolver\\DeleteSubUser")
+    bssCompanyAccountCreateSubUser (user: SubUsers): Boolean
+         @doc(description: "Create sub-user")
+         @resolver(class: "\\Bss\\CompanyAccountGraphQl\\Model\\Resolver\\CreateSubUser")
+    bssCompanyAccountEditSubUser (user: SubUserForEdit): Boolean
+         @doc(description: "Edit sub-user")
+         @resolver(class: "\\Bss\\CompanyAccountGraphQl\\Model\\Resolver\\EditSubUser")
+    bssCompanyAccountResetSubPassword (user: SubUserResetPass): Boolean
+         @doc(description: "Reset sub-user password")
+         @resolver(class: "\\Bss\\CompanyAccountGraphQl\\Model\\Resolver\\ResetSubPassword")
+    bssCompanyAccountRequestResetSubPassword (user: SubUserRequestResetPass): Boolean
+         @doc(description: "Request send email reset password for sub user")
+         @resolver(class: "\\Bss\\CompanyAccountGraphQl\\Model\\Resolver\\RequestResetSubPassword")
+    bssCompanyAccountChangeSubPassword (user: SubUserChangePass): Boolean
+         @doc(description: "Change password for sub user")
+         @resolver(class: "\\Bss\\CompanyAccountGraphQl\\Model\\Resolver\\ChangeSubUserPassword")
+}
+
+type RevokeSubUserTokenOutput {
+    result: Boolean!
+}
+
+type SubUserToken {
+    token: String @doc(description: "The sub-user token")
+}
+
+input SubRoleInput @doc(description: "Sub role input") {
+    role_id: Int @doc(description: "Role id, not defined, leave null will be create new")
+    role_name: String @doc(description: "What name that role will be call?")
+    role_type: String @doc(description: "The values of role permissions defined in `etc/company_rules.xml`, format example: `'1,2,3,4,5'`")
+    order_per_day: Int @doc(description: "Number of order sub-user can order perday, not defined, or leave null to unlimited.")
+    max_order_amount: Int @doc(description: "Order amount sub-user can checkout per order, not defined, or leave null to unlimited.")
+    customer_id: Int @doc(description: "Company Account own the role")
+}
+
+input SubUsers @doc(description: "Sub user input"){
+    customer_id: Int @doc(description: "Customer Id")
+    sub_name: String! @doc(description: "Sub Name")
+    sub_email: String! @doc(description: "Sub Email")
+    sub_status: Int! @doc(description: "Sub Status")
+    role_id: Int! @doc(description: "Role Id")
+}
+
+input SubUserForEdit @doc(description: "Sub user input for edit"){
+    customer_id: Int @doc(description: "Customer Id")
+    sub_id: Int! @doc(description: "Sub Id")
+    sub_name: String! @doc(description: "Sub Name")
+    sub_email: String! @doc(description: "Sub Email")
+    sub_status: Int! @doc(description: "Sub Status")
+    role_id: Int! @doc(description: "Role Id")
+}
+
+input SubUserResetPass @doc(description: "Sub user input for reset password"){
+    token: String! @doc(description: "Sub Token")
+    sub_email: String! @doc(description: "Sub Email")
+    new_password:  String! @doc(description: "Sub Password")
+    password_confirm: String! @doc(description: "Sub Password Confirm")
+}
+
+input SubUserRequestResetPass @doc(description: "Sub user input for request send email to reset password"){
+    sub_email: String! @doc(description: "Sub user Email")
+}
+
+input SubUserChangePass @doc(description: "Change Sub user password"){
+    sub_email: String! @doc(description: "Sub User Email")
+    sub_password: String! @doc(description: "Sub user Password")
+    new_password:  String! @doc(description: "Sub User New Password")
+    password_confirm: String! @doc(description: "Sub Password Confirm")
+}
+
+type StoreConfig {
+    company_account_enable: String @doc(description: "Module enable/disable") @resolver(class: "\\Bss\\CompanyAccountGraphQl\\Model\\Resolver\\AuthorizationUser")
+    company_account_email_sender: String @doc(description: "Email Sender") @resolver(class: "\\Bss\\CompanyAccountGraphQl\\Model\\Resolver\\AuthorizationUser")
+    company_account_ca_approval: String @doc(description: "To be company account notification Email Template") @resolver(class: "\\Bss\\CompanyAccountGraphQl\\Model\\Resolver\\AuthorizationUser")
+    company_account_send_approval_copy_to: String @doc(description: "To be company account notification copy to emails") @resolver(class: "\\Bss\\CompanyAccountGraphQl\\Model\\Resolver\\AuthorizationUser")
+    company_account_ca_remove: String @doc(description: "Revoke company account notification email template") @resolver(class: "\\Bss\\CompanyAccountGraphQl\\Model\\Resolver\\AuthorizationUser")
+    company_account_send_remove_copy_to: String @doc(description: "Revoke company account notification copy to emails") @resolver(class: "\\Bss\\CompanyAccountGraphQl\\Model\\Resolver\\AuthorizationUser")
+    company_account_subuser_welcome: String @doc(description: "Welcome to be sub-user of company account notification email template.") @resolver(class: "\\Bss\\CompanyAccountGraphQl\\Model\\Resolver\\AuthorizationUser")
+    company_account_subuser_remove: String @doc(description: "Remove sub-user from company account notification email template") @resolver(class: "\\Bss\\CompanyAccountGraphQl\\Model\\Resolver\\AuthorizationUser")
+    company_account_subuser_reset_password: String @doc(description: "Reset password sub-user email template") @resolver(class: "\\Bss\\CompanyAccountGraphQl\\Model\\Resolver\\AuthorizationUser")
+}
+
+type Customer {
+    bss_is_company_account: Boolean @resolver(class: "\\Bss\\CompanyAccountGraphQl\\Model\\Resolver\\AddIsCompanyAccountAttributeToCustomer")
+    salesrep: SalesRepUser @resolver(class: "\\Bss\\CompanyAccountGraphQl\\Model\\Resolver\\GetSalesRepUser") @doc(description: "Get information of salesrep")
+    sub_users: [SubUser] @resolver(class: "\\Bss\\CompanyAccountGraphQl\\Model\\Resolver\\ListSubUser") @doc(description: "List sub-user of company account")
+    sub_roles: [SubRole] @resolver(class: "\\Bss\\CompanyAccountGraphQl\\Model\\Resolver\\ListRole") @doc(description: "List roles were created by company account")
+}
+
+type SalesRepUser @doc(description: "SalesRep information") {
+    user_id: Int
+    firstname: String
+    lastname: String
+    email: String
+    username: String
+    is_active: Boolean
+}
+
+input PlaceOrderInput {
+    sub_id: Int
+}
+
+type CustomerOrder {
+    sub_user: SubUser @doc(description: "Sub-user's information at the place order time") @resolver(class: "\\Bss\\CompanyAccountGraphQl\\Model\\Resolver\\GetSubUserInfoInOrder")
+}
+
+type SubUser @doc(description: "Sub-user of company account") {
+    sub_id: Int @doc(description: "Sub-user ID")
+    sub_email: String @doc(description: "Sub-user email")
+    sub_name: String @doc(description: "Sub-user name")
+    sub_status: Int @doc(description: "Sub-user account status")
+    role_id: Int @doc(description: "The role id was assigned to sub-user")
+    role: SubRole @doc(description: "The full role data was assigned to sub-user") @resolver(class: "\\Bss\\CompanyAccountGraphQl\\Model\\Resolver\\Extractor\\ExtractRoleData")
+    created_at: String @doc(description: "The create time of sub-user")
+    quote_id: Int @doc(description: "The quote id for sub-user")
+    customer_id: Int @doc(description: "The owner of current sub-user")
+    customer: Customer @doc(description: "The owner company account") @resolver(class: "\\Bss\\CompanyAccountGraphQl\\Model\\Resolver\\Extractor\\ExtractCustomerData")
+}
+
+type SubRole @doc(description: "Company Account role") {
+    role_id: Int @doc(description: "Role id")
+    role_name: String @doc(description: "Role name")
+    role_type: String @doc(description: "The values of role defined in `etc/company_rules.xml`")
+    order_per_day: Int @doc(description: "The number of order that sub-user can order per day")
+    max_order_amount: Float @doc(description: "The max order amount that sub-user can checkout per order")
+    customer_id: Int @doc(description: "The company account id")
+    customer: Customer @doc(description: "The owner company account") @resolver(class: "\\Bss\\CompanyAccountGraphQl\\Model\\Resolver\\Extractor\\ExtractCustomerData")
+}

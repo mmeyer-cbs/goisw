@@ -1,0 +1,75 @@
+<?php
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_CustomerAttributes
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2018-2019 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+// @codingStandardsIgnoreFile
+/** @var \Bss\CustomerAttributes\Block\Adminhtml\Attribute\Edit\Tab\Relation\DependentAttribute | Bss\CustomerAttributes\Block\Adminhtml\Address\Edit\Tab\Relation\DependentAddressAttribute $block */
+$attributes = $block->getAllAttributesCollection();
+$blockObj = $attributes->getData();
+$attributeValues = $block->getAllAttributeDependentBe($attributes);
+$customerAttributeId = $block->getAttributeById();
+$blockObjUpdate = $block->validateAllAttributeDependentBe($blockObj,$customerAttributeId);
+?>
+
+<select class="dependent_attribute" name="relation_data[attribute-values][dependent_attribute][value]" required>
+    <option hidden></option>
+    <?php
+    foreach ($blockObjUpdate as $key => $value) { ?>
+        <option value="<?php echo $value['attribute_code']; ?>"
+                id="<?php echo $value['attribute_code']; ?>"
+                name="<?php echo $value['frontend_input']; ?>"
+        ><?php echo $value['frontend_label']; ?></option>
+    <?php }
+    ?>
+</select>
+<table class="dependent_values">
+    <thead>
+    <tr>
+        <th>Dependent Values</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td><select class="attribute"
+                    name="relation_data[attribute-values][dependent_attribute][dependent_attribute_value]" required>
+            </select></td>
+    </tr>
+    </tbody>
+</table>
+
+<script type="text/javascript">
+    require(['jquery', 'jquery/ui'], function ($) {
+        var attrValues = '<?= $block->encodeFunction($attributeValues) ?>';
+        var obj = JSON.parse(attrValues);
+        $(document).on('change', '.dependent_attribute', function () {
+            $(this).closest("tr").find("select.attribute option").remove();
+            var attrcode = $(this).children(":selected").attr("id")
+            var that = $(this)
+            $.each(obj, function (index, value) {
+                if (index == attrcode) {
+                    $.each(value, function (i, v) {
+                        if (v.label.trim() !== '') {
+                            $(that).closest("tr").find("select.attribute").append(`<option value="${v.value}">
+                                    ${v.label}
+                                  </option>`);
+                        }
+                    });
+                }
+            });
+        });
+    });
+</script>
+

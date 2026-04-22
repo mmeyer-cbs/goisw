@@ -1,0 +1,100 @@
+<?php
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_CompanyAccount
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2020 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+
+/** @var $block \Bss\CompanyAccount\Block\Role\Index*/
+$roles = $block->getItems();
+?>
+<?php if (count($roles) > 0) : ?>
+    <div class="table-wrapper">
+        <table id="my-sub-user-table" class="data table">
+            <caption class="table-caption"><?= $block->escapeHtml(__('Role and Permissions')) ?></caption>
+            <thead>
+            <tr>
+                <th scope="col" class="col id"><?= $block->escapeHtml(__('Role #')) ?></th>
+                <th scope="col" class="col name"><?= $block->escapeHtml(__('Role Name')) ?></th>
+                <th scope="col" class="col permissions"><?= $block->escapeHtml(__('Permissions')) ?></th>
+                <th scope="col" class="col max_order_per_day"><?= $block->escapeHtml(__('Max Order Per Day')) ?></th>
+                <th scope="col" class="col max_order_amount"><?= $block->escapeHtml(__('Max Order Amount')) ?></th>
+                <th scope="col" class="col actions"><?= $block->escapeHtml(__('Actions')) ?></th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php /** @var \Bss\CompanyAccount\Api\Data\SubRoleInterface $role */ ?>
+            <?php foreach ($roles as $role) : ?>
+                <tr>
+                    <td data-th="<?= $block->escapeHtmlAttr(__('Role #')) ?>" class="col id">
+                        <?= $block->escapeHtml($role->getRoleId()) ?>
+                    </td>
+                    <td data-th="<?= $block->escapeHtmlAttr(__('Role Name')) ?>" class="col name">
+                        <?= $block->escapeHtml($role->getRoleName()) ?>
+                    </td>
+                    <td data-th="<?= $block->escapeHtmlAttr(__('Permissions')) ?>" class="col permissions">
+                        <?= $block->escapeHtml($block->formatPermission($role->getRoleType())) ?>
+                    </td>
+                    <td data-th="<?= $block->escapeHtmlAttr(__('Max Order Per Day')) ?>" class="col max_order_per_day">
+                        <?= $block->escapeHtml($role->getMaxOrderPerDay()) ?>
+                    </td>
+                    <td <?= ($role->getRoleId() == 0) ? 'colspan="2"' : '' ?> data-th="<?= $block->escapeHtmlAttr(__('Max Order Amount')) ?>" class="col max_order_amount">
+                        <?= /* @noEscape */ $block->convertCurrency($role->getMaxOrderAmount()) ?>
+                    </td>
+                    <?php if ($role->getRoleId() != 0) : ?>
+                    <td data-th="<?= $block->escapeHtmlAttr(__('Actions')) ?>"
+                        title="<?= $block->escapeHtmlAttr(__('Edit')) ?>"
+                        class="col bss actions">
+                        <a href="<?= $block->escapeUrl($block->getEditUrl($role)) ?>" class="action edit">
+                            <i class="material-icons">create</i>
+                        </a>
+                        <a href="javascript:void(0);"
+                           data-mage-init='{ "Bss_CompanyAccount/js/grid/actions": { "url": "<?= $block->escapeUrl($block->getDeleteUrl($role)) ?>" } }'
+                           title="<?= $block->escapeHtmlAttr(__('Delete')) ?>"
+                           class="action delete _delete">
+                            <i class="material-icons">delete</i>
+                        </a>
+                    </td>
+                    <?php endif; ?>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+
+    <?php if ($block->getChildHtml('pager')) : ?>
+        <div class="toolbar bottom">
+            <?= $block->getChildHtml('pager') ?>
+        </div>
+    <?php endif; ?>
+<?php else : ?>
+    <div class="message info empty"><span><?= $block->escapeHtml(__('You have not any role yet.')) ?></span></div>
+<?php endif; ?>
+<div class="actions-toolbar">
+    <div class="primary">
+        <a href="<?= $block->escapeUrl($block->getCreateUrl()) ?>" class="action create primary">
+            <span><?= $block->escapeHtml(__('New Role')) ?></span>
+        </a>
+    </div>
+</div>
+<script type="text/x-magento-init">
+    {
+        "._delete": {
+            "Bss_CompanyAccount/js/grid/actions": {
+                "cfTitle": "<?= __('Delete Role') ?>",
+                "cfContent": "<?= __('Are you sure you want to delete the role?') ?>"
+            }
+        }
+    }
+</script>

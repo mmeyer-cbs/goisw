@@ -1,0 +1,169 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_ForceLogin
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2017-2021 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="bss" translate="label" sortOrder="300">
+            <label><![CDATA[Bss Commerce]]></label>
+        </tab>
+        <section id="forcelogin" translate="label" sortOrder="22" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Force Login</label>
+            <tab>bss</tab>
+            <resource>Bss_ForceLogin::config_forcelogin</resource>
+            <group id="general" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General</label>
+                <field id="enable" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[Version 1.1.8]]></comment>
+                </field>
+                <field id="disable_register" translate="label" type="select" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Disable Default Registration</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+            <group id="page" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Enable "Force Login" When Users Visit Page(s)</label>
+                <field id="message" translate="label" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Alert Message</label>
+                    <comment>The message is shown when users are redirected to the login page.</comment>
+                </field>
+
+                <field id="force_login_page" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Force Login Page</label>
+                    <source_model>Bss\ForceLogin\Model\Config\Source\ForceLoginPage</source_model>
+                </field>
+
+                <field id="list_ignore_router" translate="label" type="textarea" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="1" >
+                    <label>Ignore list router</label>
+                    <depends>
+                        <field id="forcelogin/page/force_login_page">1</field>
+                    </depends>
+                    <comment><![CDATA[
+                     <br> Example: bsscommerce.com/customer/login, the router is <b>customer/login</b1>
+                    ]]></comment>
+                </field>
+
+                <field id="force_router_special" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label><![CDATA[Special Page]]></label>
+                    <depends>
+                        <field id="forcelogin/page/force_login_page">2</field>
+                    </depends>
+                    <frontend_model>Bss\ForceLogin\Block\Adminhtml\Block\Form\OtherPage\SpecialPage\Serialized</frontend_model>
+                    <backend_model>Bss\ForceLogin\Model\Config\Backend\OtherPage\SpecialPage\Serialized</backend_model>
+                </field>
+
+                <field id="product_page" translate="label" type="select" sortOrder="25" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Product Page</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="forcelogin/page/force_login_page">2</field>
+                    </depends>
+                </field>
+
+                <field id="category_page" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Category Page</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="forcelogin/page/force_login_page">2</field>
+                    </depends>
+                </field>
+
+                <field id="cart_page" translate="label" type="select" sortOrder="35" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Cart Page</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="forcelogin/page/force_login_page">2</field>
+                    </depends>
+                </field>
+
+                <field id="checkout_page" translate="label" type="select" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Checkout Page</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="forcelogin/page/force_login_page">2</field>
+                    </depends>
+                </field>
+
+                <field id="search_term_page" translate="label" type="select" sortOrder="45" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Search Term Page</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="forcelogin/page/force_login_page">2</field>
+                    </depends>
+                </field>
+
+                <field id="advanced_search_page" translate="label" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Advanced Search Page</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="forcelogin/page/force_login_page">2</field>
+                    </depends>
+                </field>
+
+                <field id="search_result_page" translate="label" type="select" sortOrder="55" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Search Results Page</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="forcelogin/page/force_login_page">2</field>
+                    </depends>
+                </field>
+
+                <field id="contact_page" translate="label" type="select" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1" >
+                    <label>Contact Page</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="forcelogin/page/force_login_page">2</field>
+                    </depends>
+                </field>
+
+                <field id="enable" translate="label" type="select" sortOrder="65" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>CMS Page</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends>
+                        <field id="forcelogin/page/force_login_page">2</field>
+                    </depends>
+                </field>
+                <field id="page_id" translate="label" type="multiselect" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Select CMS Page</label>
+                    <source_model>Bss\ForceLogin\Model\Config\Source\CmsPage</source_model>
+                    <depends>
+                        <field id="forcelogin/page/force_login_page">2</field>
+                        <field id="forcelogin/page/enable" separator=",">1</field>
+                    </depends>
+                </field>
+            </group>
+            <group id="redirect_url" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>After Login</label>
+                <field id="page" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Redirect To</label>
+                    <source_model>Bss\ForceLogin\Model\Config\Source\RedirectPage</source_model>
+                </field>
+                <field id="custom_url" type="text" translate="label" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Custom Url</label>
+                    <depends>
+                        <field id="forcelogin/redirect_url/page" separator=",">customurl</field>
+                    </depends>
+                    <comment>Example: "customer/account/index".</comment>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

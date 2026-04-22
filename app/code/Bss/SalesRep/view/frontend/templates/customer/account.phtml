@@ -1,0 +1,43 @@
+<?php
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_SalesRep
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2020 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+
+use Bss\SalesRep\Block\Customer\Account;
+
+?>
+
+<?php
+// @codingStandardsIgnoreFile
+
+/** @var  $block Account */
+?>
+<?php $salesRep = $block->getSalesRep() ?>
+<?php if ($block->isEnable()):?>
+<?php if ($salesRep !== []):?>
+<div>
+    <h4 class="sales_rep_label"><?= $block->escapeHtml(__('Name:')); ?></h4>
+    <p class="sales_rep_name"><?= $block->escapeHtml(__($block->getName($salesRep))); ?></p>
+</div>
+
+<h4><?= $block->escapeHtml(__('Information')); ?></h4>
+<div class="bss_sales_rep_container"><?= $block->getInformation($salesRep) ?></div>
+<?php else:?>
+    <div class="message info empty"><span><?= $block->escapeHtml(__('There is not any sales rep assigned for you')) ?></span></div>
+<?php endif; ?>
+<?php else:?>
+<div class="message info empty"><span><?= $block->escapeHtml(__('This function has been disabled by Store Owner')) ?></span></div>
+<?php endif; ?>

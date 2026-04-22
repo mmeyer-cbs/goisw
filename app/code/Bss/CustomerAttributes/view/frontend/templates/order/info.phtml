@@ -1,0 +1,104 @@
+<?php
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_CustomerAttributes
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2018-2019 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+?>
+<?php /** @var $block \Magento\Sales\Block\Order\Info */ ?>
+<?php /** @var $viewModel \Bss\CustomerAttributes\ViewModel\Order\CustomAddressHelper */
+// @codingStandardsIgnoreFile
+?>
+<?php $_order = $block->getOrder() ?>
+<?php $viewModel = $block->getViewModel(); ?>
+<?php $attributeHelper = $viewModel->getAttributeHelper();?>
+
+
+<div class="block block-order-details-view">
+    <div class="block-title">
+        <strong><?= $block->escapeHtml(__('Order Information')) ?></strong>
+    </div>
+    <div class="block-content">
+        <?php if (!$_order->getIsVirtual()) : ?>
+            <div class="box box-order-shipping-address">
+                <strong class="box-title"><span><?= $block->escapeHtml(__('Shipping Address')) ?></span></strong>
+                <div class="box-content">
+                    <address><?= /* @noEscape */ $block->getFormattedAddress($_order->getShippingAddress()) ?></address>
+                    <!--            Custom address attribute -->
+                    <?php if ($_order->getShippingAddress()->getCustomerAddressAttribute()!== null): ?>
+                        <?php foreach ($viewModel->getJson()->unserialize($_order->getShippingAddress()->getCustomerAddressAttribute()) as $attributeCode => $address): ?>
+                            <?php if ($address['value']): ?>
+                                <div class="field custom_attribute">
+                                    <label class="label"><?= $address['label'] . ': ' ?><span><?php
+                                        if ($attributeHelper->isDateFormat($address['value'], $attributeCode)) {
+                                            echo $attributeHelper->formatDate($address['value']);
+                                        } else {
+                                            echo $address['value'];
+                                        }
+                                        ?></label>
+                                </div>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </div>
+            </div>
+
+            <div class="box box-order-shipping-method">
+                <strong class="box-title">
+                    <span><?= $block->escapeHtml(__('Shipping Method')) ?></span>
+                </strong>
+                <div class="box-content">
+                    <?php if ($_order->getShippingDescription()) : ?>
+                        <?= $block->escapeHtml($_order->getShippingDescription()) ?>
+                    <?php else : ?>
+                        <?= $block->escapeHtml(__('No shipping information available')) ?>
+                    <?php endif; ?>
+                </div>
+            </div>
+        <?php endif; ?>
+
+        <div class="box box-order-billing-address">
+            <strong class="box-title">
+                <span><?= $block->escapeHtml(__('Billing Address')) ?></span>
+            </strong>
+            <div class="box-content">
+                <address><?= /* @noEscape */ $block->getFormattedAddress($_order->getBillingAddress()) ?></address>
+                <!--            Custom address attribute -->
+                <?php if ($_order->getBillingAddress()->getCustomerAddressAttribute()!== null): ?>
+                    <?php foreach ($viewModel->getJson()->unserialize($_order->getBillingAddress()->getCustomerAddressAttribute()) as $attributeCode => $address): ?>
+                        <?php if ($address['value']): ?>
+                            <div class="field custom_attribute">
+                                <label class="label"><?= $address['label'] . ': ' ?><span><?php
+                                    if ($attributeHelper->isDateFormat($address['value'], $attributeCode)) {
+                                        echo $attributeHelper->formatDate($address['value']);
+                                    } else {
+                                        echo $address['value'];
+                                    }
+                                    ?></label>
+                            </div>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </div>
+        </div>
+        <div class="box box-order-billing-method">
+            <strong class="box-title">
+                <span><?= $block->escapeHtml(__('Payment Method')) ?></span>
+            </strong>
+            <div class="box-content">
+                <?= $block->getPaymentInfoHtml() ?>
+            </div>
+        </div>
+    </div>
+</div>

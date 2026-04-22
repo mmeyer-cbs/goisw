@@ -1,0 +1,130 @@
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_CustomOrderNumber
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2017-2018 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+
+& when (@media-common = true) {
+    .checkout-index-index {
+        .field[name*=bss_customer_attributes] {
+            margin: 0 0 20px;
+            &._required {
+                &>label {
+                    &:after {
+                        content: '*';
+                        color: #e02b27;
+                        font-size: 1.2rem;
+                        margin: 0 0 0 5px;
+                    }
+                }
+            }
+        }
+    }
+
+    .bss-onestepcheckout {
+        .step-title {
+            &.customer-attributes-title {
+                &:before {
+                    content: ''!important;
+                    background-color: transparent!important;
+                }
+            }
+        }
+
+        #co-payment-form {
+            .step-title {
+                &.customer-attributes-title {
+                    border-bottom: 1px solid #cccccc;
+                    margin-bottom: 20px;
+                    &:before {
+                        content: none;
+                    }
+                }
+            }
+        }
+    }
+
+    .customer-account-create {
+        .field {
+            &.hidden {
+                display: none!important;
+            }
+        }
+    }
+    .orderAttribute {
+        width: 50%;
+        img {
+            min-height: 100px;
+        }
+        div {
+            display: inline-block;
+        }
+    }
+    .label_attribute {
+        float: left;
+        overflow: hidden;
+        margin: auto 0;
+        width: 40%;
+    }
+    .value_attribute {
+        width: 60%;
+        height: 100%;
+        img {
+            height: 100%;
+        }
+        video {
+
+        }
+    }
+    .disabled {
+        pointer-events: none;
+        cursor: default;
+    }
+
+    .hide {
+        display: none;
+    }
+
+    .box-content div.field.custom_attribute {
+        overflow-wrap: break-word;
+    }
+    .payment-option-title.field.choice, .payment-method-content {
+        max-width: 70%;
+        overflow-wrap: break-word;
+    }
+}
+@media only screen and (min-width: 1700px) {
+    .payment-option-title.field.choice, .payment-method-content {
+        max-width: 80%;
+        overflow-wrap: break-word;
+    }
+}
+@media only screen and (max-width: 1400px) {
+    .payment-option-title.field.choice, .payment-method-content{
+        max-width: 65%;
+        word-wrap: break-word;
+    }
+}
+@media only screen and (max-width: 768px) {
+    .payment-option-title.field.choice, .payment-method-content{
+        max-width: 47%;
+        word-wrap: break-word;
+    }
+}
+@media only screen and (max-width: 500px) {
+    .payment-option-title.field.choice, .payment-method-content{
+        max-width: 37%;
+        word-wrap: break-word;
+    }
+}

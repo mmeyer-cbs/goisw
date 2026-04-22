@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_CompanyAccount
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2020 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+-->
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <listingToolbar name="listing_top">
+        <massaction name="listing_massaction">
+            <action name="company_account_approval">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="type" xsi:type="string">approval</item>
+                        <item name="label" xsi:type="string" translate="true">Change to Company Account</item>
+                        <item name="url" xsi:type="url" path="bss_companyaccount/customer/MassApprovedCompanyAccount"/>
+                        <item name="confirm" xsi:type="array">
+                            <item name="title" xsi:type="string" translate="true">Approval</item>
+                            <item name="message" xsi:type="string" translate="true">Are you sure to Approval selected customers to Company Account?</item>
+                        </item>
+                    </item>
+                </argument>
+            </action>
+            <action name="company_account_remove">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="type" xsi:type="string">remove</item>
+                        <item name="label" xsi:type="string" translate="true">Remove from Company Account</item>
+                        <item name="url" xsi:type="url" path="bss_companyaccount/customer/MassDisapprovedCompanyAccount"/>
+                        <item name="confirm" xsi:type="array">
+                            <item name="title" xsi:type="string" translate="true">Remove</item>
+                            <item name="message" xsi:type="string" translate="true">Are you sure to Remove selected customers from Company Account?</item>
+                        </item>
+                    </item>
+                </argument>
+            </action>
+        </massaction>
+    </listingToolbar>
+</listing>

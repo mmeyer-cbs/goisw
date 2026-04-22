@@ -1,0 +1,38 @@
+<?php
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_QuoteExtension
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2018-2019 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+
+/** @var $block \Bss\QuoteExtension\Block\QuoteExtension\MovetoQuote */
+?>
+<?php // @codingStandardsIgnoreFile ?>
+
+<?php if ($block->isEnabled()): ?>
+    <div class="form-cart">
+        <form action="<?= /* @escapeNotVerified */ $block->escapeUrl($block->getMoveUrl()); ?>"
+              method="post"
+              id="form-coppy-quote">
+            <?= $block->getBlockHtml('formkey') ?>
+            <button type="submit"
+                    name="copy_to_quote_action"
+                    value="copy_to_quote"
+                    title="<?= $block->escapeHtml(__('Move all to Quote')); ?>"
+                    class="action copytoquote">
+                <span><?= $block->escapeHtml(__('Move all to Quote')); ?></span>
+            </button>
+        </form>
+    </div>
+<?php endif; ?>

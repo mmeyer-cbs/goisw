@@ -1,0 +1,43 @@
+<?php
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_QuoteExtension
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2018-2019 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+
+/** @var $block \Bss\QuoteExtension\Block\QuoteExtension\View\Action */
+?>
+<?php // @codingStandardsIgnoreFile ?>
+
+<?php if ($block->canShowButton('cancel') && $block->isEnable()) : ?>
+    <?php $action = $block->getAction('quoteextension/quote/cancel'); ?>
+    <form action="<?= /* @escapeNotVerified */ $block->escapeUrl($action); ?>" method="post" id="cancel-quote" class="quote-button">
+        <input type="hidden" name="quote" value="<?= /* @escapeNotVerified */ $block->escapeHtmlAttr($block->getRequestQuote()->getId()); ?>">
+        <input type="hidden" name="token" value="<?= /* @escapeNotVerified */ $block->escapeHtmlAttr($block->getRequestQuote()->getToken()); ?>">
+        <?php echo $block->getBlockHtml('formkey')?>
+        <div class="primary">
+            <button type="submit" title="<?= $block->escapeHtmlAttr(__('Cancel')); ?>" class="action primary quote-submit quote-cancel">
+                <span><?= $block->escapeHtml(__('Cancel')); ?></span>
+            </button>
+        </div>
+    </form>
+<?php endif; ?>
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Bss_QuoteExtension/js/quote-view/action/cancel-confirm": {
+            }
+        }
+    }
+</script>

@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_QuoteExtension
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2018-2019 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="quoteextension_quote_sidebar_item_renderers"/>
+    <update handle="quoteextension_quote_sidebar_item_price_renderers"/>
+    <update handle="quoteextension_quote_sidebar_total_renderers"/>
+    <body>
+        <referenceBlock name="head.components">
+            <block class="Magento\Framework\View\Element\Js\Components" name="quoteextension_page_head_components" template="Bss_QuoteExtension::js/components.phtml"/>
+        </referenceBlock>
+        <referenceContainer name="header-wrapper">
+            <block class="Bss\QuoteExtension\Block\QuoteExtension\Sidebar"  ifconfig="bss_request4quote/general/enable" name="miniquoteextension" as="miniquoteextension" before="minicart" template="Bss_QuoteExtension::quoteextension/miniquoteextension.phtml">
+                <arguments>
+                    <argument name="jsLayout" xsi:type="array">
+                        <item name="types" xsi:type="array"/>
+                        <item name="components" xsi:type="array">
+                            <item name="miniquote_content" xsi:type="array">
+                                <item name="component" xsi:type="string">Bss_QuoteExtension/js/view/miniquote</item>
+                                <item name="config" xsi:type="array">
+                                    <item name="template" xsi:type="string">Bss_QuoteExtension/miniquote/content</item>
+                                </item>
+                                <item name="children" xsi:type="array">
+                                    <item name="subtotal.container" xsi:type="array">
+                                        <item name="component" xsi:type="string">uiComponent</item>
+                                        <item name="config" xsi:type="array">
+                                            <item name="displayArea" xsi:type="string">subtotalContainer</item>
+                                        </item>
+                                        <item name="children" xsi:type="array">
+                                            <item name="subtotal" xsi:type="array">
+                                                <item name="component" xsi:type="string">uiComponent</item>
+                                                <item name="config" xsi:type="array">
+                                                    <item name="template" xsi:type="string">Bss_QuoteExtension/miniquote/subtotal</item>
+                                                </item>
+                                            </item>
+                                        </item>
+                                    </item>
+                                    <item name="extra_info" xsi:type="array">
+                                        <item name="component" xsi:type="string">uiComponent</item>
+                                        <item name="config" xsi:type="array">
+                                            <item name="displayArea" xsi:type="string">extraInfo</item>
+                                        </item>
+                                    </item>
+                                    <item name="promotion" xsi:type="array">
+                                        <item name="component" xsi:type="string">uiComponent</item>
+                                        <item name="config" xsi:type="array">
+                                            <item name="displayArea" xsi:type="string">promotion</item>
+                                        </item>
+                                    </item>
+                                </item>
+                            </item>
+                        </item>
+                    </argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+        <referenceContainer name="content">
+            <block class="Bss\QuoteExtension\Block\Style\Config" name="bss_custom_style" template="Bss_QuoteExtension::style/product.phtml"/>
+        </referenceContainer>
+
+        <move element="miniquoteextension" destination="porto_header" />
+    </body>
+</page>

@@ -1,0 +1,71 @@
+"ID","ID"
+"Updated At","Updated At"
+"Type","Type"
+"Credit Change","Credit Change",
+"Available Credit","Available Credit"
+"Comment","Comment",
+"PO Number","PO Number",
+"Order ID","Order ID",
+"Action","Action"
+"There are no items.","There are no items."
+"Credit Information","Credit Information"
+"Company Credit","Company Credit"
+"Credit Limit","Credit Limit"
+Warning: Only make change when really needed.
+                You must assign the customer a credit limit before making changes to the below fields.,"Warning: Only make change when really needed.
+                                                                                                                        You must assign the customer a credit limit before making changes to the below fields."
+"Update Available Credit","Update Available Credit"
+"Allow Available Credit Excess","Allow Available Credit Excess"
+"Customer ID %1 cannot have available credit greater than credit limit.","Customer ID %1 cannot have available credit greater than credit limit."
+"You have successfully saved changes to company credit","You have successfully saved changes to company credit"
+"Bss Commerce","Bss Commerce"
+"Company Credit","Company Credit"
+"General","General"
+"Enabled","Enabled"
+"Email Configuration","Email Configuration"
+"Email sender","Email sender"
+"Email Receiver","Email Receiver"
+"Email Template - Admin Updates Credit Value","Email Template - Admin Updates Credit Value"
+"Email Template - Admin Changes Credit Limit","Email Template - Admin Changes Credit Limit"
+"Email Template - Customer Exceeds Available Limit","Email Template - Customer Exceeds Available Limit"
+"Yes","Yes"
+"No","No"
+"History doesn\'t exist","History doesn\'t exist"
+"Log Transaction","Log Transaction"
+"Used Credit","Used Credit"
+"Allow Excess","Allow Excess"
+"-- Please Select --","-- Please Select --"
+"Leave other fields blank if you only want to make change to a field.","Leave other fields blank if you only want to make change to a field."
+"Purchase Order Number","Purchase Order Number"
+"Paid by Credit","Paid by Credit",
+"Hi %customer_name","Hi %customer_name"
+"Admin changed your credit limit: from %old_value","Admin changed your credit limit: from %old_value"
+"to %new_value","to %new_value"
+"Your Customer %customer_name has exceeded the available credit to place order: %order_id with PO number: %po_number","Your Customer %customer_name has exceeded the available credit to place order: %order_id with PO number: %po_number"
+"Your available credit has been updated: from %old_value ","Your available credit has been updated: from %old_value "
+"My Company Credit","My Company Credit"
+"You will exceed credit limit with this order.","You will exceed credit limit with this order."
+"You are eligible to order with more than your available credit.","You are eligible to order with more than your available credit."
+"Do you want to exceed your available credit?","Do you want to exceed your available credit?"
+"We can\'t send the company credit email right now.","We can\'t send the company credit email right now."
+"Sorry, you cannot place order at the moment.","Sorry, you cannot place order at the moment."
+"Enabled Payment Method Purchase Order required (to use Company Credit extension)","Enabled Payment Method Purchase Order required (to use Company Credit extension)"
+"You must assign the customer a credit limit before making changes to the below fields.", "You must assign the customer a credit limit before making changes to the below fields."
+"Please validate input credit_limit >= 0","Please validate input credit_limit >= 0"
+"You must provide at least one of the following values: credit_limit, update_available, allow_exceed.","You must provide at least one of the following values: credit_limit, update_available, allow_exceed."
+"Input customer_id is required. Enter and try again.","Input customer_id is required. Enter and try again."
+"Please validate value input order_id > 0","Please validate value input order_id > 0"
+"You can't update credit. Because order_id exist","You can't update credit. Because order_id exist"
+"Some time error","Some time error"
+"Sorry, you need permissions to save company credit","Sorry, you need permissions to save company credit"
+Input credit_limit is required. When a new company credit account is created .,Input credit_limit is required. When a new company credit account is created .
+Input available_credit is required. When you update credit_limit or available credit,Input available_credit is required. When you update credit_limit or available credit
+You need to enter a value to ensure that Unpaid Credit does not exceed the order value or be less than 0!,You need to enter a value to ensure that Unpaid Credit does not exceed the order value or be less than 0!
+You cannot change "Update Credit" config for specific order when updating simultaneously with "Update Available Credit" config.,You cannot change "Update Credit" config for specific order when updating simultaneously with "Update Available Credit" config.
+Email template - Due Date Payment Reminder,Email template - Due Date Payment Reminder
+Send remind email X day(s) before overdue,Send remind email X day(s) before overdue
+Email template - Notification Overdue payment for Admin,Email template - Notification Overdue payment for Admin
+Payment Due Date,Payment Due Date
+Payment Status,Payment Status
+Unpaid Credit,Unpaid Credit
+Update Credit,Update Credit

@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Bss Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   Bss
+ * @package    Bss_CatalogPermission
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2018-2019 Bss Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Theme\Block\Html\Topmenu">
+        <plugin name="bssCatalogPermissionsCachingTopmenu"
+                type="Bss\CatalogPermission\Model\Plugin\Theme\Block\Html\Topmenu" sortOrder="10"/>
+    </type>
+    <type name="Magento\Elasticsearch\Elasticsearch5\Model\Client\Elasticsearch">
+        <plugin name="bss_cp_exclude_product_ids_es5" type="Bss\CatalogPermission\Plugin\Elasticsearch" sortOrder="20"/>
+    </type>
+    <type name="Magento\Elasticsearch6\Model\Client\Elasticsearch">
+        <plugin name="bss_cp_exclude_product_ids_es6" type="Bss\CatalogPermission\Plugin\Elasticsearch" sortOrder="20"/>
+    </type>
+    <type name="Magento\Elasticsearch7\Model\Client\Elasticsearch">
+        <plugin name="bss_cp_exclude_product_ids_es7" type="Bss\CatalogPermission\Plugin\Elasticsearch" sortOrder="20"/>
+    </type>
+    <type name="Bss\CatalogPermission\Model\ResourceModel\Category">
+        <plugin name="bss_catalog_permission_category" type="Bss\CatalogPermission\Plugin\Model\ResourceModel\Category"/>
+    </type>
+    <preference for="Bss\CatalogPermission\Api\CmsPageRepositoryInterface"
+                type="Bss\CatalogPermission\Model\Api\CmsPageRepository" />
+    <preference for="Bss\CatalogPermission\Api\Data\CmsPageInterface"
+                type="Bss\CatalogPermission\Model\Api\CmsPage" />
+
+</config>

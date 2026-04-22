@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_CompanyAccount
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2020-2021 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="config">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="acl">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="rules">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element minOccurs="0" maxOccurs="unbounded" name="rule" type="ruleItemType" />
+                                    </xs:sequence>
+                                </xs:complexType>
+
+                                <xs:unique name="uniqueResourceId">
+                                    <xs:annotation>
+                                        <xs:documentation>
+                                            Attribute id is unique under all ACL resources
+                                        </xs:documentation>
+                                    </xs:annotation>
+                                    <xs:selector xpath=".//*"/>
+                                    <xs:field xpath="@value"/>
+                                </xs:unique>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+        <xs:complexType name="ruleItemType">
+            <xs:annotation>
+                <xs:documentation>
+                    ACL Resource. Recursive complex type
+                </xs:documentation>
+            </xs:annotation>
+
+            <xs:sequence>
+                <xs:element minOccurs="0" maxOccurs="unbounded" name="rule" type="ruleItemType" />
+            </xs:sequence>
+
+            <xs:attribute name="value" type="xs:int" use="required" />
+            <xs:attribute name="title" type="xs:string" use="required" />
+            <xs:attribute name="translate" type="xs:boolean" use="optional" />
+            <xs:attribute name="remove" type="xs:boolean" use="optional" />
+        </xs:complexType>
+</xs:schema>

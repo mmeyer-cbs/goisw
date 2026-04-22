@@ -1,0 +1,42 @@
+<?php
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_HidePrice
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2018-2022 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+namespace Bss\HidePrice\Model\Config\Source;
+
+class ApplyForChildProduct extends \Magento\Eav\Model\Entity\Attribute\Source\AbstractSource
+{
+    const BSS_HIDE_PRICE_PRESELECT = null;
+    const BSS_HIDE_PRICE_YES = '1';
+    const BSS_HIDE_PRICE_NO = '0';
+
+    /**
+     * Get Options For Config.
+     *
+     * @return array
+     */
+    public function getAllOptions()
+    {
+        if (!$this->_options) {
+            $this->_options = [
+                ['label' => __('Please Select'), 'value' => self::BSS_HIDE_PRICE_PRESELECT],
+                ['label' => __('Yes'), 'value' => self::BSS_HIDE_PRICE_YES],
+                ['label' => __('No'), 'value' => self::BSS_HIDE_PRICE_NO],
+            ];
+        }
+        return $this->_options;
+    }
+}

@@ -1,0 +1,48 @@
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_StoreCredit
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2017-2018 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+
+.cart-bss-store-credit .bss-store-credit>.field {
+    display: block;
+}
+.cart-bss-store-credit .actions-toolbar, .bss-store-credit-code .actions-toolbar {
+    display: block;
+    width: 100%;
+}
+.cart-bss-store-credit .actions-toolbar .primary, .bss-store-credit-code .actions-toolbar .primary {
+    float: left !important;
+}
+.cart-bss-store-credit .actions-toolbar>.primary, .bss-store-credit-code .actions-toolbar>.primary
+{
+    margin-right: 15px !important;
+}
+.bss-storecredit-history-toolbar.toolbar.top .pages{
+    display: none;
+}
+.bss-storecredit-history-toolbar.toolbar.top .limiter{
+    display: block;
+    float: right;
+}
+.bss-storecredit-history-toolbar.toolbar.bottom .limiter{
+    display: none;
+}
+.bss-storecredit-history-toolbar.toolbar.bottom .toolbar-amount{
+    display: none;
+}
+#bss-store-credit-form{
+    max-width: 500px;
+}
+#block-bss-store-credit #bss-store-credit-form .actions-toolbar{width:auto;}

@@ -1,0 +1,22 @@
+{
+  "name": "bsscommerce/custom-pricing-graph-ql",
+  "version": "1.0.5",
+  "description": "Custom Pricing GraphQl API Support",
+  "type": "magento2-module",
+  "require": {
+    "magento/framework": "*",
+    "magento/module-graph-ql": "*",
+    "bsscommerce/custom-pricing": "1.*"
+  },
+  "license": [
+    "Proprietary"
+  ],
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "Bss\\CustomPricingGraphQl\\": ""
+    }
+  }
+}

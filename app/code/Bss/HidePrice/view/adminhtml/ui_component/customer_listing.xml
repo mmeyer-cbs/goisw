@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_HidePrice
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2021 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+-->
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <listingToolbar name="listing_top">
+        <massaction name="listing_massaction">
+            <action name="bss_hide_pice_apply_customer">
+                <settings>
+                    <type>bss_hide_pice_apply_customer</type>
+                    <label translate="true">Hide Price</label>
+                    <actions>
+                        <action name="0">
+                            <type>disable</type>
+                            <label translate="true">Disable</label>
+                            <url path="hideprice/index/hideprice">
+                                <param name="hideprice">0</param>
+                            </url>
+                        </action>
+                        <action name="1">
+                            <type>enable</type>
+                            <label translate="true">Enable</label>
+                            <url path="hideprice/index/hideprice">
+                                <param name="hideprice">1</param>
+                            </url>
+                        </action>
+                        <action name="2">
+                            <type>use_config</type>
+                            <label translate="true">Use Config</label>
+                            <url path="hideprice/index/hideprice">
+                                <param name="hideprice">2</param>
+                            </url>
+                        </action>
+                    </actions>
+                </settings>
+            </action>
+        </massaction>
+    </listingToolbar>
+</listing>

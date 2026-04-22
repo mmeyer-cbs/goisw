@@ -1,0 +1,43 @@
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_CompanyAccount
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2020 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+ -->
+<!--@subject {{trans "Welcome to be sub-user of company account from %store_name" store_name=$store.frontend_name}} @-->
+{{template config_path="design/email/header_template"}}
+
+<p class="greeting">{{trans "Hi %name," name=$subUser.sub_name}}</p>
+<p>{{trans "You are request to be sub-user of %email company account!" email=$companyAccountEmail}}</p>
+<p>{{trans "Please set a new password here:"}}</p>
+
+<table class="button" width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+        <td>
+            <table class="inner-wrapper" border="0" cellspacing="0" cellpadding="0" align="center">
+                <tr>
+                    <td align="center">
+                        <a href="{{var this.getUrl($store,'companyaccount/subuser/createpassword',[_query:[token:$subUser.token],_nosid:1])}}" target="_blank">{{trans "Set a New Password"}}</a>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+<p>{{trans "The token will expire after about 3 days."}}</p>
+<p>{{trans "If you have any question, please contact your company account's email: %email." email=$companyAccountEmail}}</p>
+<p>{{trans "Thank you!"}}</p>
+
+{{template config_path="design/email/footer_template"}}

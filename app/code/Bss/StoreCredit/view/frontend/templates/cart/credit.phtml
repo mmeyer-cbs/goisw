@@ -1,0 +1,85 @@
+<?php
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_StoreCredit
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2017-2018 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+?>
+
+<?php
+// @codingStandardsIgnoreFile
+
+/** @var  $block \Bss\StoreCredit\Block\Cart\Credit */
+?>
+
+<?php if ($block->getStoreCreditTotal() && $block->isDisplay()) : ?>
+    <div class="block bss-store-credit"
+        id="block-bss-store-credit"
+        data-mage-init='{"collapsible":{"openedState": "active", "saveState": false}}'
+    >
+        <div class="title" data-role="title">
+            <strong id="block-bss-store-credit-heading" role="heading" aria-level="2">
+                <?= $block->escapeHtml(__('Apply Store Credit')); ?>
+            </strong>
+        </div>
+        <div class="content" data-role="content" aria-labelledby="block-bss-store-credit-heading">
+            <div class="block-content">
+                <span class="balance-price-label">
+                    <span><?= $block->escapeHtml(__('Your Store Credit:')); ?></span>
+                    <span><?= /* @noEscape */ $block->getStoreCreditTotal(); ?></span>
+                </span>
+            </div>
+            <form id="bss-store-credit-form"
+                  action="<?= $block->escapeUrl($block->getUrl('storecredit/cart/updatePost')); ?>"
+                  method="post"
+                  data-mage-init='{"bss/storecredit":{}}'>
+                <div class="fieldset bss-store-credit">
+                    <input type="hidden" name="remove" id="remove-bss-store-credit" value="0" />
+                    <input type="hidden" name="shipping_amount" id="shipping_amount-bss-store-credit" value="0" />
+                    <input type="hidden" name="tax_amount" id="tax_amount-bss-store-credit" value="0" />
+                    <div class="field">
+                        <label for="bss-store-credit" class="label">
+                            <span><?= $block->escapeHtml(__('Enter Value')); ?></span>
+                        </label>
+                        <div class="control">
+                            <input type="text"
+                                class="input-text validate-zero-or-greater"
+                                id="bss-store-credit-value"
+                                name="bss_store_credit"
+                                value="<?= /* @noEscape */ $block->getStoreCreditUsed();?>"
+                                placeholder="<?= $block->escapeHtmlAttr(__('Enter Value'));?>" />
+                        </div>
+                    </div>
+                    <div class="actions-toolbar">
+                        <div class="primary">
+                            <button class="action bss-store-credit-apply primary"
+                                type="button"
+                                value="<?= $block->escapeHtmlAttr(__('Apply')); ?>"
+                            ><span><?= $block->escapeHtml(__('Apply')); ?></span>
+                            </button>
+                        </div>
+                        <?php if ($block->getStoreCreditUsed()) : ?>
+                            <div class="primary">
+                                <button type="button"
+                                    class="action bss-store-credit-cancel primary"
+                                    value="<?= $block->escapeHtmlAttr(__('Cancel')); ?>"
+                                ><span><?= $block->escapeHtml(__('Cancel')); ?></span></button>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+<?php endif; ?>

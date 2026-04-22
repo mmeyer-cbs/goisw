@@ -1,0 +1,48 @@
+<?php
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_CompanyCredit
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2020 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+// @codingStandardsIgnoreFile
+
+/** @var $block Magento\Backend\Block\Widget\Form\Renderer\Fieldset */
+?>
+<?php $creditInforClass = $this->helper(\Bss\CompanyCredit\Helper\CreditInfo::class);;
+      $creditInfor = $creditInforClass->getCreditInfo();
+?>
+<div class="entry-edit">
+    <fieldset id="companycredit_statistic" class="fieldset admin__fieldset">
+        <legend class="legend">
+            <span><?= $block->escapeHtml(__('Credit Limit Information')); ?></span>
+        </legend>
+        <?php if ($creditInfor): ?>
+            <table class="data-grid">
+                <tr>
+                    <th class="data-grid-th"><?= $block->escapeHtml(__("Credit Limit")) ?></th>
+                    <th class="data-grid-th"><?= $block->escapeHtml(__("Used Credit")) ?></th>
+                    <th class="data-grid-th"><?= $block->escapeHtml(__("Available Credit")) ?></th>
+                    <th class="data-grid-th"><?= $block->escapeHtml(__("Allow Excess")) ?></th>
+                </tr>
+                <tr>
+                    <td class="a-right"><?= __($creditInforClass->formatPrice($creditInfor->getCreditLimit())); ?></td>
+                    <td class="a-right"><?= __($creditInforClass->formatPrice($creditInfor->getUsedCredit())); ?></td>
+                    <td class="a-right"><?= __($creditInforClass->formatPrice($creditInfor->getAvailableCredit())); ?></td>
+                    <td class="a-right"><?= __($creditInforClass->convertYesNo($creditInfor->getAllowExceed())); ?></td>
+                </tr>
+            </table>
+        <?php endif; ?>
+
+    </fieldset>
+</div>

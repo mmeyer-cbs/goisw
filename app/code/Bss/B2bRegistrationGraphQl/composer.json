@@ -1,0 +1,21 @@
+{
+  "name": "bsscommerce/b2b-registration-graph-ql",
+  "version": "1.0.2",
+  "description": "B2b Registration GraphQl API support module",
+  "type": "magento2-module",
+  "require": {
+    "magento/framework": "*",
+    "bsscommerce/b2b-registration": "1.*"
+  },
+  "license": [
+    "Proprietary"
+  ],
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "Bss\\B2bRegistrationGraphQl\\": ""
+    }
+  }
+}

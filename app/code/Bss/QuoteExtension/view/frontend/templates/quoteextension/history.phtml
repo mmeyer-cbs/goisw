@@ -1,0 +1,83 @@
+<?php
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_QuoteExtension
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2018-2022 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+
+/** @var $block \Bss\QuoteExtension\Block\QuoteExtension\History **/
+?>
+<?php // @codingStandardsIgnoreFile ?>
+
+<?php $requestQuotes = $block->getRequestQuotes(); ?>
+<?php $helper = $block->getHelperStatus(); ?>
+<?php $helperData = $block->getHelperData(); ?>
+<?php if ($requestQuotes && count($requestQuotes)) : ?>
+    <div class="table-wrapper quotes-history">
+        <table class="data table table-quote-items history" id="my-quotes-table">
+            <caption class="table-caption"><?= $block->escapeHtml(__('Quotes')); ?></caption>
+            <thead>
+            <tr>
+                <th scope="col" class="col id"><?= $block->escapeHtml(__('Quote #')); ?></th>
+                <th scope="col" class="col date"><?= $block->escapeHtml(__('Created Date')); ?></th>
+                <th scope="col" class="col date"><?= $block->escapeHtml(__('Last Update')); ?></th>
+                <th scope="col" class="col date"><?= $block->escapeHtml(__('Current Total')); ?></th>
+                <th scope="col" class="col status"><?= $block->escapeHtml(__('Status')); ?></th>
+                <?php if ($block->getHelperData()->isEnableSalesRep()): ?>
+                    <th scope="col" class="col status"><?= $block->escapeHtml(__('Sales Rep')); ?></th>
+                <?php endif; ?>
+                <?php if ($block->isEnableCompanyAccount()): ?>
+                    <th scope="col" class="col status"><?= $block->escapeHtml(__('Created By')); ?></th>
+                <?php endif; ?>
+                <th scope="col" class="col actions"><?= $block->escapeHtml(__('Action')); ?></th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php foreach ($requestQuotes as $requestQuote) : ?>
+                <?php $quote = $block->getQuote($requestQuote->getQuoteId());
+                if (!$quote) {
+                    continue;
+                }
+                ?>
+                <?php $currentTotal = $block->canShowCurrentSubtotal($requestQuote)
+                    ? $helperData->formatPrice($quote->getGrandTotal(), $quote->getStoreId(), $quote->getQuoteCurrencyCode()) : '';
+                ?>
+                <tr>
+                    <td data-th="<?= $block->escapeHtml(__('Quote #')) ?>" class="col id"><?= $block->escapeHtml($requestQuote->getIncrementId()); ?></td>
+                    <td data-th="<?= $block->escapeHtml(__('Created Date')) ?>" class="col created-at"><?= $block->escapeHtml($block->formatDate($requestQuote->getCreatedAt())); ?></td>
+                    <td data-th="<?= $block->escapeHtml(__('Last Update')) ?>" class="col last-update"><?= $block->escapeHtml($block->formatDate($requestQuote->getUpdatedAt())); ?></td>
+                    <td data-th="<?= $block->escapeHtml(__('Current Total')) ?>" class="col base-total"><?= $currentTotal; ?></td>
+                    <td data-th="<?= $block->escapeHtml(__('Status')) ?>" class="col status"><?= $block->escapeHtml($helper->getStatusLabel($requestQuote->getStatus())); ?></td>
+                    <?php if ($block->getHelperData()->isEnableSalesRep()): ?>
+                        <td data-th="<?= $block->escapeHtml(__('Sales Rep')) ?>" class="col status"><?= $block->escapeHtml($requestQuote->getSalesRep());?></td>
+                    <?php endif; ?>
+                    <?php if ($block->isEnableCompanyAccount()): ?>
+                        <td data-th="<?= $block->escapeHtml(__('Created By')) ?>" class="col status"><?= $block->escapeHtml($block->getCreateBy($requestQuote->getSubName()));?></td>
+                    <?php endif; ?>
+                    <td data-th="<?= $block->escapeHtml(__('Actions')) ?>" class="col actions">
+                        <a href="<?= $block->getViewUrl($requestQuote) ?>" class="action view">
+                            <span><?= $block->escapeHtml(__('View Quote')); ?></span>
+                        </a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+    <?php if ($block->getPagerHtml()) : ?>
+        <div class="quote-products-toolbar toolbar bottom"><?= $block->getPagerHtml(); ?></div>
+    <?php endif; ?>
+<?php else : ?>
+    <div class="message info empty"><span><?= $block->escapeHtml(__('There is no quote.')); ?></span></div>
+<?php endif; ?>

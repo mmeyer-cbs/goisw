@@ -1,0 +1,70 @@
+<?xml version="1.0" ?>
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_ForceLogin
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2017-2018 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Catalog\Controller\Product\View">
+        <plugin name="bss_productpage_login" sortOrder="10" type="Bss\ForceLogin\Plugin\Product\View"/>
+    </type>
+    <type name="Magento\Catalog\Controller\Category\View">
+        <plugin name="bss_categorypage_login" sortOrder="10" type="Bss\ForceLogin\Plugin\Category\View"/>
+    </type>
+    <type name="Magento\Checkout\Controller\Cart\Index">
+        <plugin name="bss_cart_login" sortOrder="10" type="Bss\ForceLogin\Plugin\Cart\Index"/>
+    </type>
+    <type name="Magento\Checkout\Controller\Index\Index">
+        <plugin name="bss_checkout_login" sortOrder="10" type="Bss\ForceLogin\Plugin\Index\Index"/>
+    </type>
+    <type name="Magento\Contact\Controller\Index\Index">
+        <plugin name="bss_contact_login" sortOrder="10" type="Bss\ForceLogin\Plugin\Contact\Index"/>
+    </type>
+    <type name="Magento\Search\Controller\Term\Popular">
+        <plugin name="bss_search_term_login" sortOrder="10" type="Bss\ForceLogin\Plugin\Search\Term\Popular"/>
+    </type>
+    <type name="Magento\CatalogSearch\Controller\Result\Index">
+        <plugin name="bss_search_result_login" sortOrder="10" type="Bss\ForceLogin\Plugin\CatalogSearch\Result\Index"/>
+    </type>
+    <type name="Magento\CatalogSearch\Controller\Advanced\Index">
+        <plugin name="bss_search_advanced_login" sortOrder="10" type="Bss\ForceLogin\Plugin\CatalogSearch\Advanced\Index"/>
+    </type>
+    <type name="Magento\Customer\Controller\Account\LoginPost">
+        <plugin name="bss_redirect_login" sortOrder="10" type="Bss\ForceLogin\Plugin\Customer\LoginPost"/>
+    </type>
+    <type name="Magento\Cms\Controller\Page\View">
+        <plugin name="bss_cms_login" sortOrder="10" type="Bss\ForceLogin\Plugin\Cms\Page\View"/>
+    </type>
+    <type name="Magento\Cms\Controller\Noroute\Index">
+        <plugin name="bss_404_login" sortOrder="10" type="Bss\ForceLogin\Plugin\Cms\Noroute\Index"/>
+    </type>
+    <type name="Magento\Cms\Controller\Index\Index">
+        <plugin name="bss_homepage_login" sortOrder="10" type="Bss\ForceLogin\Plugin\Cms\Index\Index"/>
+    </type>
+    <type name="Magento\Framework\App\Action\Action">
+        <plugin name="bss_otherpage_login" sortOrder="10" type="Bss\ForceLogin\Plugin\ForceLoginPage"/>
+    </type>
+    <type name="Magento\Customer\Block\Form\Login\Info">
+                <plugin name="bss_block_login_info" sortOrder="10" type="Bss\ForceLogin\Block\Form\Login\Info"/>
+            </type>
+    <preference for="Magento\Customer\Controller\Account\Login" type="Bss\ForceLogin\Controller\Account\Login" />
+    <preference for="Magento\Customer\Block\Account\RegisterLink" type="Bss\ForceLogin\Block\Account\RegisterLink" />
+
+    <preference for="Bss\ForceLogin\Api\Data\ModuleConfigInterface"
+                type="Bss\ForceLogin\Model\ModuleConfig"/>
+    <preference for="Bss\ForceLogin\Api\ModuleManagementInterface"
+                type="Bss\ForceLogin\Model\ModuleManagement"/>
+</config>

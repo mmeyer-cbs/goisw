@@ -1,0 +1,63 @@
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_QuoteExtension
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2018-2019 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+-->
+<!--@subject {{trans "You Have A New Quote"}} @-->
+<!--@vars {
+"var increment_id":"Increment Id",
+"var created_at":"Create At",
+"layout handle=\"quote_extension_email_items\" quote=$quote":"Grid item quote",
+"var this.getUrl($store, 'customer/account/')":"Customer Account URL",
+"var quote.getCustomerName()":"Customer Name",
+"var quote.getCustomerNote()":"Customer Note",
+"var quote.shipping_description":"Shipping Description"
+} @-->
+{{template config_path="design/email/header_template"}}
+{{inlinecss file="Bss_QuoteExtension::css/email-inline.css"}}
+<table>
+    <tr class="email-intro">
+        <td>
+            <p>
+                {{trans 'Your customer has submitted a new quote. Please visit the quote '}}<span class="email-increament">#{{var increment_id}}</span>{{trans ' to check and manage the request.'}}
+                <br>
+                {{trans 'You can accept, reject, update and resend the quote to the customer.'}}
+            </p>
+        </td>
+    </tr>
+    <tr class="email-intro-header">
+        <td>
+            <p class="email-increament-id"><span>{{trans "Quote ID: "}}</span>#{{var increment_id}}</p>
+            <p>{{trans 'Placed on ' }}<span class="no-link">{{var created_at}}</span></p>
+        </td>
+    </tr>
+    <tr class="email-information">
+        <td>
+            {{depend quote.getCustomerNote()}}
+            <table class="message-info">
+                <tr>
+                    <td>
+                        {{trans 'Comment: '}}
+                        {{var quote.getCustomerNote()|escape|nl2br}}
+                    </td>
+                </tr>
+            </table>
+            {{/depend}}
+            {{layout handle="quote_extension_email_items" quote=$quote quoteId=$quote.getEntityId() area="frontend"}}
+        </td>
+    </tr>
+</table>
+{{template config_path="design/email/footer_template"}}

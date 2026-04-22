@@ -1,0 +1,32 @@
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_CompanyCredit
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2020-2022 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+-->
+<!--@subject {{trans "%store_name: An order was overdue payment!" store_name=$store.getFrontendName()}} @-->
+{{template config_path="design/email/header_template"}}
+<table cellspacing="0" cellpadding="0" border="0" width="100%">
+    <tr>
+        <td>
+            <p>
+                {{trans "Order %order_id with PO number %po_number of
+                %customer_name was due for payment on %payment_due_date."
+                order_id=$order_id po_number=$po_number customer_name=$customer_name payment_due_date=$payment_due_date}}
+            </p>
+        </td>
+    </tr>
+</table>
+{{template config_path="design/email/footer_template"}}

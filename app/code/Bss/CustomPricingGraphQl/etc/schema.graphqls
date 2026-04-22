@@ -1,0 +1,131 @@
+# BSS Commerce Co.
+#
+# NOTICE OF LICENSE
+#
+# This source file is subject to the EULA
+# that is bundled with this package in the file LICENSE.txt.
+# It is also available through the world-wide-web at this URL:
+# http://bsscommerce.com/Bss-Commerce-License.txt
+#
+# @category   BSS
+# @package    Bss_CustomPricingGraphQl
+# @author     Extension Team
+# @copyright  Copyright (c) 2021 BSS Commerce Co. ( http://bsscommerce.com )
+# @license    http://bsscommerce.com/Bss-Commerce-License.txt
+
+type Query {
+    bssCustomPricingConfig(store_view: Int!): CustomPricingModuleConfigs
+        @resolver(class: "\\Bss\\CustomPricingGraphQl\\Model\\Resolver\\GetModuleConfig")
+        @doc(description: "Get all configs of module with param is store_view id: 0 is default")
+    bssGetPriceRule(rule_id: Int): BssPriceRule
+        @resolver(class: "Bss\\CustomPricingGraphQl\\Model\\Resolver\\GetPriceRule")
+        @doc(description: "Get price rule information")
+    bssGetListPriceRuleOfNotLoggedInCustomer: [BssPriceRule]
+        @resolver(class: "Bss\\CustomPricingGraphQl\\Model\\Resolver\\GetPriceRuleNotLoggedIn")
+        @doc(description: "Get price rule collection for not logged in customer.")
+    bssGetListPriceRuleOfCustomer(customer_id: Int): [BssPriceRule]
+        @resolver(class: "Bss\\CustomPricingGraphQl\\Model\\Resolver\\GetPriceRuleByCustomer")
+        @doc(description: "Get price rule collection for customer.")
+    bssDeletePriceRule(rule_id: Int): Boolean
+        @resolver(class: "Bss\\CustomPricingGraphQl\\Model\\Resolver\\DeletePriceRule")
+        @doc(description: "Delete price rule")
+}
+
+type Mutation {
+    bssCreatePriceRule(input: PriceRuleInput): BssPriceRule
+        @resolver(class: "Bss\\CustomPricingGraphQl\\Model\\Resolver\\CreatePriceRule")
+        @doc(description: "Create a price rule")
+    bssUpdatePriceRule(input: PriceRuleInput): BssPriceRule
+        @resolver(class: "Bss\\CustomPricingGraphQl\\Model\\Resolver\\UpdatePriceRule")
+        @doc(description: "Update a price rule")
+    bssUpdateProductPrice(input: [ProductPriceInput]): [AppliedProduct]
+        @resolver(class: "Bss\\CustomPricingGraphQl\\Model\\Resolver\\SaveProductPrice")
+        @doc(description: "Update product prices")
+    bssUpdateProductPriceByRule(input: ProductPriceInput): BssPriceRule
+        @doc(description: "Update product price by rule id.")
+        @resolver(class: "Bss\\CustomPricingGraphQl\\Model\\Resolver\\SaveProductPriceByRule")
+}
+
+interface ProductInterface {
+    bss_product_price: [BssProductPrice] @doc(description: "List custom price information") @resolver(class: "Bss\\CustomPricingGraphQl\\Model\\Resolver\\ProductPriceInfo")
+}
+
+type BssProductPrice {
+    rule_id: Int @doc(description: "Rule id")
+    custom_price: Float @doc(description: "Custom price")
+}
+
+input CartItemInput {
+    bss_custom_price: Float
+}
+
+input ProductPriceInput @doc(description: "Product prices input data") {
+    id: Int! @doc(description: "product price id or rule id if use `bssUpdateProductPriceByRule`")
+    product_ids: [Int] @doc(description: "Update for specific product(s) when use `bssUpdateProductPriceByRule` with `id` is rule id. Leave empty that will execute update for all product in this price rule.")
+    price_type: Int! @doc(description: "Update price method. 1 - Absolute price, 2- increase fixed price, 3 - decrease fixed price, 4 - increase percent price, 5 - decrease percent price")
+    custom_price: Float! @doc(description: "Set custom price.")
+}
+
+input PriceRuleInput {
+    id: Int @doc(description: "Price rule id. Not defined to create new")
+    name: String! @doc(description: "Price rule name")
+    status: Int! @doc(description: "Price rule status. 0 => disable, 1 => enable")
+    website_id: Int! @doc(description: "Available in website")
+    description: String @doc(description: "Describe about the rule")
+    is_not_logged_rule: Int @doc(description: "The rule is also apply cho not login customer. Default will be 0 - Not apply for guest cusotmer.")
+    default_price_type: Int @doc(description: "The default custom price method")
+    default_price_value: Int @doc(description: "The default custom price value")
+    product: [ConditionInput] @doc(description: "Product conditions. Note that: there is only 1 item in the root array")
+    customer: [ConditionInput] @doc(description: "Customer conditions. there is only 1 item in the root array")
+}
+
+input ConditionInput {
+    type: String @doc(description: "The node type. For product must be Bss\\CustomPricing\\Model\\Rule\\Condition\\Product\\Combine for Conditions Combination, or Bss\\CustomPricing\\Model\\Rule\\Condition\\Product\\Product for other attribute. For Customer, use Bss\\CustomPricing\\Model\\Rule\\Condition\\Customer\\Combine for Conditions Combination, or Bss\\CustomPricing\\Model\\Rule\\Condition\\Customer\\Customer for other attribute")
+    aggregator: String @doc(description: "Conditions Combination aggregator. available 2 value: any, all. It works when type is Bss\\CustomPricing\\Model\\Rule\\Condition\\(Product|Customer)\\Combine")
+    value: String @doc(description: "Condition value. Note that: for multiple attributes, its value will be of the array type. Array values are separated by , or ;. e.g: MH-370,MH380")
+    attribute: String @doc(description: "Attribute code")
+    operator: String @doc(description: "Compare operator. It works when type is Bss\\CustomPricing\\Model\\Rule\\Condition\\Product\\Product. To know all compare operator, please see our dev docs.")
+    product: [ConditionInput] @doc(description: "Product condition recursive.")
+    customer: [ConditionInput] @doc(description: "Customer condition recursive.")
+}
+
+type CustomPricingModuleConfigs @doc(description: "B2b Registration configs") {
+    enable: Int @doc(description: "The module status")
+    apply_normal_special_price: Int @doc(description: "Apply Normal Special Price to product that has Custom Price")
+    apply_normal_tier_price: Int @doc(description: "Apply Normal Tier Price to product that has Custom Price")
+}
+
+type BssPriceRule @doc(description: "Price Rule") {
+    id: Int @doc(description: "Price rule id")
+    name: String @doc(description: "Price Rule name")
+    status: Int @doc(description: "Price rule status")
+    description: String @doc(description: "Describe about the price rule")
+    website_id: Int @doc(description: "Related website")
+    is_not_logged_rule: Int @doc(description: "Is current price rule apply for not logged in customer")
+    default_price_type: Int @doc(description: "The default price method, it will apply for all new product price")
+    default_price_value: Float @doc(description: "The default price value, it will apply for all new product price")
+    applied_customers: [AppliedCustomer] @doc(description: "List applied customers")
+    applied_products: [AppliedProduct] @doc(description: "List applied products")
+}
+
+type AppliedCustomer @doc(description: "Applied customer information") {
+    id: Int
+    customer_id: Int @doc(description: "Customer id")
+    customer_first_name: String @doc(description: "Customer first name")
+    customer_last_name: String @doc(description: "Customer last name")
+    rule_id: Int @doc(description: "Related price rule")
+    applied_rule: Int @doc(description: "Status - be appled or disable applied")
+}
+
+type AppliedProduct @doc(description: "Applied product information") {
+    id: Int
+    name: String @doc(description: "Product name")
+    origin_price: Float @doc(description: "The product origin price")
+    custom_price: Float @doc(description: "The product custom price")
+    rule_id: Int @doc(description: "Related price rule")
+    product_id: Int @doc(description: "Product ID")
+    product_sku: String @doc(description: "Product SKU")
+    type_id: String @doc(description: "Product type")
+    price_type: Int @doc(description: "The custom price method")
+    price_value: Float @doc(description: "The custom price value")
+}

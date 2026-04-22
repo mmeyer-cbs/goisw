@@ -1,0 +1,116 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_CustomPricing
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2020-2022 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+  <table name="bss_price_rules" resource="default" engine="innodb" comment="Bss Price Rules Table">
+    <column xsi:type="int" name="id" padding="10" unsigned="true" nullable="false" identity="true" comment="Id"/>
+    <column xsi:type="varchar" name="name" nullable="true" length="80" comment="Price Rule Name"/>
+    <column xsi:type="int" name="website_id" padding="10" unsigned="true" nullable="true" identity="false" comment="Website Id"/>
+    <column xsi:type="varchar" name="description" nullable="true" length="255" comment="Description"/>
+    <column xsi:type="int" name="priority" padding="10" unsigned="true" nullable="true" identity="false" comment="Priority"/>
+    <column xsi:type="int" name="status" padding="10" unsigned="true" nullable="true" identity="false" comment="Status"/>
+    <column xsi:type="mediumtext" name="product_serialized" nullable="true" comment="Product Serialized"/>
+    <column xsi:type="mediumtext" name="customer_serialized" nullable="true" comment="Customer Serialized"/>
+    <column xsi:type="int" name="is_not_logged_rule" padding="10" unsigned="true" nullable="true" identity="false" comment="Is Not Logged In Rule"/>
+    <!-- Column 'price_method' not use from v1.0.7 -->
+    <column xsi:type="varchar" name="price_method" nullable="true" length="255" comment="The product price set method"/>
+    <column xsi:type="smallint" name="default_price_type" padding="5" unsigned="true" nullable="true" identity="false" default="1" comment="Method when set custom price for product"/>
+    <column xsi:type="decimal" name="default_price_value" scale="4" precision="20" unsigned="true" nullable="true" comment="Custom price value"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="id"/>
+    </constraint>
+    <index referenceId="BSS_PRICE_RULES_ID" indexType="btree">
+      <column name="id"/>
+    </index>
+  </table>
+  <table name="bss_applied_customers" resource="default" engine="innodb" comment="Bss Applied Customers Table">
+    <column xsi:type="int" name="id" padding="10" unsigned="true" nullable="false" identity="true" comment="Id"/>
+    <column xsi:type="varchar" name="customer_first_name" nullable="true" length="32" comment="Customer First Name"/>
+    <column xsi:type="varchar" name="customer_last_name" nullable="true" length="32" comment="Customer Last Name"/>
+    <column xsi:type="int" name="customer_id" padding="10" unsigned="true" nullable="true" identity="false" comment="Customer Id"/>
+    <column xsi:type="int" name="rule_id" padding="10" unsigned="true" nullable="true" identity="false" comment="Rule Id"/>
+    <column xsi:type="int" name="applied_rule" padding="10" unsigned="true" nullable="true" identity="false" comment="Applied Rule Status"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="id"/>
+    </constraint>
+    <constraint xsi:type="foreign" referenceId="BSS_APPLIED_CUSTOMERS_RULE_ID_BSS_PRICE_RULES_ID" table="bss_applied_customers" column="rule_id" referenceTable="bss_price_rules" referenceColumn="id" onDelete="CASCADE"/>
+    <index referenceId="BSS_APPLIED_CUSTOMERS_ID" indexType="btree">
+      <column name="id"/>
+    </index>
+  </table>
+  <table name="bss_product_price" resource="default" engine="innodb" comment="Bss Product Price Table">
+    <column xsi:type="int" name="id" padding="10" unsigned="true" nullable="false" identity="true" comment="Id"/>
+    <column xsi:type="varchar" name="name" nullable="true" length="80" comment="Product Name"/>
+    <column xsi:type="varchar" name="type_id" nullable="true" length="80" comment="Product Type Id"/>
+    <column xsi:type="decimal" name="origin_price" scale="2" precision="20" unsigned="true" nullable="true" comment="Origin Price"/>
+    <column xsi:type="decimal" name="custom_price" scale="2" precision="20" unsigned="true" nullable="true" comment="Custom Price"/>
+    <column xsi:type="int" name="rule_id" padding="10" unsigned="true" nullable="true" identity="false" comment="Rule Id"/>
+    <column xsi:type="int" name="product_id" padding="10" unsigned="true" nullable="true" identity="false" comment="Product Id"/>
+    <column xsi:type="varchar" name="product_sku" nullable="true" length="80" comment="Product Sku"/>
+    <column xsi:type="smallint" name="price_type" padding="5" unsigned="true" nullable="true" identity="false" default="1" comment="Method when set custom price for product"/>
+    <column xsi:type="decimal" name="price_value" scale="4" precision="20" unsigned="true" nullable="true" comment="Custom price value"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="id"/>
+    </constraint>
+    <constraint xsi:type="foreign" referenceId="BSS_PRODUCT_PRICE_RULE_ID_BSS_PRICE_RULES_ID" table="bss_product_price" column="rule_id" referenceTable="bss_price_rules" referenceColumn="id" onDelete="CASCADE"/>
+    <index referenceId="BSS_PRODUCT_PRICE_ID" indexType="btree">
+      <column name="id"/>
+    </index>
+    <index referenceId="BSS_PRODUCT_PRICE_PRODUCT_ID" indexType="btree">
+      <column name="product_id"/>
+    </index>
+    <index referenceId="BSS_PRODUCT_PRICE_PRODUCT_SKU" indexType="btree">
+      <column name="product_sku"/>
+    </index>
+    <index referenceId="BSS_PRODUCT_PRICE_PRODUCT_ID_PRODUCT_SKU" indexType="btree">
+      <column name="product_id"/>
+      <column name="product_sku"/>
+    </index>
+  </table>
+  <table name="bss_custom_pricing_index" resource="default" engine="innodb" comment="Bss Product Price Index">
+    <column xsi:type="int" name="product_id" padding="10" unsigned="true" nullable="false" identity="false" comment="Product Id"/>
+    <column xsi:type="int" name="rule_id" padding="10" unsigned="true" nullable="false" identity="false" comment="Rule Id"/>
+    <column xsi:type="int" name="customer_group_id" padding="10" unsigned="true" nullable="false" identity="false" comment="Customer Group Id"/>
+    <column xsi:type="smallint" name="website_id" padding="5" unsigned="true" nullable="false" identity="false" comment="Website Id"/>
+    <column xsi:type="smallint" name="tax_class_id" padding="5" unsigned="true" nullable="false" identity="false" default="0" comment="Tax Class Id"/>
+    <column xsi:type="decimal" name="price" scale="6" precision="20" unsigned="false" nullable="true" comment="Price"/>
+    <column xsi:type="decimal" name="final_price" scale="6" precision="20" unsigned="false" nullable="true" comment="Final Price"/>
+    <column xsi:type="decimal" name="min_price" scale="6" precision="20" unsigned="false" nullable="true" comment="Min Price"/>
+    <column xsi:type="decimal" name="max_price" scale="6" precision="20" unsigned="false" nullable="true" comment="Max Price"/>
+    <column xsi:type="decimal" name="tier_price" scale="6" precision="20" unsigned="false" nullable="true" comment="Tier Price"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="product_id"/>
+      <column name="rule_id"/>
+      <column name="customer_group_id"/>
+      <column name="website_id"/>
+      <column name="tax_class_id"/>
+    </constraint>
+    <index referenceId="BSS_CUSTOM_PRICING_INDEX_CUSTOMER_GROUP_ID" indexType="btree">
+      <column name="customer_group_id"/>
+    </index>
+    <index referenceId="BSS_CUSTOM_PRICING_INDEX_MIN_PRICE" indexType="btree">
+      <column name="min_price"/>
+    </index>
+    <index referenceId="BSS_CUSTOM_PRICING_INDEX_WEBSITE_ID_MIN_PRICE" indexType="btree">
+      <column name="website_id"/>
+      <column name="min_price"/>
+      <column name="customer_group_id"/>
+    </index>
+  </table>
+</schema>

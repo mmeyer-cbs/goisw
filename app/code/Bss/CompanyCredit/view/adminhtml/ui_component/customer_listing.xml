@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_CompanyCredit
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2020-2022 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+-->
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <columns name="customer_columns" class="Magento\Customer\Ui\Component\Listing\Columns">
+        <column name="available_credit" class="Bss\CompanyCredit\Ui\Component\Listing\Columns\Customer\Credit\AvailableCredit">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="componentDisabled" xsi:type="boolean">true</item>
+                    <item name="sortOrder" xsi:type="number">100</item>
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="label" translate="true" xsi:type="string">Available Credit</item>
+                </item>
+            </argument>
+        </column>
+
+        <column name="allow_exceed" class="Bss\CompanyCredit\Ui\Component\Listing\Columns\Customer\Credit\AllowExceed">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Magento\Config\Model\Config\Source\Yesno</item>
+                <item name="config" xsi:type="array">
+                    <item name="componentDisabled" xsi:type="boolean">true</item>
+                    <item name="sortOrder" xsi:type="number">100</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/select</item>
+                    <item name="dataType" xsi:type="string">select</item>
+                    <item name="filter" xsi:type="string">select</item>
+                    <item name="label" xsi:type="string" translate="true">Allow Excess</item>
+                </item>
+            </argument>
+        </column>
+    </columns>
+
+    <listingToolbar name="listing_top">
+        <massaction name="listing_massaction">
+            <action name="update_credit">
+                <settings>
+                    <callback>
+                        <target>openModal</target>
+                        <provider>ns = customer_listing, index = companycredit_form_modal</provider>
+                    </callback>
+                    <type>update_creditt</type>
+                    <label translate="true">Update Company Credit</label>
+                </settings>
+            </action>
+        </massaction>
+    </listingToolbar>
+    <container name="modalContainer">
+        <modal name="companycredit_form_modal" component="Bss_CompanyCredit/js/update-credit/modal">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="creditLimit" xsi:type="string">${ $.name }.companycredit.credit_limit</item>
+                    <item name="paymentDueDate" xsi:type="string">${ $.name }.companycredit.payment_due_date</item>
+                    <item name="updateAvailable" xsi:type="string">${ $.name }.companycredit.update_available</item>
+                    <item name="comment" xsi:type="string">${ $.name }.companycredit.comment</item>
+                    <item name="allowExceed" xsi:type="string">${ $.name }.companycredit.allow_exceed</item>
+                    <item name="massUpdateCreditUrl" xsi:type="url" path="companycredit/customer/updatecredit"/>
+                </item>
+            </argument>
+            <settings>
+                <options>
+                    <option name="buttons" xsi:type="array">
+                        <item name="0" xsi:type="array">
+                            <item name="text" xsi:type="string">Cancel</item>
+                            <item name="class" xsi:type="string">action-secondary</item>
+                            <item name="actions" xsi:type="array">
+                                <item name="0" xsi:type="string">actionCancel</item>
+                            </item>
+                        </item>
+                        <item name="1" xsi:type="array">
+                            <item name="text" xsi:type="string">Save</item>
+                            <item name="class" xsi:type="string">action-primary</item>
+                            <item name="actions" xsi:type="array">
+                                <item name="0" xsi:type="string">updateCredit</item>
+                            </item>
+                        </item>
+                    </option>
+                    <option name="modalClass" xsi:type="string">companycredit-form-modal</option>
+                    <option name="title" xsi:type="string">Credit Limit Configuration</option>
+                    <option name="type" xsi:type="string">popup</option>
+                </options>
+            </settings>
+            <container name="warning_message" template="Bss_CompanyCredit/update-credit/warning-message"/>
+            <fieldset name="companycredit">
+                <settings>
+                    <additionalClasses>
+                        <class name="companycredit">true</class>
+                    </additionalClasses>
+                    <label/>
+                    <dataScope>companycredit</dataScope>
+                </settings>
+                <field name="credit_limit" formElement="input">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="dataType" xsi:type="string">text</item>
+                            <item name="label" xsi:type="string" translate="true">Credit Limit</item>
+                            <item name="notice" xsi:type="string" translate="true">You must assign the customer a credit limit before making changes to the below fields.</item>
+                            <item name="dataScope" xsi:type="string">credit_limit</item>
+                            <item name="validation" xsi:type="array">
+                                <item name="validate-zero-or-greater" xsi:type="boolean">true</item>
+                            </item>
+                        </item>
+                    </argument>
+                </field>
+                <field name="payment_due_date" formElement="input">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="dataType" xsi:type="string">text</item>
+                            <item name="label" xsi:type="string" translate="true">Payment Due Date</item>
+                            <item name="dataScope" xsi:type="string">payment_due_date</item>
+                            <item name="validation" xsi:type="array">
+                                <item name="validate-greater-than-zero" xsi:type="boolean">true</item>
+                            </item>
+                        </item>
+                    </argument>
+                </field>
+                <field name="update_available" formElement="input">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="dataType" xsi:type="string">text</item>
+                            <item name="label" xsi:type="string" translate="true">Update Available Credit</item>
+                            <item name="dataScope" xsi:type="string">update_available</item>
+                            <item name="validation" xsi:type="array">
+                                <item name="validate-number" xsi:type="boolean">true</item>
+                            </item>
+                        </item>
+                    </argument>
+                </field>
+                <field name="comment" formElement="input">
+                    <settings>
+                        <dataType>text</dataType>
+                        <label translate="true">Comment</label>
+                        <dataScope>comment</dataScope>
+                    </settings>
+                </field>
+                <field name="allow_exceed" formElement="select">
+                    <settings>
+                        <dataType>text</dataType>
+                        <label translate="true">Allow Excess</label>
+                        <dataScope>allow_exceed</dataScope>
+                    </settings>
+                    <formElements>
+                        <select>
+                            <settings>
+                                <caption>-- Please Select --</caption>
+                                <options class="Bss\CompanyCredit\Model\Config\Source\YesNo"/>
+                            </settings>
+                        </select>
+                    </formElements>
+                </field>
+            </fieldset>
+        </modal>
+    </container>
+</listing>

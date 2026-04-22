@@ -1,0 +1,121 @@
+<?php
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_CompanyAccount
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2020 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+/** @var $block \Bss\CompanyAccount\Block\Role\Edit */
+?>
+<form action="<?= $block->escapeUrl($block->getSaveUrl()) ?>"
+      method="post"
+      autocomplete="off"
+      id="form-validate"
+      class="form sub-user-edit"
+      data-mage-init='{"validation":{}}'>
+    <?= $block->getBlockHtml('formkey') ?>
+    <input type="hidden" name="success_url" value="<?= $block->escapeUrl($block->getSuccessUrl()) ?>">
+    <input type="hidden" name="error_url" value="<?= $block->escapeUrl($block->getErrorUrl()) ?>">
+
+    <fieldset class="fieldset" data-hasrequired="<?= $block->escapeHtmlAttr(__('* Required Fields')) ?>">
+
+        <div class="field role-name required">
+            <label for="sub-role-name" class="label">
+                <span><?= $block->escapeHtml(__('Role Name')) ?></span>
+            </label>
+            <input type="text"
+                   name="role_name"
+                   id="sub-role-name"
+                   class="input-text role-name"
+                   value="<?= $block->getRole()->getRoleName() ?>"
+                   placeholder="<?= $block->escapeHtmlAttr(__('Enter role name')) ?>"
+                   data-validate="{required:true}"/>
+        </div>
+        <div class="field permissions">
+            <label for="permissions" class="label">
+                <span><?= $block->escapeHtml(__('Permissions')) ?></span>
+            </label>
+            <?php if ($block->checkMagentoVersionHigherV244() === true) : ?>
+                <div id="bss-ca-role-table" class="input-text tree x-tree" data-rule="rule-tree" data-mage-init='<?=
+                $block->escapeHtmlAttr(
+                    $block->getSerializer()->serialize([
+                        'Bss_CompanyAccount/js/role/role-trees-view' => [
+                            'treeInitData' => $block->getDataRules(true),
+                            'editFormSelector' => '#form-validate'
+                        ]
+                    ])
+                ) ?>'></div>
+            <?php else : ?>
+                <div id="bss-ca-role-table" class="input-text tree x-tree" data-rule="rule-tree" data-mage-init='<?=
+                $block->escapeHtmlAttr(
+                    $block->getSerializer()->serialize([
+                        'Bss_CompanyAccount/js/role/role-tree-view' => [
+                            'treeInitData' => $block->getDataRules(),
+                            'treeInitSelectedData' => $block->getSelectedRules()
+                        ]
+                    ])
+                ) ?>'></div>
+            <?php endif; ?>
+        </div>
+        <div class="field max-order-per-day">
+            <label for="max-order-per-day" class="label">
+                <span><?= $block->escapeHtml(__('Max Order Per day')) ?></span>
+            </label>
+            <input type="text"
+                   name="order_per_day"
+                   id="max-order-per-day"
+                   class="input-text max-order-per-day"
+                   value="<?= $block->getRole()->getMaxOrderPerDay() ?>"
+                   placeholder="<?= $block->escapeHtmlAttr(__('Enter max order per day')) ?>"
+                   data-validate="{'validate-digits': true, 'validate-not-negative-number': true}"/>
+            <div class="bss-help-block"><?= $block->escapeHtml(__('Leave empty for unlimited.')) ?></div>
+        </div>
+        <div class="field max-order-amount">
+            <label for="max-order-amount" class="label">
+                <span><?= $block->escapeHtml(__('Max Order Amount')) ?></span>
+            </label>
+            <input type="text"
+                   name="max_order_amount"
+                   id="max-order-amount"
+                   class="input-text max-order-amount"
+                   value="<?= $block->escapeHtmlAttr($block->convertCurrency($block->getRole()->getMaxOrderAmount())) ?>"
+                   placeholder="<?= $block->escapeHtmlAttr(__('Enter max order amount')) ?>"
+                   data-validate="{'validate-number': true, 'validate-not-negative-number': true}"/>
+            <div class="bss-help-block"><?= $block->escapeHtml(__('Leave empty for unlimited.')) ?></div>
+        </div>
+    </fieldset>
+
+    <div class="actions-toolbar">
+        <div class="secondary float-left padding-left-right-15">
+            <a class="action" href="<?= $block->escapeUrl($block->getBackUrl()) ?>" title="<?= $block->escapeHtmlAttr('Back') ?>">
+                <span>
+                    <i class="material-icons">keyboard_arrow_left</i>
+                    <?= $block->escapeHtmlAttr('Back') ?>
+                </span>
+            </a>
+        </div>
+        <div class="primary">
+            <button id="save-submit" type="submit" class="action submit primary" title="<?= $block->escapeHtml(__('Save Role')) ?>">
+                <span><?= $block->escapeHtml(__('Save')) ?></span>
+            </button>
+        </div>
+    </div>
+</form>
+<script>
+    window.jsTree =
+    <?php if ($block->checkMagentoVersionHigherV244() === true) : ?>
+    'bssTreeJsV244'
+    <?php else : ?>
+    'bssTreeJs'
+    <?php endif; ?>
+</script>

@@ -1,0 +1,32 @@
+<?php
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_CompanyCredit
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2020 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+
+/**
+ * @var $block \Bss\CompanyCredit\Plugin\Block\Purchaseorder\Info
+ */
+?>
+<dl class="payment-method purchase order">
+    <dt class="title"><?= $block->escapeHtml($block->getMethod()->getTitle()) ?></dt>
+    <dd class="content">
+        <strong><?= $block->escapeHtml(__('Purchase Order Number')) ?></strong>
+        <span class="number"><?= $block->escapeHtml($block->getInfo()->getPoNumber()) ?></span>
+        <?php if ($block->isHistoryCredit()): ?>
+            <div><b><?= $block->escapeHtml("Paid by Credit") ?></b></div>
+        <?php endif; ?>
+    </dd>
+</dl>

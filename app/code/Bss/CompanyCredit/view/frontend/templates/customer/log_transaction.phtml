@@ -1,0 +1,163 @@
+<?php
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_CompanyCredit
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2020-2022 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+use Bss\CompanyCredit\Block\Customer\Account\LogTransaction;
+
+?>
+
+<?php
+// @codingStandardsIgnoreFile
+
+/** @var  $block LogTransaction */
+?>
+
+<?php
+$histories = $block->getHistories();
+?>
+<div class="block block-companycredit-history">
+    <div class="block-title">
+        <strong><?= $block->escapeHtml(__('Log Transaction')); ?></strong>
+    </div>
+    <div class="block-content">
+        <div class="table-wrapper companycredit-history">
+            <table id="customerbalance-history" class="data table table-companycredit-history">
+                <caption class="table-caption"><?= $block->escapeHtml(__('Log Transaction')); ?></caption>
+                <thead>
+                <tr>
+                    <th scope="col" class="col transaction">
+                        <?= $block->escapeHtml(__('ID')); ?>
+                    </th>
+                    <?= $block->getChildHtml('companycredit.extra.column.header') ?>
+                    <th scope="col" class="col date">
+                        <?= $block->escapeHtml(__('Update At')); ?>
+                    </th>
+                    <th scope="col" class="col change">
+                        <?= $block->escapeHtml(__('Type')); ?>
+                    </th>
+                    <th scope="col" class="col balance">
+                        <?= $block->escapeHtml(__('Credit Change')); ?>
+                    </th>
+                    <th scope="col" class="col balance">
+                        <?= $block->escapeHtml(__('Available Credit')); ?>
+                    </th>
+                    <th scope="col" class="col balance">
+                        <?= $block->escapeHtml(__('Comment')); ?>
+                    </th>
+                    <th scope="col" class="col date">
+                        <?= $block->escapeHtml(__('PO Number')); ?>
+                    </th>
+                    <th scope="col" class="col date">
+                        <?= $block->escapeHtml(__('Order ID')); ?>
+                    </th>
+                    <th scope="col" class="col addition">
+                        <?= $block->escapeHtml(__('Action')); ?>
+                    </th>
+                    <th scope="col" class="col date">
+                        <?= $block->escapeHtml(__('Payment Due Date')); ?>
+                    </th>
+                    <th scope="col" class="col">
+                        <?= $block->escapeHtml(__('Payment Status')); ?>
+                    </th>
+                    <th scope="col" class="col">
+                        <?= $block->escapeHtml(__('Unpaid Credit')); ?>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php if (!empty($histories)) : ?>
+                    <?php foreach ($histories as $history) : ?>
+                        <tr>
+                            <td data-th="<?= $block->escapeHtmlAttr(__('ID')); ?>"
+                                class="col actions">
+                                <?= /* @noEscape */ $history->getId(); ?>
+                            </td>
+                            <?php $extra = $block->getChildBlock('companycredit.extra.container'); ?>
+                            <?php if ($extra) : ?>
+                                <?php $extra->setHistory($history); ?>
+                                <?= $extra->getChildHtml() ?>
+                            <?php endif; ?>
+                            <td data-th="<?= $block->escapeHtmlAttr(__('Update At')); ?>"
+                                class="col date">
+                                <?= /* @noEscape */ $block->formatDateTime($history->getUpdatedTime()); ?>
+                            </td>
+                            <td data-th="<?= $block->escapeHtmlAttr(__('Type')); ?>"
+                                class="col actions">
+                                <?= /* @noEscape */ $block->getTypeAction($history->getType(), $history->getAllowExceed()); ?>
+                            </td>
+                            <td data-th="<?= $block->escapeHtmlAttr(__('Credit Change')); ?>"
+                                class="col change">
+                                <?php if ($history->getChangeCredit() > 0) : ?>
+                                <span class="bss-companycredit-green">
+                                    <?php else : ?>
+                                <span class="bss-companycredit-red">
+                                    <?php endif; ?>
+                                    <?= /* @noEscape */ $block->convertPrice($history->getChangeCredit(), $history->getCurrencyCode()); ?>
+                                </span>
+                            </td>
+                            <td data-th="<?= $block->escapeHtmlAttr(__('Available Credit')); ?>"
+                                class="col balance">
+                                <?= /* @noEscape */ $block->convertPrice($history->getAvailableCreditCurrent(), $history->getCurrencyCode()); ?>
+                            </td>
+                            <td data-th="<?= $block->escapeHtmlAttr(__('Comment')); ?>"
+                                class="col comment">
+                                <?= /* @noEscape */ $history->getComment(); ?>
+                            </td>
+                            <td data-th="<?= $block->escapeHtmlAttr(__('PO Number')); ?>"
+                                class="col po_number">
+                                <?= /* @noEscape */ $history->getPONumber(); ?>
+                            </td>
+                            <td data-th="<?= $block->escapeHtmlAttr(__('Order Id')); ?>"
+                                class="col order_id">
+                                <?= /* @noEscape */ $history->getOrderId(); ?>
+                            </td>
+                            <td data-th="<?= $block->escapeHtmlAttr(__('Action')); ?>"
+                                class="col action">
+                                <?= /* @noEscape */ $block->viewOrder($history->getOrderId(), $history->getType()); ?>
+                            </td>
+                            <td data-th="<?= $block->escapeHtmlAttr(__('Payment Due Date')); ?>"
+                                class="col payment_due_date">
+                                <?= /* @noEscape */ $block->formatDateTime($history->getPaymentDueDate()); ?>
+                            </td>
+                            <td data-th="<?= $block->escapeHtmlAttr(__('Payment Status')); ?>"
+                                class="col payment_status">
+                                <?php $paymentStt = $block->showPaymentStatus($history->getPaymentStatus(), $history->getPaymentDueDate()); ?>
+                                <?= /* @noEscape */ $paymentStt; ?>
+                            </td>
+                            <td data-th="<?= $block->escapeHtmlAttr(__('Unpaid Credit')); ?>"
+                                class="col unpaid_credit">
+                                <?php if ($history->getUnpaidCredit()) : ?>
+                                    <?= /* @noEscape */ $block->convertPrice($history->getUnpaidCredit(), $history->getCurrencyCode()); ?>
+                                <?php elseif ($paymentStt === 'Overdue') : ?>
+                                    <?php $absChangeCredit = $history->getChangeCredit() ? abs($history->getChangeCredit()) : 0; ?>
+                                    <?= /* @noEscape */ $block->convertPrice($absChangeCredit, $history->getCurrencyCode()); ?>
+                                <?php endif; ?>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+                </tbody>
+            </table>
+        </div>
+        <?php if ($block->getPagerHtml()) : ?>
+            <div class="bss-companycredit-history-toolbar toolbar bottom">
+                <?= /* @noEscape */
+                $block->getPagerHtml(); ?>
+            </div>
+        <?php endif; ?>
+    </div>
+</div>
+

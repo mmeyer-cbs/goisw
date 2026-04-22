@@ -1,0 +1,55 @@
+<?php
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_StoreCredit
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2017-2018 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+?>
+
+<?php
+// @codingStandardsIgnoreFile
+
+/** @var  $block \Bss\StoreCredit\Block\Adminhtml\Order\Create\Credit */
+?>
+
+<?php if ($block->getStoreCreditTotal()) : ?>
+    <div class="admin__field field-apply-store-credit" data-mage-init='{
+                    "Bss_StoreCredit/js/order_create": {}
+                }'>
+        <label class="admin__field-label"><span><?= $block->escapeHtml(__('Store Credit')); ?></span></label>
+        <div>
+            <?= $block->escapeHtml(__('Customer Credit Balance:')); ?>
+            <span><?= /* @noEscape */ $block->getStoreCreditTotal(); ?></span>
+        </div>
+        <div class="admin__field-control">
+            <input type="text" class="admin__control-text"
+                id="store_credit_amount"
+                value=""
+                name="store_credit_amount" />
+            <?= $block->getButtonHtml(__('Apply'), 'order.applyStoreCredit($F(\'store_credit_amount\'))') ?>
+            <?php if ($block->getStoreCreditUsed()) : ?>
+                <p class="added-store-credit">
+                    <span><?= /* @noEscape */ $block->getStoreCreditUsed() ?></span>
+                    <a href="#"
+                        id="store_credit_remove"
+                        onclick="order.applyStoreCredit(0); return false;"
+                        title="<?= $block->escapeHtmlAttr(__('Remove Store Credit')); ?>"
+                        class="action-remove">
+                        <span><?= $block->escapeHtml(__('Remove')); ?></span>
+                    </a>
+                </p>
+            <?php endif; ?>
+        </div>
+    </div>
+<?php endif; ?>

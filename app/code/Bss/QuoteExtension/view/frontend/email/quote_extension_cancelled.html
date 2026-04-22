@@ -1,0 +1,64 @@
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_QuoteExtension
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2018-2019 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+-->
+<!--@subject {{trans "Your Quote Has Been Cancel"}} @-->
+{{template config_path="design/email/header_template"}}
+{{inlinecss file="Bss_QuoteExtension::css/email-inline.css"}}
+<table>
+    <tr class="email-intro">
+        <td>
+            <p>{{var customer_name}},</p>
+            <p>
+                {{trans 'We are sorry to announce that your quote has been rejected. If you want to resend the quote please visit '}}<span class="email-increament">#{{var increment_id}}</span>
+                <br>
+                {{trans 'In case you have any further question, feel free to '}}<a href="{{var this.getUrl($store,'contact')}}" target="_blank">{{trans "contact us"}}</a></span>
+            </p>
+        </td>
+    </tr>
+    <tr class="email-intro-header">
+        <td>
+            <p class="email-increament-id"><span>{{trans "Quote ID: "}}</span>#{{var increment_id}}</p>
+            <p class="email-cancel"><span>{{trans "Rejected at: "}}</span>{{var cancelled_date}}</p>
+        </td>
+    </tr>
+    <tr class="email-information">
+        <td>
+            {{depend quote.getCustomerNote()}}
+            <table class="message-info">
+                <tr>
+                    <td>
+                        {{trans 'Comment: '}}
+                        {{var quote.getCustomerNote()|escape|nl2br}}
+                    </td>
+                </tr>
+            </table>
+            {{/depend}}
+            {{layout handle="quote_extension_email_items" quote=$quote quoteId=$quote.getEntityId() area="frontend"}}
+        </td>
+    </tr>
+    <tr class="comments">
+        <td>
+            {{depend comments}}
+            <h2>{{trans 'Admin's comment:'}}</h2>
+            {{layout handle="quote_extension_email_comment" comments=$comments area="frontend"}}
+            {{/depend}}
+        </td>
+    </tr>
+</table>
+
+{{template config_path="design/email/footer_template"}}

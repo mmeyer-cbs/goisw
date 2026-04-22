@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_CompanyAccount
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2020 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Backend::admin">
+                <resource id="Magento_Backend::stores">
+                    <resource id="Magento_Backend::stores_settings">
+                        <resource id="Magento_Config::config">
+                            <resource id="Bss_CompanyAccount::config_section" title="Bss Company Account Config" />
+                        </resource>
+                    </resource>
+                </resource>
+                <resource id="Magento_Customer::customer">
+                    <resource id="Bss_CompanyAccount::company_account" title="Company Account" translate="true">
+                        <resource id="Bss_CompanyAccount::sub_role_manage" title="Manage Roles and Permissions" translate="true">
+                            <resource id="Bss_CompanyAccount::role_add" title="Add" translate="true" />
+                            <resource id="Bss_CompanyAccount::role_edit" title="Edit" translate="true" />
+                            <resource id="Bss_CompanyAccount::role_delete" title="Delete" translate="true" />
+                        </resource>
+                        <resource id="Bss_CompanyAccount::sub_user_manage" title="Manage Sub User" translate="true">
+                            <resource id="Bss_CompanyAccount::sub_user_add" title="Add" translate="true" />
+                            <resource id="Bss_CompanyAccount::sub_user_edit" title="Edit" translate="true" />
+                            <resource id="Bss_CompanyAccount::sub_user_reset_password" title="Reset Password" translate="true" />
+                            <resource id="Bss_CompanyAccount::sub_user_delete" title="Delete" translate="true" />
+                        </resource>
+                    </resource>
+                </resource>
+            </resource>
+        </resources>
+    </acl>
+</config>

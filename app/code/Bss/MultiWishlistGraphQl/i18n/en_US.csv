@@ -1,0 +1,9 @@
+wishlist_name should be specified,wishlist_name should be specified
+NOT_SAVE,NOT_SAVE
+ITEM_ID_NOT_FOUND,ITEM_ID_NOT_FOUND
+Could not find a product with SKU "%sku",Could not find a product with SKU "%sku"
+Could not add the product with SKU "%sku" to the wishlist:: %message,Could not add the product with SKU "%sku" to the wishlist:: %message
+Not found wishlist_item_id: %1,Not found wishlist_item_id: %1
+Could not update wishlist item with wishlist_item_id "%wishlist_item_id" to the wishlist:: %message,Could not update wishlist item with wishlist_item_id "%wishlist_item_id" to the wishlist:: %message
+You create bss multi wishlist success,You create bss multi wishlist success
+You update bss multi wishlist success,You update bss multi wishlist success

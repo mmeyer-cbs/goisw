@@ -1,0 +1,69 @@
+<?php
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_QuoteExtension
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2018-2021 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+namespace Bss\QuoteExtension\Controller\Account;
+
+use Magento\Framework\App\Action\HttpGetActionInterface as HttpGetActionInterface;
+use Magento\Framework\App\Action\Action;
+use Magento\Framework\App\Action\Context;
+use Bss\QuoteExtension\Api\QuoteExtensionCustomerDelegateInterface;
+
+/**
+ * Redirect guest customer for registration.
+ */
+class DelegateCreate extends Action implements HttpGetActionInterface
+{
+    /**
+     * @var \Bss\QuoteExtension\Model\QuoteSuccess
+     */
+    protected $quoteSuccess;
+
+    /**
+     * @var QuoteExtensionCustomerDelegateInterface
+     */
+    private $delegateService;
+
+
+    /**
+     * @param \Bss\QuoteExtension\Model\QuoteSuccess $quoteSuccess
+     * @param Context $context
+     * @param QuoteExtensionCustomerDelegateInterface $customerDelegation
+     */
+    public function __construct(
+        \Bss\QuoteExtension\Model\QuoteSuccess $quoteSuccess,
+        Context $context,
+        QuoteExtensionCustomerDelegateInterface $customerDelegation
+    ) {
+        $this->quoteSuccess = $quoteSuccess;
+        parent::__construct($context);
+        $this->delegateService = $customerDelegation;
+    }
+
+    /**
+     * Pass data quote extension, quote into page create account
+     */
+    public function execute()
+    {
+        /** @var string|null $orderId */
+        $quoteId = $this->quoteSuccess->getLastQuote()->getQuoteId();
+        if (!$quoteId) {
+            return $this->resultRedirectFactory->create()->setPath('/');
+        }
+
+        return $this->delegateService->delegateNew((int)$quoteId, $this->quoteSuccess->getLastQuoteIdExtension());
+    }
+}

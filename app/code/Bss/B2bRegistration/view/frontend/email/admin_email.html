@@ -1,0 +1,9 @@
+<!--@subject Customer Register  @-->
+<!--@vars {
+"var varCompany":"B2b Registration: Company Name"
+} @-->
+{{template config_path="design/email/header_template"}}
+<table>
+    <tr>{{trans "The account %account has been registered. Please go to admin to approve/check it." account=$varEmail}}</tr>
+</table>
+{{template config_path="design/email/footer_template"}}

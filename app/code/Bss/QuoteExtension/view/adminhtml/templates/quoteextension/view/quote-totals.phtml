@@ -1,0 +1,43 @@
+<?php
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_QuoteExtension
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2018-2019 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+
+// @codingStandardsIgnoreFile
+?>
+<?php /** @var $block \Bss\QuoteExtension\Block\Adminhtml\QuoteExtension\Edit\Info */ ?>
+<?php
+	$requestQuote = $block->getQuoteExtension();
+	$quote = $block->getMageQuote();
+?>
+<section class="admin__page-section quote-totals">
+    <div class="admin__page-section-title">
+        <span class="title"><?php echo __('Quote Totals') ?></span>
+    </div>
+    <div class="admin__page-section-content">
+    	<fieldset class="admin__fieldset quote-coment order-history" id="quote-comment">
+            <legend class="admin__legend"><span><?php echo __('Admin Comment') ?></span></legend><br>
+			<div class="admin__field field-comment">
+	    		<div class="admin__field-control">
+	       	 		<textarea id="quote-comment" name="customer_note" class="admin__control-textarea"></textarea>
+	    		</div>
+			</div>
+        </fieldset>
+        <fieldset class="admin__fieldset order-history order-totals" id="order-totals">
+            <?php echo $block->getChildHtml('totals') ?>
+        </fieldset>
+    </div>
+</section>

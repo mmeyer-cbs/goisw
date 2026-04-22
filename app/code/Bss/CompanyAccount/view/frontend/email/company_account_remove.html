@@ -1,0 +1,25 @@
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_CompanyAccount
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2020 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+ -->
+<!--@subject Your account has been removed! @-->
+{{template config_path="design/email/header_template"}}
+<table>
+    <tr>{{trans "Dear %name," name=$name}}</tr>
+    <tr>Your account was removed from company account!</tr>
+</table>
+{{template config_path="design/email/footer_template"}}

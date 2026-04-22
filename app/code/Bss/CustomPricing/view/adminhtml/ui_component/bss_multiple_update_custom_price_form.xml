@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_CustomPricing
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2020 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+-->
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd" component="Magento_Customer/js/form/components/form">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">bss_multiple_update_custom_price_form.bss_multiple_update_custom_price_form_data_source</item>
+        </item>
+        <item name="label" xsi:type="string" translate="true">Edit Price</item>
+        <item name="reverseMetadataMerge" xsi:type="boolean">true</item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+    </argument>
+    <settings>
+        <buttons>
+            <button name="cancel" class="Bss\CustomPricing\Block\Adminhtml\ProductPrice\Edit\MultiFormCancelButton"/>
+            <button name="delete" class="Magento\Customer\Block\Adminhtml\Edit\Address\DeleteButton"/>
+            <button name="save" class="Magento\Customer\Block\Adminhtml\Edit\Address\SaveButton"/>
+        </buttons>
+        <namespace>bss_multiple_update_custom_price_form</namespace>
+        <ajaxSave>true</ajaxSave>
+        <ajaxSaveType>simple</ajaxSaveType>
+        <dataScope>data</dataScope>
+        <deps>
+            <dep>bss_multiple_update_custom_price_form.bss_multiple_update_custom_price_form_data_source</dep>
+        </deps>
+    </settings>
+    <dataSource name="bss_multiple_update_custom_price_form_data_source">
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+        <settings>
+            <submitUrl path="custom_pricing/ProductPrice/multipleUpdatePrice"/>
+        </settings>
+        <aclResource>Bss_CustomPricing::custom_pricing_update_product_price</aclResource>
+        <dataProvider class="Bss\CustomPricing\Model\ProductPrice\MUCPDataProvider" name="bss_multiple_update_custom_price_form_data_source">
+            <settings>
+                <requestFieldName>rule_id</requestFieldName>
+                <primaryFieldName>rule_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <container name="messages" component="Magento_Ui/js/form/components/html">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="additionalClasses" xsi:type="string">message message-error</item>
+                <item name="visible" xsi:type="boolean">false</item>
+                <item name="imports" xsi:type="array">
+                    <item name="responseData" xsi:type="string">${ $.parentName }:responseData</item>
+                </item>
+                <item name="listens" xsi:type="array">
+                    <item name="responseData.error" xsi:type="string">visible</item>
+                    <item name="responseData.message" xsi:type="string">content</item>
+                </item>
+            </item>
+        </argument>
+    </container>
+
+    <fieldset name="general">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="is_collection" xsi:type="boolean">true</item>
+            </item>
+        </argument>
+        <settings>
+            <label/>
+            <dataScope/>
+        </settings>
+
+        <field name="data" formElement="hidden">
+            <settings>
+                <dataType>text</dataType>
+            </settings>
+        </field>
+        <field name="rule_id" formElement="hidden">
+            <settings>
+                <dataType>text</dataType>
+            </settings>
+        </field>
+        <field name="price_type" sortOrder="30" formElement="select">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Price Type</label>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="Bss\CustomPricing\Model\Config\Source\PriceTypeOption" />
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="price_value"
+               sortOrder="40"
+               formElement="input"
+               template="Bss_CustomPricing/form/field"
+               component="Bss_CustomPricing/js/components/custom-price-type-change">
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                    <rule name="validate-number" xsi:type="boolean">true</rule>
+                    <rule name="validate-not-negative-number" xsi:type="boolean">true</rule>
+                </validation>
+                <additionalClasses>
+                    <class name="bss-custom-field">true</class>
+                </additionalClasses>
+                <dataType>text</dataType>
+                <dataScope>price_value</dataScope>
+                <label translate="true">Price Value</label>
+                <imports>
+                    <link name="addbefore">${ $.provider }:data.currency_sym</link>
+                    <link name="handleTypeChanges">${ $.provider }:data.price_type</link>
+                </imports>
+            </settings>
+        </field>
+    </fieldset>
+</form>

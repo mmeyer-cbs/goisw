@@ -1,0 +1,45 @@
+<?php
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_QuoteExtension
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2018-2019 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+
+/** @var $block \Bss\QuoteExtension\Block\QuoteExtension\Success */
+?>
+<?php // @codingStandardsIgnoreFile ?>
+
+<?php $quote = $block->getQuote(); ?>
+<div class="checkout-success">
+    <p><strong><?= $block->escapeHtml(__('Thank you for your interest!')); ?></strong></p>
+    <p><?= $block->escapeHtml(__('Your Quote Request # is: ')); ?>
+        <?php if ($block->isLoggedIn()): ?><a
+            href="<?= $block->escapeUrl($block->getViewUrl($quote)); ?>">
+            <?= $block->escapeHtml($quote->getIncrementId()); ?></a>
+        <?php else: ?>
+        <?= $block->escapeHtml($quote->getIncrementId()); ?>
+    <?php endif ?></p>
+    <p>
+        <?php if (!$block->isLoggedIn()): ?>
+        <?= $block->escapeHtmlAttr("Please check your email. We will send you a quote confirmation with details.") ?>
+    </p>
+    <?php endif ?>
+    <div class="actions-toolbar">
+        <div class="primary">
+            <a class="action primary continue" href="<?= /* @escapeNotVerified */ $block->escapeUrl($block->getUrl()); ?>">
+                <span><?= /* @escapeNotVerified */ $block->escapeHtml(__('Continue Shopping')); ?></span>
+            </a>
+        </div>
+    </div>
+</div>

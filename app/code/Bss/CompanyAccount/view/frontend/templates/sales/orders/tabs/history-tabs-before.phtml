@@ -1,0 +1,41 @@
+<?php
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_CompanyAccount
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2020 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+/** @var $block Bss\CompanyAccount\Block\Order\Tabs\Tabs */
+?>
+<?php if ($block->isCompanyAccount()) : ?>
+<div class="product data items"
+     data-mage-init='{"mage/tabs": {"openedState": "active", "animate": {"duration": 100}, "active":
+     <?php if ($block->getTab()) : ?>
+        <?= $block->escapeHtml($block->getTab()) ?>
+     <?php else: ?>
+     <?php if ($block->canApproveOrderWaitingOnly()) : ?> 1 <?php else : ?> 0 <?php endif; ?>
+     <?php endif; ?>
+     }}'>
+    <div <?php if ($block->isTabActive()): ?>
+        class="item title active" aria-expanded="true"
+    <?php else: ?> class="item title" aria-expanded="false"
+    <?php endif; ?> data-role="collapsible"
+        <?php if ($block->canApproveOrderWaitingOnly()) : ?> style="display: none" <?php endif; ?>>
+        <a class="switch" data-toggle="trigger" href="#" id="tab-order"
+           data-mage-init='{"redirectUrl":{"url": "<?= $block->getTabUrl() ?>"}}'>Orders</a>
+    </div>
+    <div id="my-orders" data-toggle="trigger" class="item content" data-role="content"
+        <?php if ($block->isTabActive()): ?> aria-hidden="false" style="display: block;"
+        <?php else: ?> aria-hidden="true" style="display: none;"<?php endif; ?>
+        <?php if ($block->canApproveOrderWaitingOnly()) : ?> style="display: none" <?php endif; ?>>
+        <?php endif ?>

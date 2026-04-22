@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<!--
+/**
+* BSS Commerce Co.
+*
+* NOTICE OF LICENSE
+*
+* This source file is subject to the EULA
+* that is bundled with this package in the file LICENSE.txt.
+* It is also available through the world-wide-web at this URL:
+* http://bsscommerce.com/Bss-Commerce-License.txt
+*
+* @category   BSS
+* @package    Bss_CompanyCredit
+* @author     Extension Team
+* @copyright  Copyright (c) 2017-2022 BSS Commerce Co. ( http://bsscommerce.com )
+* @license    http://bsscommerce.com/Bss-Commerce-License.txt
+*/
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="bss_companycredit_credit" resource="default" engine="innodb" comment="Company Credit">
+        <column xsi:type="int" name="id" padding="10" unsigned="true" nullable="false" identity="true" comment="ID"/>
+        <column xsi:type="int" name="customer_id" padding="10" unsigned="true" nullable="false" identity="false" comment="Customer Id"/>
+        <column xsi:type="decimal" name="credit_limit" scale="4" precision="12" unsigned="false" nullable="true" default="0" comment="Credit Limit"/>
+        <column xsi:type="decimal" name="used_credit" scale="4" precision="12" unsigned="false" nullable="true" default="0" comment="Used Credit"/>
+        <column xsi:type="decimal" name="available_credit" scale="4" precision="12" unsigned="false" nullable="true" default="0" comment="Available Credit"/>
+        <column xsi:type="varchar" name="currency_code" nullable="true" length="255" comment="Currency Code"/>
+        <column xsi:type="smallint" name="allow_exceed" padding="6" unsigned="false" nullable="true" identity="false" default="0" comment="Allow Excess"/>
+        <column xsi:type="smallint" name="payment_due_date" nullable="true" comment="Payment Due Date"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="BSS_COMPANYCREDIT_CREDIT_CUSTOMER_ID_CUSTOMER_ENTITY_ENTITY_ID" table="bss_companycredit_credit" column="customer_id" referenceTable="customer_entity" referenceColumn="entity_id" onDelete="CASCADE"/>
+        <index referenceId="BSS_COMPANYCREDIT_CREDIT_CUSTOMER_ID" indexType="btree">
+            <column name="customer_id"/>
+        </index>
+    </table>
+    <table name="bss_companycredit_credit_history" resource="default" engine="innodb" comment="Company Credit History">
+    <column xsi:type="int" name="id" padding="10" unsigned="true" nullable="false" identity="true" comment="ID"/>
+    <column xsi:type="int" name="customer_id" padding="10" unsigned="true" nullable="false" identity="false" default="0" comment="Customer ID"/>
+    <column xsi:type="decimal" name="available_credit_current" scale="4" precision="12" unsigned="false" nullable="true" default="0" comment="Available Credit"/>
+    <column xsi:type="decimal" name="change_credit" scale="4" precision="12" unsigned="false" nullable="true" default="0" comment="Change Credit"/>
+    <column xsi:type="int" name="order_id" padding="11" unsigned="false" nullable="true" identity="false" comment="Order ID"/>
+    <column xsi:type="boolean" name="type" nullable="true" comment="Type"/>
+    <column xsi:type="varchar" name="po_number" nullable="true" length="255" comment="Purchase Order Number"/>
+    <column xsi:type="varchar" name="comment" nullable="true" length="255" comment="Comment"/>
+    <column xsi:type="timestamp" name="created_time" on_update="false" nullable="true" default="CURRENT_TIMESTAMP" comment="Created Time"/>
+    <column xsi:type="timestamp" name="updated_time" on_update="true" nullable="true" default="CURRENT_TIMESTAMP" comment="Updated Time"/>
+    <column xsi:type="smallint" name="allow_exceed" padding="6" unsigned="false" nullable="true" identity="false" comment="Allow Excess"/>
+    <column xsi:type="timestamp" name="payment_due_date" nullable="true" comment="Payment Due Date"/>
+    <column xsi:type="varchar" name="payment_status" nullable="true" comment="Payment Status"/>
+    <column xsi:type="decimal" name="unpaid_credit" scale="4" precision="12" unsigned="false" nullable="true" comment="Unpaid Credit"/>
+    <column xsi:type="varchar" name="currency_code" nullable="true" length="10" comment="Currency Code"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+        <column name="id"/>
+    </constraint>
+    <constraint xsi:type="foreign" referenceId="FK_059967774F6B9F982933DC238497319B" table="bss_companycredit_credit_history" column="customer_id" referenceTable="bss_companycredit_credit" referenceColumn="customer_id" onDelete="CASCADE"/>
+    <index referenceId="BSS_COMPANYCREDIT_CREDIT_HISTORY_CUSTOMER_ID" indexType="btree">
+        <column name="customer_id"/>
+    </index>
+    <index referenceId="BSS_COMPANYCREDIT_CREDIT_HISTORY_ID" indexType="btree">
+        <column name="id"/>
+    </index>
+</table>
+    <table name="bss_c_c_remind_credit" resource="default" engine="innodb" comment="Company Credit Remind">
+        <column xsi:type="int" name="id" padding="10" unsigned="true" nullable="false" identity="true" comment="ID"/>
+        <column xsi:type="int" name="id_history" padding="10" unsigned="true" nullable="false" comment="ID History"/>
+        <column xsi:type="timestamp" name="sending_time" nullable="true" comment="Sending time"/>
+        <column xsi:type="smallint" name="sent" nullable="true" comment="Sent"/>
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="true" default="CURRENT_TIMESTAMP" comment="Created At"/>
+        <column xsi:type="timestamp" name="updated_at" on_update="true" nullable="true" default="CURRENT_TIMESTAMP" comment="Updated At"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="FK_ID_HISTORY_REMIND_TABLE" table="bss_c_c_remind_credit" column="id_history" referenceTable="bss_companycredit_credit_history" referenceColumn="id" onDelete="CASCADE"/>
+        <index referenceId="BSS_C_C_REMIND_CREDIT_ID" indexType="btree">
+            <column name="id"/>
+        </index>
+        <index referenceId="BSS_C_C_REMIND_CREDIT_ID_HISTORY" indexType="btree">
+            <column name="id_history"/>
+        </index>
+    </table>
+</schema>

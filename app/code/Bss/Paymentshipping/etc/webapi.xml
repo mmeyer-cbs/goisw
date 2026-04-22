@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_Paymentshipping
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2020-2021 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+-->
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
+
+    <route method="GET" url="/V1/bsscommerce/paymentshipping/getconfig/:storeViewId">
+        <service class="Bss\Paymentshipping\Api\PaymentshippingManagementInterface" method="getConfig"/>
+        <resources>
+            <resource ref="Bss_Paymentshipping::api"/>
+        </resources>
+    </route>
+
+    <route method="GET" url="/V1/bsscommerce/paymentshipping/getdata/type/:type/customergroupid/:customerGroupId">
+        <service class="Bss\Paymentshipping\Api\PaymentshippingRepositoryInterface" method="getListPaymentShipping"/>
+        <resources>
+            <resource ref="Bss_Paymentshipping::api"/>
+        </resources>
+    </route>
+
+    <route method="POST" url="/V1/bsscommerce/paymentshipping/save">
+        <service class="Bss\Paymentshipping\Api\PaymentshippingRepositoryInterface" method="savePaymentShippings"/>
+        <resources>
+            <resource ref="Bss_Paymentshipping::api"/>
+        </resources>
+    </route>
+
+    <route method="GET" url="/V1/bsscommerce/paymentshipping/search">
+        <service class="Bss\Paymentshipping\Api\PaymentshippingRepositoryInterface" method="getList"/>
+        <resources>
+            <resource ref="Bss_Paymentshipping::api"/>
+        </resources>
+    </route>
+
+    <route method="GET" url="/V1/bsscommerce/paymentshipping/checkallow/type/:type/websiteid/:websiteId/method/:method/customergroupid/:customerGroupId/storeid/:storeId">
+        <service class="Bss\Paymentshipping\Api\PaymentshippingRepositoryInterface" method="checkAllow"/>
+        <resources>
+            <resource ref="Bss_Paymentshipping::api"/>
+        </resources>
+    </route>
+</routes>

@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_QuoteExtension
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2018-2019 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+-->
+
+<!--
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <carriers>
+            <request4quote>
+                <active>1</active>
+                <sallowspecific>0</sallowspecific>
+                <model>Bss\QuoteExtension\Model\Carrier\QuoteExtensionShipping</model>
+                <name>Custom Price</name>
+                <title>Quote Shipping</title>
+                <specificerrmsg>This shipping method is not available. To use this shipping method, please contact us.</specificerrmsg>
+                <sort_order>0</sort_order>
+            </request4quote>
+        </carriers>
+
+        <bss_request4quote>
+            <general>
+                <save_customer>1</save_customer>
+            </general>
+            <request4quote_email_config>
+                <quote_extension_customer_guest>bss_request4quote_request4quote_email_config_quote_extension_customer_guest</quote_extension_customer_guest>
+            </request4quote_email_config>
+        </bss_request4quote>
+    </default>
+
+</config>

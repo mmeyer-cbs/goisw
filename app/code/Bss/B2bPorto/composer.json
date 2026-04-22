@@ -1,0 +1,16 @@
+{
+  "name": "bsscommerce/b2b-porto",
+  "version": "1.0.0",
+  "description": "Compatible betwwen B2b Package and Porto Theme",
+  "type": "magento2-module",
+  "license": [
+      "OSL-3.0",
+      "AFL-3.0"
+  ],
+  "autoload": {
+    "files": [ "registration.php" ],
+    "psr-4": {
+      "Bss\\B2bPorto\\": ""
+    }
+  }
+}

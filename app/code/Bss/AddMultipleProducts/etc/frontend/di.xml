@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ *  BSS Commerce Co.
+ *
+ *  NOTICE OF LICENSE
+ *
+ *  This source file is subject to the EULA
+ *  that is bundled with this package in the file LICENSE.txt.
+ *  It is also available through the world-wide-web at this URL:
+ *  http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category    BSS
+ * @package     BSS_AddMultipleProducts
+ * @author      Extension Team
+ * @copyright   Copyright © 2020 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license     http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Framework\View\Element\Message\MessageConfigurationsPool">
+        <arguments>
+            <argument name="configurationsMap" xsi:type="array">
+                <item name="Bss_addCartSuccessMessage" xsi:type="array">
+                    <item name="renderer" xsi:type="const">\Magento\Framework\View\Element\Message\Renderer\BlockRenderer::CODE</item>
+                    <item name="data" xsi:type="array">
+                        <item name="template" xsi:type="string">Bss_AddMultipleProducts::messages/addCartSuccessMessage.phtml</item>
+                    </item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+
+    <!-- Mageplaza ajax layered -->
+    <type name="Magento\Catalog\Controller\Category\View">
+        <plugin name="bss_custom_ajax_layer_navigation"
+                type="Bss\AddMultipleProducts\Plugin\Controller\Category\View"
+                sortOrder="1"/>
+    </type>
+</config>

@@ -1,0 +1,116 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_B2bRegistration
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2017-2021 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <attribute name="class" value="customer-account-create"/>
+        <referenceContainer name="content">
+            <block class="Bss\B2bRegistration\Block\CustomerRegister" name="bss-register" template="Bss_B2bRegistration::account/register.phtml">
+                <block class="Magento\Customer\Block\Widget\Dob" name="bss-register-dob" as="bss.register.dob" template="Magento_Customer::widget/dob.phtml" />
+                <block class="Magento\Customer\Block\Widget\Taxvat" name="bss-register-taxvat" as="bss.register.taxvat" template="Magento_Customer::widget/taxvat.phtml" />
+                <block class="Magento\Customer\Block\Widget\Gender" name="bss-register-gender" as="bss.register.gender" template="Magento_Customer::widget/gender.phtml" />
+                <container name="bss.captcha" as="bss.captcha"/>
+                <container name="bss.recaptcha" as="bss.recaptcha"/>
+
+                <!-- Start BSS Customer Attribute module integration -->
+                <container name="bss.form.additional.info" as="bss.form.additional.info">
+                    <block class="Bss\B2bRegistration\Block\Integration\RegisterForm" name="customer_attribute"
+                           ifconfig="bss_customer_attribute/general/enable">
+                        <arguments>
+                            <argument name="view_model" xsi:type="object">
+                                Bss\CustomerAttributes\ViewModel\Integration\CustomerSectionAttribute
+                            </argument>
+                        </arguments>
+                    </block>
+                </container>
+                <block ifconfig="bss_customer_attribute/general/enable"
+                       name="personal.information.section"
+                       as="personal_information_section"
+                       class="Bss\B2bRegistration\Block\Integration\PersonalInformationSectionAttribute">
+                        <arguments>
+                            <argument name="view_model" xsi:type="object">
+                                Bss\CustomerAttributes\ViewModel\Integration\PersonalInformationSectionAttribute
+                            </argument>
+                        </arguments>
+                </block>
+                <block ifconfig="bss_customer_attribute/general/enable"
+                       name="signin.information.section"
+                       as="signin_information_section"
+                       class="Bss\B2bRegistration\Block\Integration\SigninInformationSectionAttribute">
+                    <arguments>
+                        <argument name="view_model" xsi:type="object">
+                            Bss\CustomerAttributes\ViewModel\Integration\SigninInformationSectionAttribute
+                        </argument>
+                    </arguments>
+                </block>
+                <!-- End BSS Customer Attribute module integration -->
+
+            </block>
+        </referenceContainer>
+        <referenceContainer name="bss.captcha">
+            <block class="Magento\Captcha\Block\Captcha" name="captcha" after="-" cacheable="false">
+                <action method="setFormId">
+                    <argument name="formId" xsi:type="string">user_create</argument>
+                </action>
+                <action method="setImgWidth">
+                    <argument name="width" xsi:type="string">230</argument>
+                </action>
+                <action method="setImgHeight">
+                    <argument name="width" xsi:type="string">50</argument>
+                </action>
+            </block>
+        </referenceContainer>
+        <referenceContainer name="bss.recaptcha">
+            <block class="MSP\ReCaptcha\Block\Frontend\ReCaptcha" name="msp-recaptcha" after="-"
+                   template="MSP_ReCaptcha::msp_recaptcha.phtml"
+                   ifconfig="msp_securitysuite_recaptcha/frontend/enabled">
+
+                <arguments>
+                    <argument name="jsLayout" xsi:type="array">
+                        <item name="components" xsi:type="array">
+                            <item name="msp-recaptcha" xsi:type="array">
+                                <item name="component" xsi:type="string">MSP_ReCaptcha/js/reCaptcha</item>
+                                <item name="zone" xsi:type="string">forgot</item>
+                            </item>
+                        </item>
+                    </argument>
+                </arguments>
+            </block>
+            <block class="Magento\ReCaptchaUi\Block\ReCaptcha"
+                   name="recaptcha"
+                   after="-"
+                   template="Magento_ReCaptchaFrontendUi::recaptcha.phtml"
+                   ifconfig="recaptcha_frontend/type_for/customer_create">
+                <arguments>
+                    <argument name="recaptcha_for" xsi:type="string">customer_create</argument>
+                    <argument name="jsLayout" xsi:type="array">
+                        <item name="components" xsi:type="array">
+                            <item name="recaptcha" xsi:type="array">
+                                <item name="component" xsi:type="string">Magento_ReCaptchaFrontendUi/js/reCaptcha</item>
+                            </item>
+                        </item>
+                    </argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+        <referenceBlock name="head.components">
+            <block class="Magento\Framework\View\Element\Js\Components" name="captcha_page_head_components" template="Magento_Captcha::js/components.phtml"/>
+        </referenceBlock>
+    </body>
+</page>

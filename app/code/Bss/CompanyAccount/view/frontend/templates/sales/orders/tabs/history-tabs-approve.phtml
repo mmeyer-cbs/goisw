@@ -1,0 +1,139 @@
+<?php
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_CompanyAccount
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2020 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+
+/** @var $block Bss\CompanyAccount\Block\Order\Tabs\Approve */
+?>
+<?php if (!$block->isViewTabs()) : ?>
+<?php elseif ($block->isCompanyAccount()) : ?>
+    <?php $approvedQuotes = $block->getQuotes();
+    $block->getChildHtml('info') ?>
+
+    <div <?php if ($block->isTabActive()): ?>
+        class="item title active" aria-expanded="true"
+    <?php else: ?> class="item title" aria-expanded="false"
+    <?php endif;?> data-role="collapsible">
+        <a class="switch" data-toggle="trigger" href="#" id="tab-approve"
+           data-mage-init='{"redirectUrl":{"url": "<?= $block->getTabUrl() ?>"}}'>Approved</a>
+    </div>
+    <div id="approved" data-toggle="trigger" class="item content" data-role="content"
+        <?php if ($block->isTabActive()): ?> aria-hidden="false" style="display: block;"
+        <?php else:?> aria-hidden="true" style="display: none;"<?php endif;?>>
+        <?php if ($approvedQuotes && count($approvedQuotes)) : ?>
+            <div class="table-wrapper orders-history">
+                <table class="data table table-order-items history" id="ca-my-orders-table">
+                    <caption class="table-caption"><?= $block->escapeHtml(__('Orders')) ?></caption>
+                    <thead>
+                    <tr>
+                        <th scope="col" class="col id">
+                            <a href="<?= $block->getSortOrderUrl('entity_id') ?>" class="color-black">
+                                <?= $block->escapeHtml(__(
+                                    'Order Request #'. '  '. $block->getSortIconId())) ?>
+                            </a>
+                        </th>
+                        <th scope="col" class="col date">
+                            <a href="<?= $block->getSortOrderUrl('created_at') ?>" class="color-black">
+                                <?= $block->escapeHtml(__(
+                                    'Date'. '  '. $block->getSortIconDate())) ?>
+                            </a>
+                        </th>
+                        <th scope="col" class="col created-by">
+                            <a href="<?= $block->getSortOrderUrl('sub_id') ?>" class="color-black">
+                                <?= $block->escapeHtml(__(
+                                    'Created By'. '  '. $block->getSortIconCreatedBy())) ?>
+                            </a>
+                        </th>
+                        <th scope="col" class="col total">
+                            <a href="<?= $block->getSortOrderUrl('subtotal') ?>" class="color-black">
+                                <?= $block->escapeHtml(__(
+                                    'Estimated Total'. '  '. $block->getSortIconEstimateTotal())) ?>
+                            </a>
+                        </th>
+                        <th scope="col" class="col status">
+                            <a href="<?= $block->getSortOrderUrl('reserved_order_id') ?>" class="color-black">
+                                <?= $block->escapeHtml(__(
+                                    'Status'. '  '. $block->getSortIconStatus())) ?>
+                            </a></th>
+                        <th scope="col" class="col rejected">
+                            <a href="<?= $block->getSortOrderUrl('action_by') ?>" class="color-black">
+                                <?= $block->escapeHtml(__(
+                                    'Approved By'). '  '. $block->getSortIconApprovedBy()) ?>
+                            </a>
+                        </th>
+                        <th scope="col" class="col actions">
+                            <span href="#" class="color-black">
+                                <?= $block->escapeHtml(__('Action')) ?>
+                            </span>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php foreach ($approvedQuotes as $item) : ?>
+                        <tr>
+                            <td data-th="<?= $block->escapeHtml(__('Order Request #')) ?>" class="col id">
+                                <?= $block->escapeHtml($item->getQuoteId()) ?>
+                            </td>
+                            <td data-th="<?= $block->escapeHtml(__('Date')) ?>" class="col date">
+                                <?= /* @noEscape */
+                                $block->formatDate($item->getCreatedAt()) ?>
+                            </td>
+                            <td data-th="<?= $block->escapeHtml(__('Created By')) ?>" class="col created">
+                                <?= $block->escapeHtml($block->actionBy($item->getData('sub_id'))) ?>
+                            </td>
+                            <td data-th="<?= $block->escapeHtml(__('Estimated Total')) ?>" class="col total">
+                                <?= /* @noEscape */
+                                $block->formatCurrency($item->getData('subtotal')) ?>
+                            </td>
+                            <td data-th="<?= $block->escapeHtml(__('Status')) ?>" class="col status">
+                                <?= $block->getApproveStatus($item->getQuoteId()) ?>
+                            </td>
+                            <td data-th="<?= $block->escapeHtml(__('Approved By')) ?>" class="col approve">
+                                <?= $block->escapeHtml($block->actionBy($item->getActionBy())) ?>
+                            </td>
+                            <td data-th="<?= $block->escapeHtml(__('Actions')) ?>" class="col actions">
+                                <a href="<?= $block->escapeUrl($block->getViewUrl($item)) ?>" class="action order">
+                                    <span><?= $block->escapeHtml(__('View Order')) ?></span>
+                                </a>
+                                <?php if ($block->canCheckout()) : ?>
+                                    <?php if ($block->getReservedOrderId($item->getQuoteId()) !== null) :
+                                        if ($block->checkReorder($item->getQuoteId()) != false)
+                                            : $order = $block->checkReorder($item->getQuoteId()) ?>
+                                            <a href="#" data-post='<?= /* @noEscape */$block->getPostDataReorder($order) ?>' class="action order">
+                                                <span><?= $block->escapeHtml(__('Reorder')) ?></span>
+                                            </a>
+                                        <?php endif ?>
+                                    <?php else : ?>
+                                        <a href="<?= $block->escapeUrl($block->getCheckOutUrl($item)) ?>"
+                                           class="action order">
+                                            <span><?= $block->escapeHtml(__('Checkout')) ?></span>
+                                        </a>
+                                    <?php endif ?>
+                                <?php endif ?>
+                            </td>
+                        </tr>
+                    <?php endforeach?>
+                    </tbody>
+                </table>
+            </div>
+            <?php if ($block->getPagerHtml()) : ?>
+                <div class="order-products-toolbar toolbar bottom"><?= $block->getPagerHtml() ?></div>
+            <?php endif ?>
+        <?php else : ?>
+            <div class="message info empty"><span><?= $block->escapeHtml($block->getEmptyQuotesMessage()) ?></span></div>
+        <?php endif ?>
+    </div>
+<?php endif ?>

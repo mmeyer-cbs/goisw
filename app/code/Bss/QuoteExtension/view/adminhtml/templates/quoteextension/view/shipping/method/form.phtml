@@ -1,0 +1,174 @@
+<?php
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_QuoteExtension
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2018-2019 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+
+// @codingStandardsIgnoreFile
+?>
+<?php /** @var $block \Bss\QuoteExtension\Block\Adminhtml\QuoteExtension\Edit\Shipping\Method/Form */ ?>
+<?php $_shippingRateGroups = $block->getShippingRates(); ?>
+<?php $taxHelper = $this->helper('Magento\Tax\Helper\Data'); ?>
+<?php $radioProperty = 'name="quote[shipping_method]" type="radio" onclick="quote.setShippingMethod(this.value)"' ?>
+<?php if ($_shippingRateGroups) : ?>
+    <div id="quote-shipping-method-choose" style="display:none">
+        <dl class="admin__quote-shipment-methods">
+            <?php foreach ($_shippingRateGroups as $code => $_rates) : ?>
+                <?php $carierName = $block->escapeHtml($block->getCarrierName($code)); ?>
+                <dt class="admin__quote-shipment-methods-title"><?php echo $carierName ?></dt>
+                <dd class="admin__quote-shipment-methods-options">
+                    <ul class="admin__quote-shipment-methods-options-list">
+                        <?php foreach ($_rates as $_rate) : ?>
+                            <?php
+                            if ($_rate->getMethodTitle()) {
+                                $methodTitle = $block->escapeHtml($_rate->getMethodTitle());
+                            } else {
+                                $methodTitle = $block->escapeHtml($_rate->getMethodDescription());
+                            }
+                            ?>
+                            <?php $_code = $_rate->getCode() ?>
+                            <li class="admin__field-option">
+                                <?php if ($_rate->getErrorMessage()) : ?>
+                                    <div class="messages">
+                                        <div class="message message-error error">
+                                            <div><?php echo $block->escapeHtml($_rate->getErrorMessage()) ?></div>
+                                        </div>
+                                    </div>
+                                <?php elseif ($block->isQuoteShipping($code)): ?>
+                                    <?php echo $block->getChildBlock('quote.view.shipping.method.form.quoteextension')
+                                        ->setRate($_rate)
+                                        ->setCode($_code)
+                                        ->setTaxHelper($taxHelper)
+                                        ->setRadioProperty($radioProperty)
+                                        ->toHtml();
+                                    ?>
+                                <?php else : ?>
+                                    <?php $_checked = $block->isMethodActive($_code) ? 'checked="checked"' : '' ?>
+                                    <input <?php echo $radioProperty ?> value="<?php echo $_code ?>"
+                                                                        id="s_method_<?php echo $_code ?>"
+                                        <?php echo $_checked ?>
+                                                                        class="admin__control-radio"/>
+                                    <label class="admin__field-label" for="s_method_<?php echo $_code ?>">
+                                        <?php echo $methodTitle ?>
+                                        -
+                                        <strong>
+                                            <?php $_excl = $block->getShippingPrice(
+                                                $_rate->getPrice(),
+                                                $taxHelper->displayShippingPriceIncludingTax()
+                                            ); ?>
+                                            <?php $_incl = $block->getShippingPrice($_rate->getPrice(), true); ?>
+
+                                            <?php echo $_excl; ?>
+                                            <?php if ($taxHelper->displayShippingBothPrices() && $_incl != $_excl) : ?>
+                                                (<?php echo __('Incl. Tax'); ?><?php echo $_incl; ?>)
+                                            <?php endif; ?>
+                                        </strong>
+                                    </label>
+                                <?php endif ?>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                </dd>
+            <?php endforeach; ?>
+        </dl>
+    </div>
+    <?php if ($_rate = $block->getActiveMethodRate()) : ?>
+        <?php
+        if ($_rate->getMethodTitle()) {
+            $methodTitle = $block->escapeHtml($_rate->getMethodTitle());
+        } else {
+            $methodTitle = $block->escapeHtml($_rate->getMethodDescription());
+        }
+        ?>
+        <div id="quote-shipping-method-info" class="quote-shipping-method-info">
+            <dl class="admin__quote-shipment-methods">
+                <dt class="admin__quote-shipment-methods-title">
+                    <?php echo $block->escapeHtml($block->getCarrierName($_rate->getCarrier())) ?>
+                </dt>
+                <dd class="admin__quote-shipment-methods-options">
+                    <?php echo $methodTitle ?>
+                    -
+                    <strong>
+                        <?php
+                        $_excl = $block->getShippingPrice(
+                                $_rate->getPrice(),
+                                $taxHelper->displayShippingPriceIncludingTax()
+                        );
+                        ?>
+                        <?php $_incl = $block->getShippingPrice($_rate->getPrice(), true); ?>
+
+                        <?php echo $_excl; ?>
+                        <?php if ($taxHelper->displayShippingBothPrices() && $_incl != $_excl) : ?>
+                            (<?php echo __('Incl. Tax'); ?><?php echo $_incl; ?>)
+                        <?php endif; ?>
+                    </strong>
+                </dd>
+            </dl>
+            <a href="#"
+               onclick="$('quote-shipping-method-info').hide();$('quote-shipping-method-choose').show();return false"
+               class="action-default">
+                <span><?php echo __('Click to change shipping method') ?></span>
+            </a>
+        </div>
+    <?php else : ?>
+        <script>
+            require(['prototype'], function () {
+                $('quote-shipping-method-choose').show();
+            });
+        </script>
+    <?php endif; ?>
+<?php elseif ($block->getIsRateRequest()) : ?>
+    <div class="quote-shipping-method-summary">
+        <strong
+            class="quote-shipping-method-not-available"
+        ><?php echo __('Sorry, no quotes are available for this quote.') ?></strong>
+    </div>
+<?php else : ?>
+    <div id="quote-shipping-method-summary" class="quote-shipping-method-summary">
+        <a href="#" onclick="quote.loadShippingRates();return false" class="action-default">
+            <span><?php echo __('Get shipping methods and rates') ?></span>
+        </a>
+        <input type="hidden" name="quote[has_shipping]" value=""/>
+    </div>
+<?php endif; ?>
+<div style="display: none;" id="shipping-method-overlay" class="quote-methods-overlay">
+    <span><?php echo __('You don\'t need to select a shipping method.') ?></span>
+</div>
+<script>
+    require(["Bss_QuoteExtension/js/quote/edit/form"], function () {
+
+        quote.overlay(
+            'shipping-method-overlay',
+            <?php if ($block->getQuote()->isVirtual()) : ?>false<?php else : ?>true<?php endif; ?>
+        );
+        quote.overlay(
+            'address-shipping-overlay',
+            <?php if ($block->getQuote()->isVirtual()) : ?>false<?php else : ?>true<?php endif; ?>
+        );
+
+        <?php if ($block->getQuote()->isVirtual()) : ?>
+        quote.isOnlyVirtualProduct = true;
+        <?php endif; ?>
+    });
+</script>
+<script>
+    /**
+     * Disable card server validation in admin
+     */
+    require(["Magento_Sales/order/create/form"], function () {
+        order.paymentMethod = 'nothing';
+        order.addExcludedPaymentMethod('nothing');
+    });
+</script>

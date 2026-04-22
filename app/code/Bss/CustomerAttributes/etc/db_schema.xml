@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_CustomerAttributes
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2018-2022 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="sales_order" resource="default">
+        <column xsi:type="text" name="customer_attribute" nullable="true"/>
+    </table>
+    <table name="sales_order_address" resource="default">
+        <column xsi:type="text" name="customer_address_attribute" nullable="true" comment="Custom address attribute"/>
+    </table>
+    <table name="quote_address" resource="default">
+        <column xsi:type="text" name="customer_address_attribute" nullable="true" comment="Custom address attribute"/>
+    </table>
+    <table name="bss_attribute_dependent" resource="default">
+        <column xsi:type="int" name="id" padding="10" unsigned="true" nullable="false" identity="true" comment="ID"/>
+        <column xsi:type="varchar" name="attr_id" length="255" comment="Attr_id"/>
+        <column xsi:type="mediumtext" name="dependents_data" nullable="true" comment="Dependents_data"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+    </table>
+    <table name="bss_address_attribute_dependent" resource="default">
+        <column xsi:type="int" name="id" padding="10" unsigned="true" nullable="false" identity="true" comment="ID"/>
+        <column xsi:type="varchar" name="attr_id" length="255" comment="Attr_id"/>
+        <column xsi:type="mediumtext" name="dependents_data" nullable="true" comment="Dependents_data"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+    </table>
+</schema>

@@ -1,0 +1,102 @@
+.product.media .fotorama__stage {
+  border: 1px solid #f4f4f4;
+}
+.product.media .fotorama__nav {
+  text-align: right;
+}
+.product.media .fotorama__arr {
+  width: 35px;
+}
+.product.media .fotorama__arr .fotorama__arr__arr {
+  background: none;
+  width: auto;
+  height: auto;
+}
+.product.media .fotorama__arr .fotorama__arr__arr::before {
+  content: '\e81a';
+  font-family: 'porto-icons';
+  font-size: 22px;
+  font-weight: 600;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  line-height: 29px;
+  display: block;
+  color: #222529;
+}
+.product.media .fotorama__arr--prev .fotorama__arr__arr::before {
+  content: '\e819';
+}
+.product.media .fotorama__arr--next {
+  right: 0 !important;
+}
+.product.media .fotorama__caption {
+  display: none;
+}
+.product.media .fotorama__fullscreen-icon {
+  width: 35px;
+  height: 35px;
+  background: none;
+  display: block;
+  top: auto;
+  bottom: 0;
+  left: 0 !important;
+  text-align: center;
+  line-height: 34px;
+  color: #222529;
+}
+.product.media .fotorama__fullscreen-icon::before {
+  content: '\f882';
+  font-family: 'Porto-Icons';
+  font-size: 15px;
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+}
+.fotorama--fullscreen .product.media .fotorama__fullscreen-icon {
+  bottom: auto;
+  top: 0;
+}
+.fotorama--fullscreen .product.media .fotorama__fullscreen-icon::before {
+  content: '\f819';
+  font-size: 19px;
+}
+.product.media .fotorama__fullscreen-icon:focus {
+  box-shadow: none;
+}
+.product.media .fotorama__fullscreen .fotorama__zoom-in,
+.product.media .fotorama__fullscreen .fotorama__zoom-out {
+  width: 40px;
+  height: 40px;
+  background: none;
+  line-height: 40px;
+  color: #222529;
+  text-align: center;
+}
+.product.media .fotorama__fullscreen .fotorama__zoom-in::before,
+.product.media .fotorama__fullscreen .fotorama__zoom-out::before {
+  font-family: 'porto-icons';
+  font-size: 15px;
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+}
+.product.media .fotorama__fullscreen .fotorama__zoom-in {
+  top: 10px;
+}
+.product.media .fotorama__fullscreen .fotorama__zoom-in::before {
+  content: '\f882';
+}
+.product.media .fotorama__fullscreen .fotorama__zoom-out {
+  top: 60px;
+}
+.product.media .fotorama__fullscreen .fotorama__zoom-out::before {
+  content: '\f883';
+}
+.product.media .fotorama__nav-wrap--vertical .fotorama__nav__shaft {
+  margin-top: -8px;
+}
+.product.media .fotorama__wrap--css3.fotorama__wrap--no-controls.fotorama__wrap--slide.fotorama__wrap--toggle-arrows .fotorama__fullscreen-icon:not(:focus) {
+  -webkit-transform: translate3d(-80px, 80px, 0);
+  -ms-transform: translate3d(-80px, 80px, 0);
+  -o-transform: translate3d(-80px, 80px, 0);
+  transform: translate3d(-80px, 80px, 0);
+}

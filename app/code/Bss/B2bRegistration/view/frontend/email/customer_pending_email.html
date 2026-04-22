@@ -1,0 +1,10 @@
+<!--@subject Registration successful   @-->
+{{template config_path="design/email/header_template"}}
+<table>
+    <tr>{{trans "Hi %name," name=$varName}}</tr>
+    <tr>{{trans "You have successfully registered for an account. Please give us time to verify. Your registration information details are as follows: " }}</tr>
+    <tr>{{trans "Email Address: %account" account=$varEmail}}</tr>
+    <tr>Password: [ The password you specified ]</tr>
+    <tr>You will be informed when your account gets approved. </tr>
+</table>
+{{template config_path="design/email/footer_template"}}

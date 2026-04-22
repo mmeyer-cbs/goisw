@@ -1,0 +1,51 @@
+<?php
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_QuoteExtension
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2018-2023 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+
+/** @var $block \Bss\QuoteExtension\Block\QuoteExtension\View\Action */
+/** @var \Bss\QuoteExtension\ViewModel\CompatibleCompanyAccount $viewModel */
+$viewModel = $block->getViewModel();
+$manageQuote = $block->getRequestQuote();
+$checkRole = $viewModel->roleCompanyAccount($manageQuote);
+?>
+<?php // @codingStandardsIgnoreFile?>
+
+<?php if ($block->canMoveCheckout() && $block->isEnable()) : ?>
+    <?php $data = [
+        'token' => $block->getRequestQuote()->getToken(),
+        'quote' => $block->getRequestQuote()->getId(),
+        '_secure' => true
+    ];
+    ?>
+    <?php $action = $block->getAction('quoteextension', $data); ?>
+    <!--check rule create quote, hide button-->
+    <?php if ($checkRole == "place_order") : ?>
+        <div class="primary quote-button">
+            <a href="<?= $block->escapeUrl($action); ?>" title="<?= $block->escapeHtml(__('Move to Checkout')); ?>" class="action primary quote-submit quote-checkout">
+                <span><?= $block->escapeHtml(__('Move to Checkout')); ?></span>
+            </a>
+        </div>
+    <?php else : ?>
+        <?php if ($checkRole == "waiting_order") : ?>
+            <div class="primary quote-button">
+                <a href="<?= $block->escapeUrl($viewModel->getUrlSendOrder()); ?>" title="<?= $block->escapeHtml(__('Send order request to company admin')); ?>" class="action primary quote-submit quote-checkout">
+                    <span><?= $block->escapeHtml(__('Send order request')); ?></span>
+                </a>
+            </div>
+        <?php endif; ?>
+    <?php endif; ?>
+<?php endif; ?>

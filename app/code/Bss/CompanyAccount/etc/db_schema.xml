@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="quote" resource="default">
+        <column xsi:type="smallint" name="bss_is_sub_quote" padding="6" unsigned="false" nullable="true" identity="false" comment="Is Sub-user Quote"/>
+    </table>
+    <table name="bss_sub_role" resource="default" engine="innodb" comment="Roles Table">
+        <column xsi:type="int" name="role_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Role Identifier"/>
+        <column xsi:type="varchar" name="role_name" nullable="true" length="128" default="N/A" comment="Role name"/>
+        <column xsi:type="varchar" name="role_type" nullable="false" length="128" comment="Permissions"/>
+        <column xsi:type="int" name="order_per_day" padding="10" unsigned="true" nullable="true" identity="false" comment="Number of order per day"/>
+        <column xsi:type="decimal" name="max_order_amount" scale="2" precision="20" unsigned="false" nullable="true" comment="Max amount of order"/>
+        <column xsi:type="int" name="customer_id" padding="10" unsigned="true" nullable="true" identity="false" comment="Edit by company account"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="role_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="BSS_SUB_ROLE_CUSTOMER_ID_CUSTOMER_ENTITY_ENTITY_ID" table="bss_sub_role" column="customer_id" referenceTable="customer_entity" referenceColumn="entity_id" onDelete="CASCADE"/>
+        <index referenceId="BSS_SUB_ROLE_CUSTOMER_ID" indexType="btree">
+            <column name="customer_id"/>
+        </index>
+        <index referenceId="BSS_SUB_ROLE_ROLE_NAME_ROLE_TYPE" indexType="fulltext">
+            <column name="role_name"/>
+            <column name="role_type"/>
+        </index>
+    </table>
+    <table name="bss_sub_user" resource="default" engine="innodb" comment="Bss Sub User">
+        <column xsi:type="int" name="sub_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Sub User Identifier"/>
+        <column xsi:type="int" name="customer_id" padding="10" unsigned="true" nullable="false" identity="false" comment="Company Account is belong to"/>
+        <column xsi:type="varchar" name="sub_name" nullable="false" length="128" default="N/A" comment="Sub User's Name"/>
+        <column xsi:type="varchar" name="sub_email" nullable="true" length="128" comment="Sub User's Email"/>
+        <column xsi:type="varchar" name="sub_password" nullable="false" length="255" comment="Sub User's Password"/>
+        <column xsi:type="smallint" name="sub_status" padding="6" unsigned="false" nullable="true" identity="false" default="0" comment="Sub User's Status"/>
+        <column xsi:type="int" name="role_id" padding="10" unsigned="true" nullable="false" identity="false" default="0" comment="The role is belong to user"/>
+        <column xsi:type="varchar" name="token" nullable="true" length="255" comment="Sub User's Token"/>
+        <column xsi:type="timestamp" name="token_expires_at" on_update="false" nullable="true" comment="The expires time of reset/forget password request."/>
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Edit Time"/>
+        <column xsi:type="int" name="quote_id" padding="10" unsigned="true" nullable="true" identity="false" comment="Quote Id"/>
+        <column xsi:type="int" name="parent_quote_id" padding="10" unsigned="true" nullable="true" identity="false" comment="Associated Company Account Quote Id"/>
+        <column xsi:type="int" name="quote_status" padding="10" unsigned="true" nullable="false" identity="false" default="1" comment="Quote status"/>
+        <column xsi:type="smallint" name="is_sent_email" padding="5" unsigned="true" nullable="true" identity="false" default="0" comment="Is_sent_email"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="sub_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="BSS_SUB_USER_CUSTOMER_ID_CUSTOMER_ENTITY_ENTITY_ID" table="bss_sub_user" column="customer_id" referenceTable="customer_entity" referenceColumn="entity_id" onDelete="CASCADE"/>
+        <index referenceId="BSS_SUB_USER_CUSTOMER_ID" indexType="btree">
+            <column name="customer_id"/>
+        </index>
+        <index referenceId="BSS_SUB_USER_ROLE_ID" indexType="btree">
+            <column name="role_id"/>
+        </index>
+        <index referenceId="BSS_SUB_USER_SUB_NAME_SUB_EMAIL" indexType="fulltext">
+            <column name="sub_name"/>
+            <column name="sub_email"/>
+        </index>
+    </table>
+    <table name="bss_sub_user_order" resource="default" engine="innodb" comment="Sub User Order">
+        <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Sub user order identifier"/>
+        <column xsi:type="int" name="sub_id" padding="10" unsigned="true" nullable="false" identity="false" comment="Sub user id"/>
+        <column xsi:type="int" name="order_id" padding="10" unsigned="true" nullable="true" identity="false" comment="Order Id"/>
+        <column xsi:type="decimal" name="grand_total" scale="4" precision="20" unsigned="false" nullable="true" comment="Grand total"/>
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Create Time"/>
+        <column xsi:type="text" name="sub_user_info" nullable="false" comment="Sub-user Information"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="BSS_SUB_USER_ORDER_ORDER_ID_SALES_ORDER_ENTITY_ID" table="bss_sub_user_order" column="order_id" referenceTable="sales_order" referenceColumn="entity_id" onDelete="CASCADE"/>
+        <index referenceId="BSS_SUB_USER_ORDER_SUB_ID" indexType="btree">
+            <column name="sub_id"/>
+        </index>
+    </table>
+    <table name="quote_extension" resource="default">
+        <column xsi:type="smallint" name="sub_user_id" padding="6" unsigned="false" nullable="true" identity="false" comment="Sub User Id"/>
+    </table>
+    <table name="oauth_token" resource="default">
+        <column xsi:type="int" name="sub_user_id" padding="10" unsigned="true" nullable="true" identity="false" comment="Sub User Id"/>
+        <constraint xsi:type="foreign" referenceId="OAUTH_TOKEN_SUB_USER_ID_BSS_SUB_USER_SUB_ID" table="oauth_token" column="sub_user_id" referenceTable="bss_sub_user" referenceColumn="sub_id" onDelete="CASCADE"/>
+        <index referenceId="OAUTH_TOKEN_SUB_USER_ID" indexType="btree">
+            <column name="sub_user_id"/>
+        </index>
+    </table>
+    <table name="bss_sub_quote" resource="default" engine="innodb" comment="Quote Management">
+        <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Sub Quote Identifier"/>
+        <column xsi:type="varchar" name="quote_status" nullable="true" length="128" default="waiting" comment="Quote Status"/>
+        <column xsi:type="int" name="quote_id" padding="10" unsigned="true" nullable="true" identity="false" comment="Linked Quote table"/>
+        <column xsi:type="int" name="sub_id" padding="10" unsigned="true" nullable="true" identity="false" comment="Linked Sub User table"/>
+        <column xsi:type="int" name="action_by" padding="10" unsigned="true" nullable="true" identity="false" comment="Define sub-user approve/rejected"/>
+        <column xsi:type="smallint" name="is_back_quote" padding="5" unsigned="true" nullable="true" identity="false" comment="Check recent quote"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+        </constraint>
+        <index referenceId="BSS_SUB_QUOTE_QUOTE_ID" indexType="btree">
+            <column name="quote_id"/>
+        </index>
+        <index referenceId="BSS_SUB_QUOTE_SUB_ID" indexType="btree">
+            <column name="sub_id"/>
+        </index>
+    </table>
+</schema>

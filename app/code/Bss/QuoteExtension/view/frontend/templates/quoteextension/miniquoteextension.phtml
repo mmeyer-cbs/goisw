@@ -1,0 +1,75 @@
+<?php
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_QuoteExtension
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2018-2019 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+
+/** @var $block \Bss\QuoteExtension\Block\QuoteExtension\Sidebar */
+?>
+<?php // @codingStandardsIgnoreFile ?>
+
+<?php
+$icon = $block->getIcon();
+$enable = $block->isEnable();
+?>
+<?php if($enable) : ?>
+<div data-block="miniquote" class="miniquote-wrapper <?php if ($icon) : ?>has-icon<?php endif; ?>">
+    <a class="action showquote" href="<?= /* @escapeNotVerified */ $block->getShoppingCartUrl() ?>"
+       data-bind="scope: 'miniquote_content'">
+        <?= $icon ?>
+        <span class="text"><?= /* @escapeNotVerified */ $block->escapeHtml(__('My Quote')); ?></span>
+        <span class="counter qty empty"
+              data-bind="css: { empty: !!getQuoteParam('summary_count') == false }, blockLoader: isLoading">
+            <span class="counter-number"><!-- ko text: getQuoteParam('summary_count') --><!-- /ko --></span>
+            <span class="counter-label">
+            <!-- ko if: getQuoteParam('summary_count') -->
+                <!-- ko text: getQuoteParam('summary_count') --><!-- /ko -->
+                <!-- ko i18n: 'items' --><!-- /ko -->
+                <!-- /ko -->
+            </span>
+        </span>
+    </a>
+    <?php if ($block->isNeedToDisplaySideBar()): ?>
+        <div class="block block-miniquote empty"
+             data-role="dropdownDialog"
+             data-mage-init='{"dropdownDialog":{
+                "appendTo":"[data-block=miniquote]",
+                "triggerTarget":".showquote",
+                "timeout": "2000",
+                "closeOnMouseLeave": false,
+                "closeOnEscape": true,
+                "triggerClass":"active",
+                "parentClass":"active",
+                "buttons":[]}}'>
+            <div id="miniquote-content-wrapper" data-bind="scope: 'miniquote_content'">
+                <!-- ko template: getTemplate() --><!-- /ko -->
+            </div>
+        </div>
+    <?php endif ?>
+    <script>
+        window.quote = <?= /* @escapeNotVerified */ $block->getSerializedConfig() ?>;
+    </script>
+    <script type="text/x-magento-init">
+    {
+        "[data-block='miniquote']": {
+            "Magento_Ui/js/core/app": <?= /* @escapeNotVerified */ $block->getJsLayout() ?>
+        },
+        "*": {
+            "Magento_Ui/js/block-loader": "<?= /* @escapeNotVerified */ $block->getViewFileUrl('images/loader-1.gif') ?>"
+        }
+    }
+    </script>
+</div>
+<?php endif; ?>

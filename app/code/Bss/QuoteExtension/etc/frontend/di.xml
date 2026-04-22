@@ -1,0 +1,94 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_QuoteExtension
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2018-2021 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <type name="Magento\Framework\Url\SecurityInfo">
+        <arguments>
+            <argument name="excludedUrlList" xsi:type="array">
+                <item name="checkout_sidebar" xsi:type="string">/quoteextension/sidebar</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\View\Layout">
+        <plugin name="quoteextension-session-depersonalize"
+                type="Magento\Checkout\Model\Layout\DepersonalizePlugin" sortOrder="20"/>
+    </type>
+    <type name="Magento\Customer\CustomerData\SectionPoolInterface">
+        <arguments>
+            <argument name="sectionSourceMap" xsi:type="array">
+                <item name="quote" xsi:type="string">Bss\QuoteExtension\CustomerData\QuoteExtension</item>
+                <item name="directory-data" xsi:type="string">Bss\QuoteExtension\CustomerData\DirectoryData</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Customer\Block\SectionConfig">
+        <arguments>
+            <argument name="clientSideSections" xsi:type="array">
+                <item name="quote-data" xsi:type="string">quote-data</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Catalog\Block\Product\View">
+        <plugin name="bss_quoteextension_add_button" type="Bss\QuoteExtension\Plugin\Block\Product\AddtoQuoteButton" sortOrder="11"/>
+    </type>
+    <type name="Magento\Catalog\Pricing\Render\FinalPriceBox">
+        <plugin name="bss_quoteextension_add_button_category" type="Bss\QuoteExtension\Plugin\AddtoQuoteButtonCategory" sortOrder="11"/>
+    </type>
+
+    <type name="Magento\Checkout\Block\Onepage">
+        <plugin name="change_checkout_config_quote_extension" type="Bss\QuoteExtension\Plugin\Block\OnePagePlugin" sortOrder="10"/>
+    </type>
+    <type name="Bss\QuoteExtension\CustomerData\QuoteExtension">
+        <plugin name="add_include_tax_excl_tax_to_mini_cart" type="Bss\QuoteExtension\Plugin\Checkout\CustomerData\Cart" sortOrder="10"/>
+    </type>
+    <type name="Bss\QuoteExtension\Plugin\UpdateQuoteStore">
+        <arguments>
+            <argument name="quoteExtension" xsi:type="object">Bss\QuoteExtension\Model\QuoteExtension\Proxy</argument>
+            <argument name="checkoutSession" xsi:type="object">Bss\QuoteExtension\Model\Session\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Magento\Store\Model\StoreSwitcherInterface">
+        <plugin name="bss_quoteextension_update_quote_item_store_after_switch_store_view" type="Bss\QuoteExtension\Plugin\UpdateQuoteItemStore" sortOrder="10"/>
+    </type>
+    <type name="Magento\Store\Api\StoreCookieManagerInterface">
+        <plugin name="bss_quoteextension_update_quote_store_after_switch_store_view" type="Bss\QuoteExtension\Plugin\UpdateQuoteStore" sortOrder="10"/>
+    </type>
+    <type name="Magento\Tax\Block\Item\Price\Renderer">
+        <plugin name="bss_quoteextension_item_price" type="Bss\QuoteExtension\Plugin\Block\Item\Price\Renderer" sortOrder="10"/>
+    </type>
+    <type name="Magento\Directory\Controller\Currency\SwitchAction">
+        <plugin name="bss_quoteextension_currency" type="Bss\QuoteExtension\Plugin\Controller\Currency\SwitchAction" sortOrder="10"/>
+    </type>
+
+    <type name="Magento\Framework\View\Element\Message\MessageConfigurationsPool">
+        <arguments>
+            <argument name="configurationsMap" xsi:type="array">
+                <item name="addQuoteSuccessMessage" xsi:type="array">
+                    <item name="renderer" xsi:type="const">\Magento\Framework\View\Element\Message\Renderer\BlockRenderer::CODE</item>
+                    <item name="data" xsi:type="array">
+                        <item name="template" xsi:type="string">Bss_QuoteExtension::messages/add_to_success.phtml</item>
+                    </item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+
+</config>

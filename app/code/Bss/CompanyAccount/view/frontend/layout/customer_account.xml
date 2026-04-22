@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_CompanyAccount
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2020 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="customer_account_navigation">
+            <block class="Bss\CompanyAccount\Block\Customer\Tab\SubChangePassword"
+                   name="customer-account-navigation-sub-user-change-password">
+                <arguments>
+                    <argument name="path" xsi:type="string">companyaccount/subuser/mypassword</argument>
+                    <argument name="label" xsi:type="string" translate="true">My Password</argument>
+                    <argument name="sortOrder" xsi:type="number">240</argument>
+                </arguments>
+            </block>
+            <block class="Magento\Customer\Block\Account\Delimiter" name="customer-account-navigation-delimiter-3" template="Magento_Customer::account/navigation-delimiter.phtml">
+                <arguments>
+                    <argument name="sortOrder" xsi:type="number">40</argument>
+                </arguments>
+            </block>
+            <block class="Bss\CompanyAccount\Block\Customer\Tab\ManageSubUser"
+                   name="customer-account-navigation-manage-sub-user">
+                <arguments>
+                    <argument name="path" xsi:type="string">companyaccount/subuser/</argument>
+                    <argument name="label" xsi:type="string" translate="true">Manage Sub-user</argument>
+                    <argument name="sortOrder" xsi:type="number">30</argument>
+                </arguments>
+            </block>
+            <block class="Bss\CompanyAccount\Block\Customer\Tab\ManageSubRole"
+                   name="customer-account-navigation-manage-sub-role">
+                <arguments>
+                    <argument name="path" xsi:type="string">companyaccount/role/</argument>
+                    <argument name="label" xsi:type="string" translate="true">Manage Role</argument>
+                    <argument name="sortOrder" xsi:type="number">20</argument>
+                </arguments>
+            </block>
+            <block class="Bss\CompanyAccount\Block\Customer\Tab\SubUserReport"
+                   name="customer-account-navigation-sub-user-report">
+                <arguments>
+                    <argument name="path" xsi:type="string">companyaccount/report/</argument>
+                    <argument name="label" xsi:type="string" translate="true">Sub-user Report</argument>
+                    <argument name="sortOrder" xsi:type="number">10</argument>
+                </arguments>
+            </block>
+        </referenceBlock>
+    </body>
+</page>

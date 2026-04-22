@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_CustomPricing
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2020 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <!-- Price Rule Interface -->
+    <preference for="Bss\CustomPricing\Api\Data\PriceRuleInterface"
+                type="Bss\CustomPricing\Model\PriceRule"/>
+    <preference for="Bss\CustomPricing\Api\PriceRuleRepositoryInterface"
+                type="Bss\CustomPricing\Model\PriceRuleRepository"/>
+    <preference for="Bss\CustomPricing\Api\Data\PriceRuleSearchResultsInterface"
+                type="Magento\Framework\Api\SearchResultsInterface"/>
+    <!-- End -->
+
+    <!-- Product Price Interface -->
+    <preference for="Bss\CustomPricing\Api\Data\ProductPriceInterface"
+                type="Bss\CustomPricing\Model\ProductPrice"/>
+    <preference for="Bss\CustomPricing\Api\ProductPriceRepositoryInterface"
+                type="Bss\CustomPricing\Model\ProductPriceRepository"/>
+    <preference for="Bss\CustomPricing\Api\Data\ProductPriceSearchResultsInterface"
+                type="Magento\Framework\Api\SearchResultsInterface"/>
+    <!-- End -->
+
+    <!-- Applied Customers Interface -->
+    <preference for="Bss\CustomPricing\Api\Data\AppliedCustomersInterface"
+                type="Bss\CustomPricing\Model\AppliedCustomers"/>
+    <preference for="Bss\CustomPricing\Api\AppliedCustomersRepositoryInterface"
+                type="Bss\CustomPricing\Model\AppliedCustomersRepository"/>
+    <preference for="Bss\CustomPricing\Api\Data\AppliedCustomersSearchResultsInterface"
+                type="Magento\Framework\Api\SearchResultsInterface"/>
+    <!-- End -->
+
+    <type name="Bss\CustomPricing\Api\Data\PriceRuleInterface">
+        <arguments>
+            <argument name="hasManyFields" xsi:type="array">
+                <item name="applied_customers" xsi:type="object">Bss\CustomPricing\Api\AppliedCustomersRepositoryInterface</item>
+                <item name="applied_products" xsi:type="object">Bss\CustomPricing\Api\ProductPriceRepositoryInterface</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <!-- Product Price listing -->
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="bss_product_price_listing_data_source" xsi:type="string">Bss\CustomPricing\Model\ResourceModel\ProductPrice\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Bss\CustomPricing\Model\ResourceModel\ProductPrice\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">bss_product_price</argument>
+            <argument name="eventPrefix" xsi:type="string">bss_product_price_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">bss_product_price_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Bss\CustomPricing\Model\ResourceModel\ProductPrice</argument>
+        </arguments>
+    </type>
+    <!-- End -->
+
+    <!-- Applied Customer listing -->
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="bss_applied_customers_listing_data_source" xsi:type="string">Bss\CustomPricing\Model\ResourceModel\AppliedCustomers\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Bss\CustomPricing\Model\ResourceModel\AppliedCustomers\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">bss_applied_customers</argument>
+            <argument name="eventPrefix" xsi:type="string">bss_applied_customers_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">bss_applied_customers_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Bss\CustomPricing\Model\ResourceModel\AppliedCustomers</argument>
+        </arguments>
+    </type>
+    <!-- End -->
+    <type name="Magento\Catalog\Model\Product\Type\Price">
+        <plugin name="bss-change-price-product" type="Bss\CustomPricing\Plugin\Model\Product\Price" sortOrder="20" />
+    </type>
+</config>

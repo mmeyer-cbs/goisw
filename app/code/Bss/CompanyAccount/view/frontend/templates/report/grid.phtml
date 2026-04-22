@@ -1,0 +1,155 @@
+<?php
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_CompanyAccount
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2023 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+
+/** @var $block Index */
+
+use Bss\CompanyAccount\Block\Report\Index;
+
+/** @var \Bss\CompanyAccount\ViewModel\CompatibleQuoteExtension $viewModel */
+$viewModel = $block->getViewModel();
+$enableQuoteExtension = $viewModel->isEnableQuoteExtension();
+if ($enableQuoteExtension) {
+    $users = $viewModel->getSubUserQuote();
+} else {
+    $users = $block->getItems();
+}
+?>
+<?php if (count($users)) : ?>
+    <form class="filter-order" method="get">
+        <div class="date-filter">
+            <div class="btn-filter">
+                <input id="submit-filter" type="button" value="Filters">
+            </div>
+            <div class="btn-filter">
+                <input id="export-btn" type="button" value="Export CSV">
+            </div>
+        </div>
+        <div class="clear-float"></div>
+        <div id="bss-filter-nav" style="display: none">
+            <div class="bss-filter-nav">
+                <div><b><?= $block->escapeHtml(__('Filter by date')); ?></b></div>
+                <div class="date-input">
+                    <label><?= $block->escapeHtml(__('from')); ?></label>
+                    <input type="date" id="date-from" name="date-from" required>
+                </div>
+                <div class="date-input">
+                    <label><?= $block->escapeHtml(__('to')); ?></label>
+                    <input type="date" id="date-to" name="date-to" required>
+                </div>
+                <div class="clear-float"></div>
+                <div class="bss-action-nav">
+                    <div class="bss-cancel-action">
+                        <input type="button" id="bss-cancel-filter" value="Cancel">
+                    </div>
+                    <div class="bss-filter-action">
+                        <input type="button" id="bss-action-filter" value="Apply filter">
+                    </div>
+                    <div class="clear-float"></div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div id="bss-table-filter">
+        <div class="table-wrapper">
+            <table id="my-sub-user-table" class="data table">
+                <caption class="table-caption"><?= $block->escapeHtml(__('Sub-Users')) ?></caption>
+                <thead>
+                <tr>
+                    <th scope="col" class="col id"><?= $block->escapeHtml(__('User #')) ?></th>
+                    <th scope="col" class="col name"><?= $block->escapeHtml(__('Name')) ?></th>
+                    <th scope="col" class="col email"><?= $block->escapeHtml(__('Email')) ?></th>
+                    <th scope="col" class="col total"><?= $block->escapeHtml(__('Total Order Value')) ?></th>
+                    <th scope="col" class="col number of orders"><?= $block->escapeHtml(__('Number of Orders')) ?></th>
+                    <?php if ($enableQuoteExtension) : ?>
+                        <th scope="col" class="col number of orders"><?= $block->escapeHtml(__('Number of Quotes')) ?></th>
+                    <?php endif; ?>
+                    <th scope="col" class="col date"><?= $block->escapeHtml(__('Created Date')) ?></th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php /** @var \Bss\CompanyAccount\Api\Data\SubUserOrderInterface|\Bss\CompanyAccount\Model\SubUser $user */ ?>
+                <?php foreach ($users as $user) : ?>
+                    <tr>
+                        <?php if ($enableQuoteExtension) :
+                            $subName = $user->getSubName();
+                            $subEmail = $user->getSubEmail();
+                            $grandTotal = $user->getData('grand_total');
+                            $numTotal = $user->getData('count');
+                            if ($grandTotal == 0) {
+                                $numTotal = 0;
+                            }
+                            ?>
+                        <?php else :
+                            $subName = $user->subUser()->getSubName();
+                            $subEmail = $user->subUser()->getSubEmail();
+                            $grandTotal = $user->getGrandTotal();
+                            $numTotal =$user->getCount();
+                            ?>
+                        <?php endif; ?>
+                        <td data-th="<?= $block->escapeHtmlAttr(__('User #')) ?>" class="col id">
+                            <?= $block->escapeHtml($user->getSubId()) ?>
+                        </td>
+                        <td data-th="<?= $block->escapeHtmlAttr(__('Name')) ?>" class="col name">
+                            <?= $block->escapeHtml($subName) ?>
+                        </td>
+                        <td data-th="<?= $block->escapeHtmlAttr(__('Email')) ?>" class="col email">
+                            <a href="mailto:<?= $block->escapeHtml($subEmail) ?>">
+                                <?= $block->escapeHtml($subEmail) ?>
+                            </a>
+                        </td>
+                        <td data-th="<?= $block->escapeHtmlAttr(__('Total Order Value')) ?>" class="col total">
+                            <?= $block->formatValue($grandTotal) ?>
+                        </td>
+                        <td data-th="<?= $block->escapeHtmlAttr(__('Number of Orders')) ?>"
+                            class="col number of orders">
+                            <?= $block->escapeHtml($numTotal) ?>
+                        </td>
+                        <!--Display quantity of quote subUser-->
+                        <?php if ($enableQuoteExtension) : ?>
+                            <td data-th="<?= $block->escapeHtmlAttr(__('Number of Orders')) ?>"
+                                class="col number of orders">
+                                <?= $block->escapeHtml($viewModel->getQuantityOfQuoteBySubUserId($user->getSubId())) ?>
+                            </td>
+                        <?php endif;?>
+                        <td data-th="<?= $block->escapeHtmlAttr(__('Created Date')) ?>" class="col date">
+                            <?= $block->getFormatDate($user->getCreatedAt()) ?>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+<?php else : ?>
+    <div class="message info empty">
+        <?php if ($enableQuoteExtension) : ?>
+            <span><?= $block->escapeHtml(__('No record found.')) ?></span>
+        <?php else :?>
+            <span><?= $block->escapeHtml(__('No order found.')) ?></span>
+        <?php endif;?>
+    </div>
+<?php endif; ?>
+
+<script type="text/x-magento-init">
+    {
+        ".table-wrapper": {
+            "Bss_CompanyAccount/js/report/filter-report": {
+            }
+        }
+    }
+</script>

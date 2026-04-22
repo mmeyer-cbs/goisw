@@ -1,0 +1,68 @@
+# BSS Commerce Co.
+#
+# NOTICE OF LICENSE
+#
+# This source file is subject to the EULA
+# that is bundled with this package in the file LICENSE.txt.
+# It is also available through the world-wide-web at this URL:
+# http://bsscommerce.com/Bss-Commerce-License.txt
+#
+# @category   BSS
+# @package    Bss_B2bRegistrationGraphQl
+# @author     Extension Team
+# @copyright  Copyright (c) 2021 BSS Commerce Co. ( http://bsscommerce.com )
+# @license    http://bsscommerce.com/Bss-Commerce-License.txt
+
+type Query {
+    bssB2bRegistrationStoreConfig(store_view: Int!): ModuleConfigs
+    @resolver(class: "\\Bss\\B2bRegistrationGraphQl\\Model\\Resolver\\GetModuleConfig")
+    @doc(description:"Get all configs of module with param is store_view id: 0 is default")
+}
+
+type Mutation {
+    b2bcreateCustomer (input: CustomerInput! @doc(description: "An input object that defines the customer to be created.")): CustomerOutput @resolver(class: "\\Bss\\B2bRegistrationGraphQl\\Model\\CreateCustomer") @doc(description:"Use `createCustomerV2` instead.")
+}
+
+type ModuleConfigs @doc(description: "B2b Registration configs") {
+    enable: Int @doc(description: "The module status")
+    b2b_url: String @doc(description: "B2B Account Page Url")
+    shortcut_link: Int @doc(description: "Shortcut Link In Header")
+    shortcut_link_text: String @doc(description: "Shortcut Link Text")
+    title: String @doc(description: "Form Title")
+    date: Int @doc(description: "Add Date of Birth Field")
+    tax: Int @doc(description: "Add Tax/VAT Number Field")
+    gender: Int @doc(description: "Add Gender Field")
+    address: Int @doc(description: "Add Address Field")
+    prefix: Int @doc(description: "Add Prefix Field")
+    prefix_options: String @doc(description: "Prefix Dropdown Options")
+    suffix: Int @doc(description: "Add Suffix Field")
+    suffix_options: String @doc(description: "Suffix Dropdown Options")
+    middle: Int @doc(description: "Add Middle Field")
+    customer_group: Int @doc(description: "Default Customer Group")
+    regular_registration: Int @doc(description: "Disable Regular Registration")
+    auto_approval: Int @doc(description: "Auto Approve Accounts")
+    pending_message: String @doc(description: "Pending Message")
+    disapprove_message: String @doc(description: "Disapproval Message")
+    admin_notification_enable: [Int] @doc(description: "Enable admin email for Auto Approve Account (0) or Not Auto approve account (1)")
+    admin_email_sender: String @doc(description: "Email Sender")
+    admin_recipeints: [String] @doc(description: "Email recipeints")
+    admin_email_templates: String @doc(description: "Email Templates")
+    customer_email_enable: Int @doc(description: "Enable send email to customer")
+    customer_email_sender: String @doc(description: "Email sender")
+    customer_approve_templates: String @doc(description: "Approval Email Templates")
+    customer_disapprove_templates: String @doc(description: "Disapproval Email Templates")
+}
+
+input CustomerInput {
+    b2b_registration_address: CustomerAddressInput @doc(description:"B2b registration address attributes")
+}
+
+type Customer {
+    b2b_activasion_status: B2bActivationStatus
+    @resolver(class: "Bss\\B2bRegistrationGraphQl\\Model\\Resolver\\B2bCustomerActivationStatus")
+}
+
+type B2bActivationStatus {
+    value: Int @doc(description: "Status value")
+    label: String @doc(description: "Status label")
+}

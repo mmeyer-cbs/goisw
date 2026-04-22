@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_CompanyAccount
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2020 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+ -->
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd"
+      component="Bss_CompanyAccount/js/sub-user/form/components/form">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">bss_companyaccount_customer_subuser_form.bss_companyaccount_customer_subuser_form_data_source</item>
+        </item>
+        <item name="config" xsi:type="array">
+            <item name="deleteConfirmationMessage" translate="true" xsi:type="string">Are you sure you want to delete this sub-user?</item>
+            <item name="resetPasswordConfirmationMessage" translate="true" xsi:type="string">Are you sure you want to send reset password to the sub-user?</item>
+        </item>
+        <item name="label" xsi:type="string" translate="true">Update Sub-user</item>
+        <item name="reverseMetadataMerge" xsi:type="boolean">true</item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+    </argument>
+    <settings>
+        <buttons>
+            <button name="cancel" class="Bss\CompanyAccount\Block\Adminhtml\Edit\SubUser\CancelButton"/>
+            <button name="delete" class="Bss\CompanyAccount\Block\Adminhtml\Edit\SubUser\DeleteButton"/>
+            <button name="reset_password" class="Bss\CompanyAccount\Block\Adminhtml\Edit\SubUser\ResetPasswordButton"/>
+            <button name="save" class="Bss\CompanyAccount\Block\Adminhtml\Edit\Button\SaveButton"/>
+        </buttons>
+        <namespace>bss_companyaccount_customer_subuser_form</namespace>
+        <ajaxSave>true</ajaxSave>
+        <ajaxSaveType>simple</ajaxSaveType>
+        <dataScope>data</dataScope>
+        <deps>
+            <dep>bss_companyaccount_customer_subuser_form.bss_companyaccount_customer_subuser_form_data_source</dep>
+        </deps>
+    </settings>
+    <dataSource name="bss_companyaccount_customer_subuser_form_data_source">
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+        <settings>
+            <submitUrl path="bss_companyaccount/customer_subuser/store"/>
+        </settings>
+        <aclResource>Bss_CompanyAccount::config_section</aclResource>
+        <dataProvider class="Bss\CompanyAccount\Model\SubUser\DataProvider" name="bss_companyaccount_customer_subuser_form_data_source">
+            <settings>
+                <requestFieldName>sub_id</requestFieldName>
+                <primaryFieldName>sub_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <container name="error_messages" component="Magento_Ui/js/form/components/html">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="additionalClasses" xsi:type="string">message message-error</item>
+                <item name="visible" xsi:type="boolean">false</item>
+                <item name="imports" xsi:type="array">
+                    <item name="responseData" xsi:type="string">${ $.parentName }:responseData</item>
+                </item>
+                <item name="listens" xsi:type="array">
+                    <item name="responseData.error" xsi:type="string">visible</item>
+                    <item name="responseData.message" xsi:type="string">content</item>
+                </item>
+            </item>
+        </argument>
+    </container>
+    <container name="success_messages" component="Magento_Ui/js/form/components/html">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="additionalClasses" xsi:type="string">message message-success</item>
+                <item name="visible" xsi:type="boolean">false</item>
+                <item name="imports" xsi:type="array">
+                    <item name="responseData" xsi:type="string">${ $.parentName }:responseData</item>
+                </item>
+                <item name="listens" xsi:type="array">
+                    <item name="responseData.success" xsi:type="string">visible</item>
+                    <item name="responseData.message" xsi:type="string">content</item>
+                </item>
+            </item>
+        </argument>
+    </container>
+
+    <fieldset name="general">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="is_collection" xsi:type="boolean">true</item>
+            </item>
+        </argument>
+        <settings>
+            <label/>
+            <dataScope/>
+        </settings>
+
+        <field name="sub_id" formElement="hidden">
+            <settings>
+                <dataType>text</dataType>
+            </settings>
+        </field>
+        <field name="sub_status" sortOrder="10" formElement="select">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Status</label>
+                <visible>true</visible>
+                <dataScope>sub_status</dataScope>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="\Bss\CompanyAccount\Model\Config\Source\EnableDisable"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="sub_email" sortOrder="20" formElement="input">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Email</label>
+                <visible>true</visible>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                    <rule name="validate-email" xsi:type="boolean">true</rule>
+                    <rule name="max_text_length" xsi:type="number">255</rule>
+                </validation>
+            </settings>
+        </field>
+        <field name="sub_name" sortOrder="30" formElement="input">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Sub-user Name</label>
+                <visible>true</visible>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                    <rule name="max_text_length" xsi:type="number">255</rule>
+                </validation>
+            </settings>
+        </field>
+        <field name="role_id" sortOrder="40" formElement="select">
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>text</dataType>
+                <dataScope>role_id</dataScope>
+                <label>Role</label>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="\Bss\CompanyAccount\Model\Config\Source\RoleOptions"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+    </fieldset>
+</form>

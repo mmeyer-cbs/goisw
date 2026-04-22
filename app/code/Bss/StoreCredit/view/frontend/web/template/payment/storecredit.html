@@ -1,0 +1,47 @@
+<!-- ko if: isDisplayed() -->
+    <div class="payment-option _collapsible opc-payment-additional bss-store-credit-code"
+         data-bind="mageInit: {'collapsible':{'openedState': '_active'}}">
+        <div class="payment-option-title field choice" data-role="title">
+            <span class="action action-toggle" id="block-bss-store-credit-heading" role="heading" aria-level="2">
+                <!-- ko i18n: 'Apply Store Credit'--><!-- /ko -->
+            </span>
+        </div>
+        <div class="payment-option-content" data-role="content">
+            <!-- ko foreach: getRegion('messages') -->
+            <!-- ko template: getTemplate() --><!-- /ko -->
+            <!--/ko-->
+            <form class="form form-bss-store-credit" id="bss-store-credit-form">
+                <div class="payment-option-inner">
+                    <div class="field">
+                        <div class="block-content">
+                            <span class="balance-price-label">
+                                <span data-bind="i18n: 'Your Store Credit:'"></span>
+                                <span data-bind="text: totalAmountCustomer()" class="price"></span>
+                            </span>
+                        </div>
+                        <div class="control">
+                            <input class="input-text validate-zero-or-greater"
+                                   type="text"
+                                   id="bss-store-credit-code"
+                                   name="bss_store_credit_code"
+                                   data-validate="{'required-entry':true}"
+                                   data-bind="value: amount, attr:{placeholder: $t('Enter store credit')} " />
+                        </div>
+                    </div>
+                </div>
+                <div class="actions-toolbar">
+                    <div class="primary">
+                        <button class="action bss-store-credit-apply" type="submit" data-bind="'value': $t('Apply'), click: apply">
+                            <span><!-- ko i18n: 'Apply'--><!-- /ko --></span>
+                        </button>
+                        <!-- ko if: isApplied() -->
+                            <button class="action bss-store-credit-cancel" type="submit" data-bind="'value': $t('Cancel'), click: cancel">
+                                <span><!-- ko i18n: 'Cancel'--><!-- /ko --></span>
+                            </button>
+                        <!-- /ko -->
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+<!-- /ko -->

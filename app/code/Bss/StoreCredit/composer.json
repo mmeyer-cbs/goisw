@@ -1,0 +1,19 @@
+{
+    "name": "bsscommerce/store-credit",
+    "description": "Bss Store Credit Module",
+    "type": "magento2-module",
+    "version": "1.1.8",
+    "license": [
+        "OSL-3.0",
+        "AFL-3.0"
+    ],
+    "suggest": {
+        "magento/module-cookie": "100.0.*"
+    },
+    "autoload": {
+        "files": [ "registration.php" ],
+        "psr-4": {
+            "Bss\\StoreCredit\\": ""
+        }
+    }
+}

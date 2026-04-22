@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_CustomPricing
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2020 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="styles"/>
+    <head>
+        <css src="Bss_CustomPricing::css/adminhtml/bss-custom-fieldset.css"/>
+    </head>
+    <body>
+        <referenceContainer name="content">
+            <uiComponent name="bss_price_rule_form" />
+        </referenceContainer>
+<!--        <referenceContainer name="content">-->
+<!--            <block class="Bss\CustomPricing\Block\Adminhtml\PriceRule\Instance\Edit" name="price_rule_instance_edit"/>-->
+<!--        </referenceContainer>-->
+<!--        <referenceContainer name="left">-->
+<!--            <block class="Bss\CustomPricing\Block\Adminhtml\PriceRule\Instance\Edit\Tabs" name="price_rule_instance_edit_tabs">-->
+<!--                <block class="Bss\CustomPricing\Block\Adminhtml\PriceRule\Instance\Edit\Tab\General" name="price_rule_instance_edit_tab_settings"/>-->
+<!--&lt;!&ndash;                <block class="Magento\Widget\Block\Adminhtml\Widget\Instance\Edit\Tab\Main" name="price_rule_instance_edit_tab_main"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                <block class="Magento\Widget\Block\Adminhtml\Widget\Instance\Edit\Tab\Properties" name="price_rule_instance_edit_tab_properties"/>&ndash;&gt;-->
+<!--                <action method="addTab">-->
+<!--                    <argument name="name" xsi:type="string">settings_section</argument>-->
+<!--                    <argument name="block" xsi:type="string">price_rule_instance_edit_tab_settings</argument>-->
+<!--                </action>-->
+<!--&lt;!&ndash;                <action method="addTab">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <argument name="name" xsi:type="string">main_section</argument>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <argument name="block" xsi:type="string">price_rule_instance_edit_tab_main</argument>&ndash;&gt;-->
+<!--&lt;!&ndash;                </action>&ndash;&gt;-->
+<!--&lt;!&ndash;                <action method="addTab">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <argument name="name" xsi:type="string">properties_section</argument>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <argument name="block" xsi:type="string">price_rule_instance_edit_tab_properties</argument>&ndash;&gt;-->
+<!--&lt;!&ndash;                </action>&ndash;&gt;-->
+<!--            </block>-->
+<!--        </referenceContainer>-->
+<!--        <referenceContainer name="js">-->
+<!--            <block class="Magento\Backend\Block\Template" template="Bss_CustomPricing::price_rule/js.phtml" name="price_rule_instance_js"/>-->
+<!--        </referenceContainer>-->
+    </body>
+</page>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_CustomPricing
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2020-2023 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <!-- Add new Tab -->
+        <tab id="bss" translate="label" sortOrder="300">
+            <label><![CDATA[Bss Commerce]]></label>
+        </tab>
+        <section id="bss_custom_pricing" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label><![CDATA[Custom Pricing]]></label>
+            <tab>bss</tab>
+            <resource>Bss_CustomPricing::config</resource>
+            <group id="general" sortOrder="10" translate="label" type="text" showInDefault="1" showInStore="1" showInWebsite="1">
+                <label><![CDATA[General Config]]></label>
+                <field id="enable" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label><![CDATA[Enable]]></label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[Version 1.1.0]]></comment>
+                </field>
+
+                <field id="apply_normal_special_price" translate="label" type="select" sortOrder="20" showInStore="0" showInWebsite="1" showInDefault="1">
+                    <label><![CDATA[Apply Normal Special Price]]></label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[Apply Normal Special Price to product that has Custom Price]]></comment>
+                </field>
+
+                <field id="apply_normal_tier_price" translate="label" type="select" sortOrder="30" showInStore="0" showInWebsite="1" showInDefault="1">
+                    <label><![CDATA[Apply Normal Tier Price]]></label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[Apply Normal Tier Price to product that has Custom Price]]></comment>
+                </field>
+
+                <!-- <field id="price_strategy" translate="label" type="select" sortOrder="40" showInStore="0" showInWebsite="1" showInDefault="1">
+                    <label><![CDATA[Price Strategy]]></label>
+                    <source_model>Bss\CustomPricing\Model\Config\Source\PriceStrategy</source_model>
+                    <comment><![CDATA[How price was assign to product when the customer was assign to many Price Rule with same product.]]></comment>
+                </field> -->
+            </group>
+
+            <group id="recommended_ext" sortOrder="20" type="text" translate="label" showInWebsite="1" showInStore="1" showInDefault="1">
+                <label><![CDATA[Recommended Extensions]]></label>
+                <frontend_model>Bss\CustomPricing\Block\Adminhtml\Config\RecommendedExtensions</frontend_model>
+            </group>
+        </section>
+    </system>
+</config>

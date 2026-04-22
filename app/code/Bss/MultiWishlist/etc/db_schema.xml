@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * @category   BSS
+ * @package    Bss_MultiWishlist
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2018-2022 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+  <table name="bss_multiwishlist" resource="default" engine="innodb" comment="Bss MultiWishlist">
+    <column xsi:type="int" name="multi_wishlist_id" padding="11" unsigned="false" nullable="false" identity="true" comment="ID"/>
+    <column xsi:type="int" name="customer_id" padding="10" unsigned="true" nullable="false" identity="false" default="0" comment="Customer Id"/>
+    <column xsi:type="text" name="wishlist_name" nullable="false" comment="Wishlist Name"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="multi_wishlist_id"/>
+    </constraint>
+    <index referenceId="BSS_MULTIWISHLIST_MULTI_WISHLIST_ID" indexType="btree">
+      <column name="multi_wishlist_id"/>
+    </index>
+  </table>
+  <table name="wishlist_item" resource="default">
+    <column xsi:type="int" name="multi_wishlist_id" padding="11" unsigned="false" nullable="false" identity="false" default="0" comment="Multi Wishlish Id"/>
+  </table>
+</schema>

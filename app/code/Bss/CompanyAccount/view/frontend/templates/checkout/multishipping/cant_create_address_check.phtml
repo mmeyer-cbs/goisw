@@ -1,0 +1,29 @@
+<?php
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_CompanyAccount
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2020 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+/** @var $block \Bss\CompanyAccount\Block\Checkout\Multishipping\CreateAddressPermissionCheck */
+?>
+<div id="create_address_checker"></div>
+<script type="text/x-magento-init">
+    {
+        "#create_address_checker": {
+            "Bss_CompanyAccount/js/checkout/cant-create-address-checkout": {
+                "cantCreateAddress": <?= $block->getSerializer()->serialize($block->cantCreateAddress()) ?>
+            }
+        }
+    }
+</script>

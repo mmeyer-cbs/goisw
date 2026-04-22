@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_StoreCredit
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2017-2021 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+-->
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
+    <route url="/V1/carts/mine/bss-store-credit/apply/:amount" method="PUT">
+        <service class="Bss\StoreCredit\Api\StoreCreditRepositoryInterface" method="apply"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+
+    <route method="GET" url="/V1/bsscommerce/storecredit/getconfig/:storeId">
+        <service class="Bss\StoreCredit\Api\StoreCreditManagementInterface" method="getConfig"/>
+        <resources>
+            <resource ref="Bss_StoreCredit::config_storecredit"/>
+        </resources>
+    </route>
+
+    <route method="GET" url="/V1/bsscommerce/storecredit/getcredit/customerid/:customerId/websiteid/:websiteId">
+        <service class="Bss\StoreCredit\Api\StoreCreditManagementInterface" method="getCredit"/>
+        <resources>
+            <resource ref="Magento_Customer::customer"/>
+        </resources>
+    </route>
+
+    <route method="GET" url="/V1/bsscommerce/storecredit/getcredit/customerid/:customerId">
+        <service class="Bss\StoreCredit\Api\StoreCreditManagementInterface" method="getAllCreditCustomerId"/>
+        <resources>
+            <resource ref="Magento_Customer::customer"/>
+        </resources>
+    </route>
+
+    <route method="GET" url="/V1/bsscommerce/storecredit/gethistory/customerid/:customerId">
+        <service class="Bss\StoreCredit\Api\StoreCreditManagementInterface" method="getAllHistoryCreditCustomerId"/>
+        <resources>
+            <resource ref="Magento_Customer::customer"/>
+        </resources>
+    </route>
+
+    <route method="GET" url="/V1/bsscommerce/storecredit/gethistory/historyid/:historyId">
+        <service class="Bss\StoreCredit\Api\StoreCreditManagementInterface" method="getHistoryById"/>
+        <resources>
+            <resource ref="Magento_Customer::customer"/>
+        </resources>
+    </route>
+
+    <route method="GET" url="/V1/bsscommerce/storecredit/gethistory/interval/startdate/:startDate/enddate/:endDate">
+        <service class="Bss\StoreCredit\Api\StoreCreditManagementInterface" method="getHistoryInInterval"/>
+        <resources>
+            <resource ref="Bss_StoreCredit::storecredit_transactions"/>
+        </resources>
+    </route>
+
+    <route method="GET" url="/V1/bsscommerce/storecredit/getreport/interval/startdate/:startDate/enddate/:endDate/period/:period">
+        <service class="Bss\StoreCredit\Api\StoreCreditManagementInterface" method="getReport"/>
+        <resources>
+            <resource ref="Bss_StoreCredit::storecredit_report"/>
+        </resources>
+    </route>
+
+    <route method="POST" url="/V1/bsscommerce/storecredit/updatecredit">
+        <service class="Bss\StoreCredit\Api\UpdateCreditInterface" method="updateCredit"/>
+        <resources>
+            <resource ref="Magento_Customer::customer"/>
+        </resources>
+    </route>
+
+</routes>

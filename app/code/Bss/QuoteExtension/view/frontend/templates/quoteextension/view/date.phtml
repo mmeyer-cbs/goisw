@@ -1,0 +1,73 @@
+<?php
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_QuoteExtension
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2018-2021 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+
+/** @var $block Info */
+
+use Bss\QuoteExtension\Block\QuoteExtension\View\Info;
+use Bss\QuoteExtension\Model\Config\Source\Status;
+
+?>
+<?php // @codingStandardsIgnoreFile ?>
+
+<?php
+$requestQuote = $block->getRequestQuote();
+$expiredDay = $requestQuote->getExpiry();
+$quote = $block->getQuoteExtension();
+?>
+<div class="quote-title quote-date">
+    <span><?= $block->escapeHtml(__('Quote Information')); ?></span>
+</div>
+<?php if ($requestQuote->getSubName()): ?>
+    <div class="sub-user-name">
+        <span><b>Created By:</b><?= /* @escapeNotVerified */
+            $block->escapeHtml(__(' %1', $requestQuote->getSubName())); ?></span>
+    </div>
+    <div class="sub-user-email">
+        <span><?= /* @escapeNotVerified */
+            $block->escapeHtml(__('Sub User Email: %1', $requestQuote->getSubEmail())); ?></span>
+    </div>
+    <div class="sub-user-role">
+        <span><?= /* @escapeNotVerified */
+            $block->escapeHtml(__('Sub User Role: %1', $requestQuote->getRoleName())); ?></span>
+    </div>
+<?php else : ?>
+    <div class="sub-user-name">
+        <span><b>Created By:</b><?= /* @escapeNotVerified */
+            $block->escapeHtml(__(' %1', $requestQuote->getCustomerName())); ?></span>
+    </div>
+    <div class="sub-user-email">
+        <span><?= /* @escapeNotVerified */
+            $block->escapeHtml(__('Email: %1', $requestQuote->getEmail())); ?></span>
+    </div>
+<?php endif; ?>
+<div class="order-date">
+    <span class="quote-label"><?= /* @escapeNotVerified */
+        $block->escapeHtml(__('Quote Date: %1', $block->formatDate($requestQuote->getCreatedAt(), IntlDateFormatter::LONG))); ?></span>
+</div>
+<div class="quote-expiry">
+    <?php if ($requestQuote->getStatus() != Status::STATE_EXPIRED): ?>
+        <span><?= /* @escapeNotVerified */
+            $block->escapeHtml(__('Expire At: %1', $block->formatDate($expiredDay, IntlDateFormatter::LONG))); ?></span>
+    <?php endif; ?>
+</div>
+<?php if ($block->canShowCurrentSubtotal()) : ?>
+    <div class="current-total">
+        <span><strong><?= /* @escapeNotVerified */
+                __('Current Total: %1', $block->formatPrice($quote->getGrandTotal(), $quote->getStoreId(), $quote->getQuoteCurrencyCode())); ?></strong></span>
+    </div>
+<?php endif; ?>

@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_B2bPorto
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2020 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+ -->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+
+    <body>
+        <move element="miniquoteextension" destination="porto_header" />
+        <referenceContainer name="category.product.list.additional">
+            <block name="add_multi_cart" template="Bss_B2bPorto::category/products.phtml"/>
+        </referenceContainer>
+        <referenceBlock name="porto_header">
+            <action method="setTemplate">
+                <argument name="template" xsi:type="string">Bss_B2bPorto::html/header.phtml</argument>
+            </action>
+        </referenceBlock>
+
+        <referenceContainer name="after.body.start">
+            <block class="Bss\MultiWishlist\Block\MultiWishlist"
+                   name="bss.multiwishlist.popup" as="bss.multiwishlist.popup"
+                   template="Bss_B2bPorto::multiwishlist/custom_multiwishlist.phtml" ifconfig="bss_multiwishlist/general/enable"/>
+        </referenceContainer>
+    </body>
+</page>

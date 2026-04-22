@@ -1,0 +1,74 @@
+<?php
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_QuoteExtension
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2018-2019 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+
+/** @var $block \Magento\Catalog\Block\Product\View */
+?>
+<?php // @codingStandardsIgnoreFile?>
+
+<?php $_product = $block->getProduct(); ?>
+<?php
+    $isConfigurableGridViewEnabled = $block->getIsConfigurableGridView();
+    /** @var \Magento\Framework\Serialize\Serializer\Json $jsonSerializer */
+    $jsonSerializer = $block->getSerializer();
+    $isConfigurableProduct = $_product->getTypeId() == \Magento\ConfigurableProduct\Model\Product\Type\Configurable::TYPE_CODE;
+    $isPortoTheme = $block->getIsPortoTheme();
+?>
+<?php $buttonTitle = $block->escapeHtml(__('Update Quote')); ?>
+<?php if ($_product->isSaleable()): ?>
+    <div class="box-tocart update">
+        <fieldset class="fieldset">
+            <?php if ($block->shouldRenderQuantity() && ((!$isConfigurableGridViewEnabled && $isConfigurableProduct) || !$isConfigurableProduct)): ?>
+                <div class="field qty">
+                    <label class="label" for="qty"><span><?= /* @escapeNotVerified */ $block->escapeHtml(__('Qty')); ?></span></label>
+                    <div class="control">
+                        <input type="number"
+                               name="qty"
+                               id="qty"
+                               value=""
+                               title="<?= /* @escapeNotVerified */ $block->escapeHtmlAttr(__('Qty')); ?>"
+                               class="input-text qty"
+                               data-validate="<?= $block->escapeHtml($jsonSerializer->serialize($block->getQuantityValidators())) ?>"/>
+                        <?php if ($isPortoTheme) :?>
+                            <div class="qty-changer">
+                                <a href="javascript:void(0)" class="qty-inc"><i class="porto-icon-up-dir"></i></a>
+                                <a href="javascript:void(0)" class="qty-dec"><i class="porto-icon-down-dir"></i></a>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            <?php endif; ?>
+            <div class="actions">
+                <button type="submit"
+                        title="<?= /* @escapeNotVerified */ $block->escapeHtmlAttr($buttonTitle); ?>"
+                        class="action primary toquote"
+                        id="product-updatequote-button">
+                    <span><?= /* @escapeNotVerified */ $block->escapeHtml($buttonTitle); ?></span>
+                </button>
+                <?= $block->getChildHtml('', true) ?>
+            </div>
+        </fieldset>
+    </div>
+<?php endif; ?>
+
+<script type="text/x-magento-init">
+    {
+        "#bss_configurablegridview": {
+            "Bss_QuoteExtension/js/cgv/view/configure/options-updater": {}
+        }
+    }
+</script>

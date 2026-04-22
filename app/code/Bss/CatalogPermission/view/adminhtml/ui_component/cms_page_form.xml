@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Bss Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   Bss
+ * @package    Bss_CatalogPermission
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2018-2019 Bss Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+-->
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <fieldset name="catalog_permission_page">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="label" xsi:type="string" translate="true">CMS Page Permission</item>
+                <item name="collapsible" xsi:type="boolean">true</item>
+                <item name="sortOrder" xsi:type="number">6</item>
+            </item>
+        </argument>
+
+        <field name="bss_redirect_type">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Bss\CatalogPermission\Model\Category\Attribute\Source\RedirectType</item>
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">45</item>
+                    <item name="dataType" xsi:type="string">string</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="dataScope" xsi:type="string">bss_redirect_type</item>
+                    <item name="label" xsi:type="string" translate="true">Redirect Type</item>
+                </item>
+            </argument>
+        </field>
+
+        <field name="bss_select_page">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Bss\CatalogPermission\Model\Config\Source\BssListCmsPage</item>
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">50</item>
+                    <item name="dataType" xsi:type="string">string</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="dataScope" xsi:type="string">bss_select_page</item>
+                    <item name="label" xsi:type="string" translate="true">Select Page</item>
+                </item>
+            </argument>
+        </field>
+
+        <field name="bss_custom_url">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">55</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="dataScope" xsi:type="string">bss_custom_url</item>
+                    <item name="label" xsi:type="string" translate="true">Custom Url</item>
+                    <item name="notice" xsi:type="string" translate="true"><![CDATA[(1) Only Applied with Custom Url. (2) Example: training.html]]></item>
+                </item>
+            </argument>
+        </field>
+
+        <field name="bss_error_message">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">60</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="dataScope" xsi:type="string">bss_error_message</item>
+                    <item name="label" xsi:type="string" translate="true">Bss Error Message</item>
+                </item>
+            </argument>
+        </field>
+
+        <field name="bss_customer_group_page">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Bss\CatalogPermission\Model\Category\Attribute\Source\CustomSource</item>
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">65</item>
+                    <item name="dataType" xsi:type="string">string</item>
+                    <item name="formElement" xsi:type="string">multiselect</item>
+                    <item name="dataScope" xsi:type="string">bss_customer_group</item>
+                    <item name="label" xsi:type="string" translate="true">Restricted Customer Group</item>
+					<item name="notice" xsi:type="string" translate="true"><![CDATA[Please select customer groups to restrict access]]></item>
+                </item>
+            </argument>
+		</field>
+    </fieldset>
+</form>

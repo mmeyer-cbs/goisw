@@ -1,0 +1,73 @@
+<?php
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_QuoteExtension
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2018-2019 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+
+// @codingStandardsIgnoreFile
+?>
+<?php /** @var $block \Bss\QuoteExtension\Block\Adminhtml\QuoteExtension\Edit\Shipping\Method/Form */ ?>
+<?php $_shippingRateGroups = $block->getShippingRates(); ?>
+<?php $taxHelper = $this->helper('Magento\Tax\Helper\Data'); ?>
+<?php $radioProperty = 'name="quote[shipping_method]" type="radio" onclick="quote.setShippingMethod(this.value)"' ?>
+<?php if ($_shippingRateGroups) : ?>
+    <?php if ($_rate = $block->getActiveMethodRate()) : ?>
+        <?php
+        if ($_rate->getMethodTitle()) {
+            $methodTitle = $block->escapeHtml($_rate->getMethodTitle());
+        } else {
+            $methodTitle = $block->escapeHtml($_rate->getMethodDescription());
+        }
+        ?>
+        <div id="quote-shipping-method-info" class="quote-shipping-method-info">
+            <dl class="admin__quote-shipment-methods">
+                <dt class="admin__quote-shipment-methods-title">
+                    <?php echo $block->escapeHtml($block->getCarrierName($_rate->getCarrier())) ?>
+                </dt>
+                <dd class="admin__quote-shipment-methods-options">
+                    <?php echo $methodTitle ?>
+                    -
+                    <strong>
+                        <?php
+                        $_excl = $block->getShippingPrice(
+                            $_rate->getPrice(),
+                            $taxHelper->displayShippingPriceIncludingTax()
+                        );
+                        ?>
+                        <?php $_incl = $block->getShippingPrice($_rate->getPrice(), true); ?>
+
+                        <?php echo $_excl; ?>
+                        <?php if ($taxHelper->displayShippingBothPrices() && $_incl != $_excl) : ?>
+                            (<?php echo __('Incl. Tax'); ?><?php echo $_incl; ?>)
+                        <?php endif; ?>
+                    </strong>
+                </dd>
+            </dl>
+        </div>
+    <?php endif; ?>
+<?php elseif ($block->getIsRateRequest()) : ?>
+    <div class="quote-shipping-method-summary">
+        <strong
+            class="quote-shipping-method-not-available"
+        ><?php echo __('Sorry, no quotes are available for this quote.') ?></strong>
+    </div>
+<?php else : ?>
+    <div id="quote-shipping-method-summary" class="quote-shipping-method-summary">
+        <a href="#" onclick="quote.loadShippingRates();return false" class="action-default">
+            <span><?php echo __('Get shipping methods and rates') ?></span>
+        </a>
+        <input type="hidden" name="quote[has_shipping]" value=""/>
+    </div>
+<?php endif; ?>

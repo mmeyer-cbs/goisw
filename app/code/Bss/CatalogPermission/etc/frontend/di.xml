@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Bss Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   Bss
+ * @package    Bss_CatalogPermission
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2018-2019 Bss Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Catalog\Model\Category">
+        <plugin name="category_plugin"
+                type="Bss\CatalogPermission\Plugin\Model\Category"
+                sortOrder="10" />
+    </type>
+
+    <type name="Magento\Cms\Controller\Page\View">
+        <plugin name="cms_page_view_plugin"
+                type="Bss\CatalogPermission\Plugin\CmsView"
+                sortOrder="10" />
+    </type>
+
+    <type name="Magento\Catalog\Block\Widget\Link">
+        <plugin name="cms_disable_category"
+                type="Bss\CatalogPermission\Plugin\Block\Widget\Link"
+                sortOrder="10" />
+    </type>
+
+    <type name="Magento\Catalog\Model\ResourceModel\Category">
+        <plugin name="cms_disable_category_search"
+                type="Bss\CatalogPermission\Plugin\Model\ResourceModel\Category"
+                sortOrder="10" />
+    </type>
+
+    <type name="Magento\Theme\Block\Html\Topmenu">
+        <plugin name="bss_catalog_permissions_topmenu"
+                type="Bss\CatalogPermission\Plugin\Theme\Block\Html\Topmenu"
+                sortOrder="10"/>
+    </type>
+
+    <type name="Magento\CatalogWidget\Block\Product\ProductsList">
+        <plugin name="catalog_widget_collection_plugin"
+                type="Bss\CatalogPermission\Plugin\CatalogWidgetCollectionPlugin"
+                sortOrder="10" />
+    </type>
+
+    <type name="\Magento\Catalog\Block\Product\ListProduct">
+        <plugin name="bss_catalog_permissions_advanced_search"
+                type="Bss\CatalogPermission\Plugin\Block\Product\ListProduct"
+                sortOrder="10"/>
+    </type>
+
+</config>

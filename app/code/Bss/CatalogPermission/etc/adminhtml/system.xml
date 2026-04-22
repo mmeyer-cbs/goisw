@@ -1,0 +1,102 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Bss Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   Bss
+ * @package    Bss_CatalogPermission
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2018-2023 Bss Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="bss"  translate="label"  sortOrder="300">
+            <label><![CDATA[Bss Commerce]]></label>
+        </tab>
+        <section id="catalog_permission" translate="label" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label><![CDATA[Catalog Permission]]></label>
+            <tab>bss</tab>
+            <resource>Bss_CatalogPermission::CatalogPermission_config</resource>
+
+            <group id="general" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label><![CDATA[Catalog Permission]]></label>
+
+                <field id="enable_catalog" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label><![CDATA[Enable Catalog Permission]]></label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[Version  1.2.3]]></comment>
+                </field>
+
+                <field id="error_message" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label><![CDATA[Error Message]]></label>
+                </field>
+
+                <field id="redirect_page" translate="label" type="select" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label><![CDATA[Redirect to Page]]></label>
+                    <source_model>Bss\CatalogPermission\Model\Config\Source\BssListCmsPage</source_model>
+                    <comment><![CDATA[Please make sure that the page is not permission by CMS permission function.]]></comment>
+                </field>
+                <field id="url_link" translate="label" type="text" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label><![CDATA[Custom Url]]></label>
+                    <depends>
+                        <field id="catalog_permission/general/redirect_page" separator=",">custom-url</field>
+                    </depends>
+                    <comment><![CDATA[(1) Only Applied with Custom Url. (2) Example: training.html]]></comment>
+                </field>
+                <field id="disable_categories_link" translate="label" type="select" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label><![CDATA[Disable Category Link]]></label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+
+                <field id="enable_product_restricted" translate="label" type="select" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label><![CDATA[Use Category Permission for Products Belonging to]]></label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[Also disable product if it belong to category with given permission.]]></comment>
+                </field>
+
+                <field id="use_parent_category" translate="label" type="select" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label><![CDATA[Apply Parent Category Setting to Sub-Category]]></label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[This config is only apply for Restricted Customer Group.]]></comment>
+                </field>
+            </group>
+
+            <group id="cms_general" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label><![CDATA[CMS Page Permission]]></label>
+                <field id="enable_cms_page" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label><![CDATA[Enable CMS Page Permission]]></label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[Version  1.1.2]]></comment>
+                </field>
+
+                <field id="cms_error_message" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label><![CDATA[Error Message]]></label>
+                </field>
+
+                <field id="cms_redirect_page" translate="label" type="select" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label><![CDATA[Redirect to Page]]></label>
+                    <source_model>Bss\CatalogPermission\Model\Config\Source\BssListCmsPage</source_model>
+                    <comment><![CDATA[Please make sure that the page is not permission by CMS permission function.]]></comment>
+                </field>
+
+                <field id="url_link" translate="label" type="text" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label><![CDATA[Custom Url]]></label>
+                    <depends>
+                        <field id="catalog_permission/cms_general/cms_redirect_page" separator=",">custom-url</field>
+                    </depends>
+                    <comment><![CDATA[(1) Only Applied with Custom Url. (2) Example: training.html]]></comment>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

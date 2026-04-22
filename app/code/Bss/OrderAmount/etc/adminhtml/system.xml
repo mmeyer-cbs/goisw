@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_OrderAmount
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2015-2019 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="sales">
+            <group id="minimum_order">                
+                <field id="amount">
+                    <label>Minimum Amount for Customer Group</label>
+                    <frontend_model>Bss\OrderAmount\Block\Form\LinkedAttributes</frontend_model>
+	                <backend_model>Bss\OrderAmount\Model\Config\Backend\Serialized</backend_model>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

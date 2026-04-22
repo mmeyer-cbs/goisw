@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="checkout_overview">
+            <action method='setTemplate'>
+                <argument name='template' xsi:type='string'>Bss_CustomerAttributes::multishipping/checkout/overview.phtml</argument>
+            </action>
+            <arguments>
+                <argument name="view_model" xsi:type="object">
+                    Bss\CustomerAttributes\ViewModel\Address\CustomAddressHelper
+                </argument>
+            </arguments>
+        </referenceBlock>
+    </body>
+</page>

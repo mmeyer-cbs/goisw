@@ -1,0 +1,48 @@
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_CompanyCredit
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2020 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+-->
+<!--@subject {{trans "%store_name: Available Credit Update" store_name=$store.getFrontendName()}} @-->
+<!--@vars {
+"var customer":"Customer Name",
+"var old_value":"Old Available Credit",
+"var new_value":"New Available Credit",
+"var comment":"Comment"
+} @-->
+{{template config_path="design/email/header_template"}}
+<table cellspacing="0" cellpadding="0" border="0" width="100%">
+    <tr class="email-intro">
+        <td>
+            <h1>{{trans "Hi %customer_name" customer_name=$customer_name}}</h1>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <p>{{trans "Your available credit has been updated: from %old_value " old_value=$old_value |raw}}
+                {{trans "to %new_value" new_value=$new_value |raw}}
+            </p>
+        </td>
+    </tr>
+    {{depend comment}}
+    <tr>
+        <td>
+            <p><h1>{{var comment}}</h1></p>
+        </td>
+    </tr>
+    {{/depend}}
+</table>
+{{template config_path="design/email/footer_template"}}

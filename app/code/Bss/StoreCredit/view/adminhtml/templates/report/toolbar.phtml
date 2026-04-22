@@ -1,0 +1,95 @@
+<?php
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_StoreCredit
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2017-2021 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+// @codingStandardsIgnoreFile
+?>
+
+<?php /** @var $block \Bss\StoreCredit\Block\Adminhtml\Report\Toolbar */ ?>
+
+<div class="admin__data-grid-header admin__data-grid-toolbar">
+    <div class="admin__data-grid-header-row">
+        <div class="admin__filter-actions" data-role="filter-form" id="bss_store_credit_report_date_range">
+            <span class="field-row">
+                <label for="bss_store_credit_report_from"
+                       class="admin__control-support-text">
+                    <span><?= $block->escapeHtml(__('From')); ?>:</span>
+                </label>
+                <input class="input-text no-changes required-entry admin__control-text"
+                       type="text"
+                       id="bss_store_credit_report_from"
+                       name="report_from"
+                       value="<?= /* @noEscape */
+                       $block->getFromDefault(); ?>">
+            </span>
+
+            <span class="field-row">
+                <label for="bss_store_credit_report_to"
+                       class="admin__control-support-text">
+                    <span><?= $block->escapeHtml(__('To')); ?>:</span>
+                </label>
+                <input class="input-text no-changes required-entry admin__control-text"
+                       type="text"
+                       id="bss_store_credit_report_to"
+                       name="report_to"
+                       value="<?= /* @noEscape */
+                       $block->getToDefault(); ?>"/>
+            </span>
+
+            <span class="field-row admin__control-filter">
+                 <label for="bss_store_credit_report_show_by" class="admin__control-support-text">
+                    <span><?= $block->escapeHtml(__('Show By')); ?>:</span>
+                 </label>
+                <select name="report_period" id="bss_store_credit_report_show_by" class="admin__control-select">
+                    <?php foreach ($block->getPeriods() as $_value => $_label) : ?>
+                        <option value="<?= $block->escapeHtmlAttr($_value); ?>"
+                            <?php if ('day' == $_value) : ?>
+                                selected
+                            <?php endif; ?>
+                        >
+                            <?= $block->escapeHtml($_label); ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+                <?php if(count($block->getAllWebsite())): ?>
+                    <label for="bss_store_credit_website" class="admin__control-support-text">
+                    <span><?= $block->escapeHtml(__('Website')); ?>:</span>
+                 </label>
+                 <select name="website_id" id="bss_store_credit_website" class="admin__control-select">
+                <?php foreach ($block->getAllWebsite() as $key => $website) : ?>
+                        <option value="<?= $block->escapeHtmlAttr($website["website_id"]); ?>"
+                         <?php if ($key == 1) : ?>
+                             selected
+                         <?php endif; ?>
+                        >
+                            <?= $block->escapeHtml($website["name"]); ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+                <?php endif; ?>
+                <button type="button" title="Refresh" id="bss_store_credit_report_refresh">
+                    <?= $block->escapeHtml(__('Refresh')); ?>
+                </button>
+            </span>
+        </div>
+    </div>
+</div>
+
+<div id="bss_store_credit_report_content" data-mage-init='{
+    "Bss_StoreCredit/js/report/ajax": {
+        "ajaxUrl": "<?= $block->escapeUrl($block->getAjaxUrl()); ?>"
+    }
+}'></div>

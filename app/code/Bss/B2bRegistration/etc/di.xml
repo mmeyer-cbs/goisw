@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_B2bRegistration
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2017-2018 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Magento\Customer\Controller\Account\Confirm" type="Bss\B2bRegistration\Controller\Account\Confirm" />
+    <type name="Magento\Customer\Ui\Component\DataProvider\Document">
+        <plugin name="Bss_B2bRegistration::gridExport"
+                type="Bss\B2bRegistration\Plugin\Ui\Component\DataProvider\Document"
+                sortOrder="30" />
+    </type>
+
+    <type name="Magento\Customer\Controller\Account\LoginPost">
+        <plugin name="bss_change_customer_status" type="Bss\B2bRegistration\Plugin\LoginPost" sortOrder="10"/>
+    </type>
+    <type name="Magento\Customer\Block\Widget\Dob">
+        <plugin name="bss_change_dob_validate" type="Bss\B2bRegistration\Plugin\Dob" sortOrder="10"/>
+    </type>
+    <type name="Magento\Customer\Model\EmailNotification">
+        <plugin name="bss_check_create_account_email" type="Bss\B2bRegistration\Plugin\EmailNotification" sortOrder="10"/>
+    </type>
+    <type name="Magento\Customer\Model\Metadata\Form">
+        <plugin name="bss_add_dob_field" type="Bss\B2bRegistration\Plugin\Form" sortOrder="10"/>
+    </type>
+    <type name="Magento\Customer\Model\Registration">
+        <plugin name="bss_remove_regular_form" type="Bss\B2bRegistration\Plugin\Registration" sortOrder="10"/>
+    </type>
+</config>

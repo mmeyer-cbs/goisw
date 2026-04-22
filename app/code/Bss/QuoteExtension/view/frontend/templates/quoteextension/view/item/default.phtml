@@ -1,0 +1,157 @@
+<?php
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_QuoteExtension
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2018-2019 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+
+/** @var $block \Bss\QuoteExtension\Block\QuoteExtension\Quote\Item\Renderer */
+?>
+<?php // @codingStandardsIgnoreFile ?>
+
+<?php
+$item = $block->getItem();
+$product = $item->getProduct();
+$isVisibleProduct = $product->isVisibleInSiteVisibility();
+/** @var \Magento\Msrp\Helper\Data $helper */
+$helper = $this->helper('Magento\Msrp\Helper\Data');
+/** @var \Bss\QuoteExtension\Helper\CartHidePrice $cartHidePriceHelper */
+$cartHidePriceHelper = $this->helper('Bss\QuoteExtension\Helper\CartHidePrice');
+$canApplyMsrp = $helper->isShowBeforeOrderConfirm($product) && $helper->isMinimalPriceLessMsrp($product);
+$quote = $block->getQuoteExtension();
+?>
+<tbody class="cart item">
+    <tr class="item-info">
+        <td data-th="<?= $block->escapeHtml(__('Item')); ?>" class="col item">
+            <?php if ($block->hasProductUrl()): ?>
+            <a href="<?= $block->escapeUrl($block->getProductUrl()); ?>"
+               title="<?= $block->escapeHtml($block->getProductName()) ?>"
+               tabindex="-1"
+               class="product-item-photo">
+            <?php else: ?>
+                <span class="product-item-photo">
+            <?php endif; ?>
+                <?= $block->getImage($block->getProductForThumbnail(), 'cart_page_product_thumbnail')->toHtml(); ?>
+            <?php if ($block->hasProductUrl()): ?>
+            </a>
+            <?php else: ?>
+            </span>
+            <?php endif; ?>
+            <div class="product-item-details">
+                <strong class="product-item-name">
+                    <?php if ($block->hasProductUrl()): ?>
+                        <a href="<?= $block->escapeUrl($block->getProductUrl()); ?>"
+                        ><?= $block->escapeHtml($block->getProductName()) ?></a>
+                    <?php else: ?>
+                        <?= $block->escapeHtml($block->getProductName()) ?>
+                    <?php endif; ?>
+                </strong>
+                <?php if ($_options = $block->getOptionList()): ?>
+                    <dl class="item-options">
+                        <?php foreach ($_options as $_option): ?>
+                            <?php $_formatedOptionValue = $block->getFormatedOptionValue($_option) ?>
+                            <dt><?= $block->escapeHtml($_option['label']) ?></dt>
+                            <dd>
+                                <?php if (isset($_formatedOptionValue['full_view'])): ?>
+                                    <?= $_formatedOptionValue['full_view']; ?>
+                                <?php else: ?>
+                                    <?= $_formatedOptionValue['value']; ?>
+                                <?php endif; ?>
+                            </dd>
+                        <?php endforeach; ?>
+                    </dl>
+                <?php endif; ?>
+                <?php if ($messages = $block->getMessages()): ?>
+                    <?php foreach ($messages as $message): ?>
+                        <div class="cart item message <?= $block->escapeHtmlAttr($message['type']); ?>">
+                            <div><?= $block->escapeHtml($message['text']) ?></div>
+                        </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+                <?php $addInfoBlock = $block->getProductAdditionalInformationBlock(); ?>
+                <?php if ($addInfoBlock): ?>
+                    <?= $addInfoBlock->setItem($item)->toHtml() ?>
+                <?php endif; ?>
+            </div>
+            <?php $cols = 1; ?>
+        </td>
+        <?php
+        if ($item->getProductType() == 'configurable') {
+            $parentProductId = $item->getProductId();
+            $childProductSku = $item->getSku();
+            $canShowPrice = $cartHidePriceHelper->canShowPrice($parentProductId, $childProductSku, $quote);
+        } else {
+            $canShowPrice = $cartHidePriceHelper->canShowPrice($item->getProductId(), false, $quote);
+        }
+        ?>
+        <?php if ($canShowPrice): ?>
+            <?php if ($canApplyMsrp): ?>
+                <td class="col msrp" data-th="<?= $block->escapeHtml(__('Price')); ?>">
+                        <span class="pricing msrp">
+                            <span class="msrp notice"><?= $block->escapeHtml(__('See price before order confirmation.')); ?></span>
+                            <?php $helpLinkId = 'cart-msrp-help-' . $item->getId(); ?>
+                            <a href="#" class="action help map" id="<?= $block->escapeHtmlAttr($helpLinkId); ?>"
+                                <?php
+                                $json = '{"addToCart":{"helpLinkId": "#';
+                                $json .= $helpLinkId;
+                                $json .= '","productName": "';
+                                $json .= $product->getName();
+                                $json .= '","showAddToCart": false}}';
+                                ?>
+                               data-mage-init='<?= $block->escapeHtml($json); ?>'>
+                                <span><?= $block->escapeHtml(__("What's this?")); ?></span>
+                            </a>
+                        </span>
+                    <?php $cols++; ?>
+                </td>
+            <?php else: ?>
+                <td class="col price" data-th="<?= $block->escapeHtml(__('Price')); ?>">
+                    <?= $block->getUnitPriceHtml($item); ?>
+                    <?php $cols++; ?>
+                </td>
+            <?php endif; ?>
+        <?php else: ?>
+            <td class="col price" data-th="<?= $block->escapeHtml(__('Price')); ?>">
+                <?php $cols++; ?>
+            </td>
+        <?php endif ?>
+        <td class="col qty" data-th="<?= $block->escapeHtml(__('Qty')); ?>">
+            <div class="field qty">
+                <label class="label" for="cart-<?= $block->escapeHtmlAttr($item->getId()); ?>-qty">
+                    <span><?= $block->escapeHtml(__('Qty')); ?></span>
+                </label>
+
+                <div class="control qty">
+                    <input id="cart-<?= $block->escapeHtmlAttr($item->getId()); ?>-qty"
+                           name="quote[<?= $block->escapeHtmlAttr($item->getId()); ?>][qty]"
+                           data-cart-item-id="<?= $block->escapeHtmlAttr($item->getSku()); ?>"
+                           value="<?= $block->escapeHtmlAttr($block->getQty()); ?>"
+                           type="number"
+                           size="4"
+                           title="<?= $block->escapeHtml(__('Qty')); ?>"
+                           class="input-text qty"
+                           maxlength="12"
+                           data-validate="{required:true,'validate-greater-than-zero':true}"
+                           data-role="cart-item-qty"/>
+                </div>
+            </div>
+            <?php $cols++; ?>
+        </td>
+        <td class="col subtotal" data-th="<?= $block->escapeHtml(__('Subtotal')); ?>">
+            <?php if ($canShowPrice): ?>
+                <?= $block->getRowTotalHtml($item); ?>
+            <?php endif ?>
+        </td>
+    </tr>
+</tbody>

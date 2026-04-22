@@ -1,0 +1,37 @@
+<?php
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_QuoteExtension
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2018-2019 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+
+/** @var Bss\QuoteExtension\Block\QuoteExtension\Quote\Item\Renderer\DefaultRenderer $block */
+?>
+<?php // @codingStandardsIgnoreFile ?>
+
+<?php if (!$block->canShowComment()): ?>
+<div class="control comment">
+    <textarea id="quote-<?= $block->getQuoteItem()->getId(); ?>-description"
+              name="cart[<?= $block->getQuoteItem()->getId(); ?>][description]"
+              title="Description"
+              disabled
+              placeholder="<?= $block->escapeHtmlAttr(__('Add notes for this quote item')); ?>"
+              class="input-text quotation-product-comment"
+              maxlength="1024"
+              data-mage-init='{"quoteItemUpdater":{
+                        "itemId": <?= $block->getQuoteItem()->getId(); ?>,
+                        "sessionProductKey": "description"
+              }}'><?= $block->getQuoteItem()->getCurrentCommentItemId(); ?></textarea>
+</div>
+<?php endif; ?>

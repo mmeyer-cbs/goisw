@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_CompanyAccount
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2020 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Customer\Ui\Component\DataProvider\Document">
+        <plugin name="Bss_CompanyAccount::gridExport"
+                type="Bss\CompanyAccount\Plugin\Ui\Component\DataProvider\Document"
+                sortOrder="30"/>
+    </type>
+
+    <type name="Bss\CompanyAccount\Model\Config\Source\SubRole\Reader">
+        <arguments>
+            <argument name="fileName" xsi:type="string">company_rules.xml</argument>
+            <argument name="converter" xsi:type="object">Bss\CompanyAccount\Model\Config\Source\SubRole\Converter
+            </argument>
+            <argument name="schemaLocator" xsi:type="object">
+                Bss\CompanyAccount\Model\Config\Source\SubRole\SchemaLocator
+            </argument>
+        </arguments>
+    </type>
+    <virtualType name="subRoleSourceDataStorage" type="Magento\Framework\Config\Data">
+        <arguments>
+            <argument name="reader" xsi:type="object">Bss\CompanyAccount\Model\Config\Source\SubRole\Reader</argument>
+            <argument name="cacheId" xsi:type="string">company_account_role_source</argument>
+        </arguments>
+    </virtualType>
+    <type name="Bss\CompanyAccount\Model\Config\Source\SubRole\Source">
+        <arguments>
+            <argument name="dataStorage" xsi:type="object">subRoleSourceDataStorage</argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Webapi\Controller\Rest\ParamsOverrider">
+        <arguments>
+            <argument name="paramOverriders" xsi:type="array">
+                <item name="%cart_id%" xsi:type="object">Bss\CompanyAccount\Plugin\Quote\ParamOverriderCartId</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Sales\Model\Order\Email\Container\Container">
+        <plugin name="Magento_Sales_Model_Order_Email_Container_Container"
+                type="Bss\CompanyAccount\Plugin\Order\Email\Container\Container" sortOrder="20"/>
+    </type>
+
+    <type name="Magento\Customer\Model\AccountManagement">
+        <plugin name="Bss_CompanyAccount_Magento\Customer\Model\AccountManagement"
+                type="Bss\CompanyAccount\Plugin\Customer\AccountManagement" sortOrder="20"/>
+    </type>
+
+    <type name="Magento\Customer\Controller\Account\LoginPost">
+        <plugin name="bss_company_account_login_post"
+                type="Bss\CompanyAccount\Plugin\Customer\LoginPost"
+                sortOrder="50"/>
+    </type>
+
+    <type name="Magento\Customer\Controller\Ajax\Login">
+        <plugin name="bss_company_account_ajax_login"
+                type="Bss\CompanyAccount\Plugin\Customer\AjaxLogin"
+                sortOrder="40"/>
+    </type>
+
+    <type name="Magento\Customer\Model\EmailNotification">
+        <plugin name="bss_company_account_customer_email_notification"
+                type="Bss\CompanyAccount\Plugin\Customer\EmailNotification" sortOrder="20"/>
+    </type>
+
+    <type name="Magento\Customer\CustomerData\Customer">
+        <plugin name="bss_company_account_customer_data"
+                type="Bss\CompanyAccount\Plugin\Customer\CustomerData" sortOrder="20"/>
+    </type>
+
+    <type name="Magento\Customer\Controller\Account\ForgotPasswordPost">
+        <plugin name="bss_company_account_customer_forgot_password_post"
+                type="Bss\CompanyAccount\Plugin\Customer\ForgotPasswordPost" sortOrder="20"/>
+    </type>
+
+    <type name="Magento\Customer\Controller\Account\CreatePost">
+        <plugin name="bss_company_account_customer_create"
+                type="Bss\CompanyAccount\Plugin\Customer\CreatePost" sortOrder="20"/>
+    </type>
+    <type name="Bss\B2bRegistration\Controller\Account\CreatePost">
+        <plugin name="bss_company_account_registration_customer_create"
+                type="Bss\CompanyAccount\Plugin\Customer\CreatePost" sortOrder="20"/>
+    </type>
+
+    <type name="Magento\Checkout\Model\Session">
+        <plugin name="bss_company_account_checkout_session"
+                type="Bss\CompanyAccount\Plugin\Checkout\Session" sortOrder="20"/>
+    </type>
+
+    <type name="Magento\Checkout\Controller\Index\Index">
+        <plugin name="bss_company_account_checkout_success"
+                type="Bss\CompanyAccount\Plugin\Customer\Permissions\PlaceOrder" sortOrder="20"/>
+    </type>
+
+    <type name="Magento\Checkout\Block\Onepage\Link">
+        <plugin name="bss_company_account_place_order_check_cart"
+                type="Bss\CompanyAccount\Plugin\Checkout\Button" sortOrder="20"/>
+    </type>
+
+    <type name="Magento\Checkout\Model\ShippingInformationManagement">
+        <plugin name="bss_company_account_shipping_information_management"
+                type="Bss\CompanyAccount\Plugin\Checkout\Model\ShippingInformationManagement"
+                sortOrder="20"/>
+    </type>
+
+    <type name="Magento\Checkout\Model\PaymentInformationManagement">
+        <plugin name="bss_company_account_shipping_information_management"
+                type="Bss\CompanyAccount\Plugin\Checkout\Model\PaymentInformationManagement"
+                sortOrder="20"/>
+    </type>
+
+    <type name="Magento\Quote\Model\ShippingMethodManagement">
+        <plugin name="bss_company_account_shipping_information_management"
+                type="Bss\CompanyAccount\Plugin\Quote\Model\ShippingMethodManagement"
+                sortOrder="20"/>
+    </type>
+
+    <type name="Magento\Quote\Model\Cart\CartTotalRepository">
+        <plugin name="bss_company_account_shipping_information_management"
+                type="Bss\CompanyAccount\Plugin\Quote\Model\CartTotalRepository"
+                sortOrder="20"/>
+    </type>
+
+    <type name="Magento\Quote\Model\ResourceModel\Quote">
+        <plugin name="bss_company_account_quote_resource_model"
+                type="Bss\CompanyAccount\Plugin\Quote\Model\ResourceModel\Quote" sortOrder="20"/>
+    </type>
+
+    <!--  Compatible with One Step Check-out -->
+    <type name="Bss\OneStepCheckout\Controller\Index\Index">
+        <plugin name="get_active_quote" type="Bss\CompanyAccount\Plugin\Quote\GetActiveQuote" sortOrder="10" disabled="false"  />
+    </type>
+
+    <type name="PayPal\Braintree\Model\StoreConfigResolver">
+        <plugin name="bss_company_account_store_config_resolver"
+                type="Bss\CompanyAccount\Plugin\Paypal\Braintree\Model\StoreConfigResolver" sortOrder="20"/>
+    </type>
+
+    <type name="Magento\Multishipping\Helper\Data">
+        <plugin name="bss_company_account_checkout_multi_addrresses"
+                type="Bss\CompanyAccount\Plugin\Checkout\MultiAddresses\Link" sortOrder="20"/>
+    </type>
+
+    <preference for="Magento\Customer\Block\Adminhtml\Edit\Tab\Orders"
+                type="Bss\CompanyAccount\Block\Adminhtml\Order\OrderHistory"/>
+
+    <preference for="Magento\Sales\Model\ResourceModel\Order\Grid\Collection"
+                type="Bss\CompanyAccount\Model\ResourceModel\Order\Grid\Collection"/>
+
+    <!--  Data source -->
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="bss_companyaccount_customer_listroles_listing_data_source" xsi:type="string">
+                    Bss\CompanyAccount\Model\ResourceModel\SubRole\Grid\Collection
+                </item>
+                <item name="bss_companyaccount_customer_subuser_listing_data_source" xsi:type="string">
+                    Bss\CompanyAccount\Model\ResourceModel\SubUser\Grid\Collection
+                </item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Bss\CompanyAccount\Model\ResourceModel\SubRole\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">bss_sub_role</argument>
+            <argument name="eventPrefix" xsi:type="string">namespace_modulename_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">namespace_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Bss\CompanyAccount\Model\ResourceModel\SubRole</argument>
+        </arguments>
+    </type>
+
+    <type name="Bss\CompanyAccount\Model\ResourceModel\SubUser\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">bss_sub_user</argument>
+            <argument name="eventPrefix" xsi:type="string">namespace_modulename_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">namespace_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Bss\CompanyAccount\Model\ResourceModel\SubUser</argument>
+        </arguments>
+    </type>
+    <!--  Api company account  -->
+    <preference for="Bss\CompanyAccount\Api\SubRoleRepositoryInterface"
+                type="Bss\CompanyAccount\Model\SubRoleRepository"/>
+    <preference for="Bss\CompanyAccount\Api\Data\SubRoleInterface"
+                type="Bss\CompanyAccount\Model\SubRole"/>
+    <preference for="Bss\CompanyAccount\Api\SubUserRepositoryInterface"
+                type="Bss\CompanyAccount\Model\SubUserRepository"/>
+    <preference for="Bss\CompanyAccount\Api\Data\SubUserInterface"
+                type="Bss\CompanyAccount\Model\SubUser"/>
+    <preference for="Bss\CompanyAccount\Api\Data\SubRoleSearchResultsInterface"
+                type="Magento\Framework\Api\SearchResults"/>
+    <preference for="Bss\CompanyAccount\Api\Data\SubUserSearchResultsInterface"
+                type="Magento\Framework\Api\SearchResults"/>
+    <preference for="Bss\CompanyAccount\Api\SubUserManagementInterface"
+                type="Bss\CompanyAccount\Model\SubUserManagement"/>
+    <preference for="Bss\CompanyAccount\Api\Data\SubUserQuoteInterface"
+                type="Bss\CompanyAccount\Model\SubUserQuote"/>
+    <preference for="Bss\CompanyAccount\Api\Data\SubUserOrderInterface"
+                type="Bss\CompanyAccount\Model\SubUserOrder"/>
+    <preference for="Bss\CompanyAccount\Api\SubUserOrderRepositoryInterface"
+                type="Bss\CompanyAccount\Model\SubUserOrderRepository"/>
+    <preference for="Bss\CompanyAccount\Api\Data\SubUserOrderSearchResultsInterface"
+                type="Magento\Framework\Api\SearchResults"/>
+    <preference for="Bss\CompanyAccount\Api\SubUserQuoteRepositoryInterface"
+                type="Bss\CompanyAccount\Model\SubUserQuoteRepository"/>
+</config>

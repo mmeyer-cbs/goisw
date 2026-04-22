@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_CustomPricing
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2020 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+-->
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">bss_price_rule_form.bss_price_rule_form_data_source</item>
+        </item>
+        <item name="label" xsi:type="string" translate="true">Rule Information</item>
+    </argument>
+    <settings>
+        <buttons>
+            <button name="save_and_continue" class="Bss\CustomPricing\Block\Adminhtml\PriceRule\Edit\Button\SaveAndContinueButton"/>
+            <button name="save" class="Bss\CustomPricing\Block\Adminhtml\PriceRule\Edit\Button\SaveButton"/>
+            <button name="delete" class="Bss\CustomPricing\Block\Adminhtml\PriceRule\Edit\Button\DeleteButton"/>
+            <button name="reset" class="Bss\CustomPricing\Block\Adminhtml\PriceRule\Edit\Button\ResetButton"/>
+            <button name="back" class="Bss\CustomPricing\Block\Adminhtml\PriceRule\Edit\Button\BackButton"/>
+        </buttons>
+        <namespace>bss_price_rule_form</namespace>
+        <dataScope>data</dataScope>
+        <layout>
+            <navContainerName>left</navContainerName>
+            <type>tabs</type>
+        </layout>
+        <deps>
+            <dep>bss_price_rule_form.bss_price_rule_form_data_source</dep>
+        </deps>
+    </settings>
+    <dataSource name="bss_price_rule_form_data_source">
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+        <settings>
+            <submitUrl path="custom_pricing/priceRules/save"/>
+        </settings>
+        <dataProvider class="Bss\CustomPricing\Model\PriceRule\DataProvider" name="bss_price_rule_form_data_source">
+            <settings>
+                <requestFieldName>id</requestFieldName>
+                <primaryFieldName>id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <fieldset name="general_information">
+        <settings>
+            <additionalClasses>
+                <class name="bss-fieldset-tab">true</class>
+            </additionalClasses>
+            <label translate="true">General Information</label>
+        </settings>
+
+        <field name="id" formElement="hidden">
+            <settings>
+                <dataType>text</dataType>
+            </settings>
+        </field>
+        <field name="status" sortOrder="10" formElement="checkbox">
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>boolean</dataType>
+                <label translate="true">Active</label>
+                <visible>true</visible>
+            </settings>
+            <formElements>
+                <checkbox>
+                    <settings>
+                        <valueMap>
+                            <map name="false" xsi:type="number">0</map>
+                            <map name="true" xsi:type="number">1</map>
+                        </valueMap>
+                        <prefer>toggle</prefer>
+                    </settings>
+                </checkbox>
+            </formElements>
+        </field>
+        <field name="name" sortOrder="20" formElement="input">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Rule Name</label>
+                <visible>true</visible>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                    <rule name="max_text_length" xsi:type="number">80</rule>
+                </validation>
+            </settings>
+        </field>
+        <field name="website_id" sortOrder="30" formElement="select">
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>number</dataType>
+                <dataScope>website_id</dataScope>
+                <label translate="true">Website</label>
+                <tooltip>
+                    <link>https://docs.magento.com/m2/ce/user_guide/configuration/scope.html</link>
+                    <description>What is this?</description>
+                </tooltip>
+                <imports>
+                    <link name="disabled">${ $.provider}:data.general_information.cant_edit_website</link>
+                </imports>
+                <exports>
+                    <link name="website_id">${$.parentName}.website_id:disabled</link>
+                </exports>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="Bss\CustomPricing\Model\Config\Source\SelectWebsiteOption" />
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="description" sortOrder="40" formElement="textarea">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Description</label>
+                <visible>true</visible>
+                <validation>
+                    <rule name="max_text_length" xsi:type="number">255</rule>
+                </validation>
+            </settings>
+        </field>
+        <!-- <field name="priority" sortOrder="50" formElement="input">
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Priority</label>
+                <visible>true</visible>
+                <validation>
+                    <rule name="max_text_length" xsi:type="number">255</rule>
+                </validation>
+            </settings>
+        </field> -->
+        <fieldset name="product_condition" sortOrder="60">
+            <settings>
+                <additionalClasses>
+                    <class name="fieldset-tab-child">true</class>
+                    <class name="no-padding-top">true</class>
+                </additionalClasses>
+                <collapsible>true</collapsible>
+                <opened>false</opened>
+                <label translate="true">Product Conditions (don't add conditions if rule is applied to all products)</label>
+            </settings>
+            <htmlContent name="html_content">
+                <block class="Bss\CustomPricing\Block\Adminhtml\PriceRule\Edit\Tab\GeneralInformation\ProductConditions"
+                       name="custom_pricing_product_edit_tab" />
+            </htmlContent>
+        </fieldset>
+        <fieldset name="customer_condition" sortOrder="70">
+            <settings>
+                <additionalClasses>
+                    <class name="fieldset-tab-child">true</class>
+                    <class name="no-padding-top">true</class>
+                </additionalClasses>
+                <collapsible>true</collapsible>
+                <opened>false</opened>
+                <label translate="true">Customer Conditions (don't add conditions if rule is applied to all customers)</label>
+            </settings>
+            <htmlContent name="html_content">
+                <block class="Bss\CustomPricing\Block\Adminhtml\PriceRule\Edit\Tab\GeneralInformation\CustomerConditions"
+                       name="custom_pricing_customer_edit_tab" />
+            </htmlContent>
+            <field name="is_not_logged_rule" sortOrder="80" formElement="checkbox">
+                <settings>
+                    <validation>
+                        <rule name="required-entry" xsi:type="boolean">false</rule>
+                    </validation>
+                    <dataType>boolean</dataType>
+                    <label translate="true">Is Applied For Not Logged In Customer</label>
+                    <visible>true</visible>
+                </settings>
+                <formElements>
+                    <checkbox>
+                        <settings>
+                            <valueMap>
+                                <map name="false" xsi:type="number">0</map>
+                                <map name="true" xsi:type="number">1</map>
+                            </valueMap>
+                            <prefer>toggle</prefer>
+                        </settings>
+                    </checkbox>
+                </formElements>
+            </field>
+        </fieldset>
+        <fieldset name="configs" sortOrder="50">
+            <settings>
+                <additionalClasses>
+                    <class name="fieldset-tab-child">true</class>
+                </additionalClasses>
+                <collapsible>true</collapsible>
+                <opened>true</opened>
+                <label translate="true">Configurations</label>
+            </settings>
+            <field name="default_price_type" sortOrder="20" formElement="select">
+                <settings>
+                    <dataType>text</dataType>
+                    <label translate="true">Default Price Type</label>
+                    <notice translate="true"><![CDATA[Default price type for new product price.]]></notice>
+                </settings>
+                <formElements>
+                    <select>
+                        <settings>
+                            <options class="Bss\CustomPricing\Model\Config\Source\PriceTypeOption" />
+                        </settings>
+                    </select>
+                </formElements>
+            </field>
+            <field name="default_price_value"
+                   sortOrder="50"
+                   formElement="input"
+                   template="Bss_CustomPricing/form/field"
+                   component="Bss_CustomPricing/js/components/custom-price-type-change">
+                <settings>
+                    <validation>
+                        <rule name="required-entry" xsi:type="boolean">false</rule>
+                        <rule name="validate-number" xsi:type="boolean">true</rule>
+                        <rule name="validate-not-negative-number" xsi:type="boolean">true</rule>
+                    </validation>
+                    <additionalClasses>
+                        <class name="bss-custom-field">true</class>
+                    </additionalClasses>
+                    <dataType>text</dataType>
+                    <label translate="true">Default Price Value</label>
+                    <notice translate="true"><![CDATA[Default price value for new applied product price.]]></notice>
+                    <imports>
+                        <link name="currencies">${ $.provider }:data.general_information.currencies</link>
+                        <link name="handleTypeChanges">${ $.provider }:${ $.parentScope }.default_price_type</link>
+                        <link name="handleAddbefore">${ $.provider }:data.general_information.website_id</link>
+                    </imports>
+                </settings>
+            </field>
+        </fieldset>
+    </fieldset>
+    <fieldset name="product_price" class="Bss\CustomPricing\Block\Adminhtml\PriceRule\Edit\Tab\ProductPrice">
+        <settings>
+            <collapsible>false</collapsible>
+            <label translate="true">Product Price</label>
+            <componentType>fieldset</componentType>
+        </settings>
+        <insertListing name="bss_product_price_listing" component="Magento_Ui/js/form/components/insert-listing">
+            <settings>
+                <dataLinks>
+                    <exports>false</exports>
+                    <imports>true</imports>
+                </dataLinks>
+                <externalProvider>bss_product_price_listing.bss_product_price_listing_data_source</externalProvider>
+                <selectionsProvider>bss_product_price_listing.bss_product_price_listing.bss_product_price_listing_columns.ids</selectionsProvider>
+                <autoRender>true</autoRender>
+                <dataScope>bss_product_price_listing</dataScope>
+                <ns>bss_product_price_listing</ns>
+                <exports>
+                    <link name="website_id">${ $.externalProvider }:params.website_id</link>
+                    <link name="rule_id">${ $.externalProvider }:params.rule_id</link>
+                </exports>
+                <imports>
+                    <link name="website_id">${ $.provider }:data.general_information.website_id</link>
+                    <link name="rule_id">${ $.provider }:data.general_information.id</link>
+                </imports>
+            </settings>
+        </insertListing>
+        <modal name="multiple_update_custom_price_modal">
+            <settings>
+                <options>
+                    <option name="title" xsi:type="string">Edit Custom Product Price</option>
+                </options>
+            </settings>
+
+            <insertForm name="edit_multiple_update_custom_price_loader" component="Bss_CustomPricing/js/edit/components/multi-cproduct-insert-form">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="productPriceListingProvider" xsi:type="string">ns = bss_product_price_listing, index = bss_product_price_listing</item>
+                        <item name="productPriceModalProvider" xsi:type="string">${ $.parentName }</item>
+                    </item>
+                </argument>
+                <settings>
+                    <formSubmitType>ajax</formSubmitType>
+                    <renderUrl path="custom_pricing/mui/render_handle">
+                        <param name="handle">multi_product_price_edit</param>
+                        <param name="buttons">1</param>
+                    </renderUrl>
+                    <loading>false</loading>
+                    <toolbarContainer>${ $.parentName }</toolbarContainer>
+                    <externalProvider>${ $.ns }.${$.ns}_data_source</externalProvider>
+                    <ns>bss_multiple_update_custom_price_form</ns>
+                </settings>
+            </insertForm>
+        </modal>
+
+        <modal name="product_price_update_modal">
+            <settings>
+                <options>
+                    <option name="title" xsi:type="string">Edit Custom Price Price</option>
+                </options>
+            </settings>
+            <insertForm name="edit_product_price_form_loader" component="Bss_CustomPricing/js/edit/components/insert-form">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="productPriceListingProvider" xsi:type="string">ns = bss_product_price_listing, index = bss_product_price_listing</item>
+                        <item name="productPriceModalProvider" xsi:type="string">${ $.parentName }</item>
+                    </item>
+                </argument>
+                <settings>
+                    <formSubmitType>ajax</formSubmitType>
+                    <renderUrl path="mui/index/render_handle">
+                        <param name="handle">product_price_edit</param>
+                        <param name="buttons">1</param>
+                    </renderUrl>
+                    <autoRender>false</autoRender>
+                    <loading>false</loading>
+                    <toolbarContainer>${ $.parentName }</toolbarContainer>
+                    <externalProvider>${ $.ns }.${ $.ns }_data_source</externalProvider>
+                    <ns>bss_product_price_form</ns>
+                </settings>
+            </insertForm>
+        </modal>
+    </fieldset>
+    <fieldset name="applied_customers" class="Bss\CustomPricing\Block\Adminhtml\PriceRule\Edit\Tab\AppliedCustomers">
+        <settings>
+            <collapsible>false</collapsible>
+            <label translate="true">Applied Customers</label>
+            <componentType>fieldset</componentType>
+        </settings>
+        <insertListing name="bss_applied_customers_listing" component="Magento_Ui/js/form/components/insert-listing">
+            <settings>
+                <dataLinks>
+                    <exports>false</exports>
+                    <imports>true</imports>
+                </dataLinks>
+                <externalProvider>bss_applied_customers_listing.bss_applied_customers_listing_data_source</externalProvider>
+                <selectionsProvider>bss_applied_customers_listing.bss_applied_customers_listing.bss_applied_customers_listing_columns.ids</selectionsProvider>
+                <autoRender>true</autoRender>
+                <dataScope>bss_applied_customers_listing</dataScope>
+                <ns>bss_applied_customers_listing</ns>
+                <exports>
+                    <link name="website_id">${ $.externalProvider }:params.website_id</link>
+                    <link name="rule_id">${ $.externalProvider }:params.rule_id</link>
+                </exports>
+                <imports>
+                    <link name="website_id">${ $.provider }:data.general_information.website_id</link>
+                    <link name="rule_id">${ $.provider }:data.general_information.id</link>
+                </imports>
+            </settings>
+        </insertListing>
+    </fieldset>
+</form>

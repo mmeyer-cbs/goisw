@@ -1,0 +1,37 @@
+<?php
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_QuoteExtension
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2018-2019 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+
+/** @var $block \Bss\QuoteExtension\Block\QuoteExtension\Tax */
+?>
+<?php // @codingStandardsIgnoreFile ?>
+
+<?php
+    $source = $block->getSource();
+?>
+<tr class="totals-tax">
+    <th <?= /* @escapeNotVerified */ $block->getLabelProperties() ?> scope="row">
+        <?php if ($block->displayFullSummary()): ?>
+            <div class="detailed"><?= /* @escapeNotVerified */ $block->escapeHtml(__('Tax')); ?></div>
+        <?php else: ?>
+            <?= /* @escapeNotVerified */ $block->escapeHtml(__('Tax')); ?>
+        <?php endif;?>
+    </th>
+    <td <?= /* @escapeNotVerified */ $block->getValueProperties() ?> data-th="<?= $block->escapeHtml(__('Tax')) ?>">
+        <?= /* @escapeNotVerified */ $block->formatPrice($source->getShippingAddress()->getTaxAmount(), $source->getStoreId()) ?>
+    </td>
+</tr>

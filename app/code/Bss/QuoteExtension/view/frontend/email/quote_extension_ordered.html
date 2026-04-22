@@ -1,0 +1,44 @@
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_QuoteExtension
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2018-2019 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+-->
+<!--@subject {{trans "You Have A New Ordered Quote"}} @-->
+<!--@vars {
+"var increment_id":"Increment Id"
+} @-->
+{{template config_path="design/email/header_template"}}
+{{inlinecss file="Bss_QuoteExtension::css/email-inline.css"}}
+<table style="width: 100%">
+    <tr class="email-intro">
+        <td>
+            <p>
+                {{trans 'Your customer has Order a request quote.'}}<span class="email-increament"></span>
+                <br>
+                {{trans 'Request quote id. '}}<span class="email-increament">#{{var increment_id}}</span>
+            </p>
+        </td>
+    </tr>
+    <tr class="comments">
+        <td>
+            {{depend comments}}
+            <h2>{{trans 'Admin's comment:'}}</h2>
+            {{layout handle="quote_extension_email_comment" comments=$comments area="frontend"}}
+            {{/depend}}
+        </td>
+    </tr>
+</table>
+{{template config_path="design/email/footer_template"}}

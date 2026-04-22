@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_QuoteExtension
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2018-2019 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+-->
+<xs:schema elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:redefine schemaLocation="urn:magento:module:Bss_QuoteExtension:etc/quote_extension_pdf.xsd">
+        <xs:complexType name="totalItemType">
+            <xs:complexContent>
+                <xs:restriction base="totalItemType">
+                    <xs:all>
+                        <xs:element name="title" type="totalTitleType" minOccurs="0"/>
+                        <xs:element name="source_field" type="fieldType" minOccurs="0"/>
+                        <xs:element name="title_source_field" type="fieldType" minOccurs="0"/>
+                        <xs:element name="font_size" type="xs:positiveInteger" minOccurs="0"/>
+                        <xs:element name="display_zero" type="xs:boolean" minOccurs="0"/>
+                        <xs:element name="sort_order" type="xs:nonNegativeInteger" minOccurs="0"/>
+                        <xs:element name="model" type="classNameType" minOccurs="0"/>
+                        <xs:element name="amount_prefix" type="xs:string" minOccurs="0"/>
+                    </xs:all>
+                </xs:restriction>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:redefine>
+</xs:schema>

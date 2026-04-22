@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_SalesRep
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2020-2022 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+*/
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+  <table name="bss_sales_rep" resource="default" engine="innodb" comment="Bss Sales Rep">
+    <column xsi:type="int" name="rep_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Sales Rep ID"/>
+    <column xsi:type="int" name="user_id" padding="10" unsigned="true" nullable="false" identity="false" comment="User ID"/>
+    <column xsi:type="text" name="information" nullable="true" comment="Information"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="rep_id"/>
+    </constraint>
+    <constraint xsi:type="foreign" referenceId="ADMIN_USER_USER_ID_BSS_SALES_REP_USER_ID" table="bss_sales_rep" column="user_id" referenceTable="admin_user" referenceColumn="user_id" onDelete="CASCADE"/>
+    <index referenceId="BSS_SALES_REP_REP_ID" indexType="btree">
+      <column name="rep_id"/>
+    </index>
+  </table>
+  <table name="bss_sales_rep_order" resource="default" engine="innodb" comment="Bss Sales Rep Order">
+    <column xsi:type="int" name="id" padding="10" unsigned="true" nullable="false" identity="true" comment="Sales Rep Order ID"/>
+    <column xsi:type="int" name="order_id" padding="10" unsigned="true" nullable="false" identity="false" comment="Order ID"/>
+    <column xsi:type="int" name="user_id" padding="10" unsigned="true" nullable="false" identity="false" comment="User ID"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="id"/>
+    </constraint>
+    <constraint xsi:type="foreign" referenceId="ADMIN_USER_USER_ID_BSS_SALES_REP_ORDER_USER_ID" table="bss_sales_rep_order" column="user_id" referenceTable="admin_user" referenceColumn="user_id" onDelete="CASCADE"/>
+    <constraint xsi:type="foreign" referenceId="SALES_ORDER_ENTITY_ID_BSS_SALES_REP_ORDER_ORDER_ID" table="bss_sales_rep_order" column="order_id" referenceTable="sales_order" referenceColumn="entity_id" onDelete="CASCADE"/>
+    <index referenceId="BSS_SALES_REP_ORDER_ID" indexType="btree">
+      <column name="id"/>
+    </index>
+  </table>
+  <table name="bss_sales_rep_history" resource="default" engine="innodb" comment="Bss Sales Rep History">
+    <column xsi:type="int" name="id" padding="10" unsigned="true" nullable="false" identity="true" comment="Sales Rep History ID"/>
+    <column xsi:type="int" name="user_id" padding="10" unsigned="true" nullable="false" identity="false" comment="User ID"/>
+    <column xsi:type="int" name="customer_id" padding="10" unsigned="true" nullable="false" identity="false" comment="Customer ID"/>
+    <column xsi:type="varchar" name="history" nullable="false" length="255" comment="History"/>
+    <column xsi:type="datetime" name="update_at" on_update="false" nullable="false" comment="Update At"/>
+    <column xsi:type="int" name="type" padding="10" unsigned="true" nullable="false" identity="false" comment="Type"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="id"/>
+    </constraint>
+    <constraint xsi:type="foreign" referenceId="ADMIN_USER_USER_ID_BSS_SALES_REP_HISTORY_USER_ID" table="bss_sales_rep_history" column="user_id" referenceTable="admin_user" referenceColumn="user_id" onDelete="CASCADE"/>
+    <index referenceId="BSS_SALES_REP_HISTORY_ID" indexType="btree">
+      <column name="id"/>
+    </index>
+  </table>
+  <table name="authorization_role" resource="default">
+    <column xsi:type="int" name="is_sales_rep" padding="11" unsigned="false" nullable="true" identity="false" comment="Is Sales Rep"/>
+  </table>
+  <table name="order_created_by_admin" resource="default" engine="innodb" comment="Order Created By Admin">
+    <column xsi:type="int" name="id" padding="11" unsigned="false" nullable="false" identity="true" comment="ID"/>
+    <column xsi:type="int" name="order_id" padding="11" unsigned="false" nullable="true" identity="false" comment="Order Id"/>
+    <column xsi:type="boolean" name="created_by_admin" nullable="true" comment="Create By Admin"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="id"/>
+    </constraint>
+    <constraint xsi:type="unique" referenceId="ORDER_ID_ORDER_ID">
+      <column name="order_id"/>
+    </constraint>
+    <index referenceId="ORDER_CREATED_BY_ADMIN_ID" indexType="btree">
+      <column name="id"/>
+    </index>
+  </table>
+</schema>

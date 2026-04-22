@@ -1,0 +1,228 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txtquote_extension_reminder_expired
+ *
+ * @category   BSS
+ * @package    Bss_QuoteExtension
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2018-2022 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="bss" translate="label" sortOrder="300">
+            <label><![CDATA[BSS Commerce]]></label>
+        </tab>
+        <section id="bss_request4quote" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label><![CDATA[Request4Quote]]></label>
+            <tab>bss</tab>
+            <resource>Bss_QuoteExtension::module_config</resource>
+            <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                <label><![CDATA[General]]></label>
+                <field id="enable" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label><![CDATA[Enable Request4Quote]]></label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[Version 1.2.6]]></comment>
+                </field>
+                <field id="save_customer" translate="label" type="select" sortOrder="10" showInDefault="1">
+                    <label><![CDATA[Auto change quote price when changing customer group]]></label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+            <group id="request4quote_global" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1"
+                   showInStore="1">
+                <depends>
+                    <field id="bss_request4quote/general/enable">1</field>
+                </depends>
+                <label><![CDATA[Request4Quote Global Config]]></label>
+                <field id="quotable" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label><![CDATA[Enable “Add to Quote” for All Products]]></label>
+                    <source_model>Bss\QuoteExtension\Model\Config\Source\Quotable</source_model>
+                </field>
+                <field id="customers" translate="label comment" type="multiselect" sortOrder="20" showInDefault="1"
+                       showInWebsite="1" showInStore="0">
+                    <label><![CDATA[Apply to Customer Groups]]></label>
+                    <source_model>Bss\QuoteExtension\Model\Config\Source\ApplyQuoteforCustomerGroup</source_model>
+                    <depends><field id="bss_request4quote/request4quote_global/quotable">2</field></depends>
+                </field>
+                <field id="amount" translate="label comment" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label><![CDATA[Minimum Quote Amount per Customer Group]]></label>
+                    <frontend_model>Bss\QuoteExtension\Block\System\Config\Form\Field\CustomerGroup</frontend_model>
+                    <backend_model>Bss\QuoteExtension\Model\Config\Source\Serialized</backend_model>
+                </field>
+                <field id="default_expire" translate="label comment" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label><![CDATA[Default Day(s) to Quote Expiration]]></label>
+                    <comment>All created quotes will expire after this period</comment>
+                    <validate>validate-number validate-digits validate-greater-than-zero</validate>
+                </field>
+                <field id="reminder_day" translate="label comment" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label><![CDATA[Send Reminder ... Day(s) before Expiration]]></label>
+                    <comment>Notify the admin/customers of the upcoming expiration</comment>
+                    <validate>validate-number validate-digits validate-greater-than-zero</validate>
+                </field>
+                <field id="disable_items_comment" translate="label comment" type="select" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label><![CDATA[Disable Comment per Quote Item]]></label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="shipping_required" translate="label comment" type="select" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label><![CDATA[Required Shipping Address]]></label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="disable_resubmit" translate="label comment" type="select" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label><![CDATA[Disable Resubmit Action]]></label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="icon" translate="label comment" type="image" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label><![CDATA[Icon Mini Quote]]></label>
+                    <backend_model>Bss\QuoteExtension\Model\Config\Backend\Image</backend_model>
+                    <upload_dir config="system/filesystem/media" scope_info="1">bss/request4quote</upload_dir>
+                    <base_url type="media" scope_info="1">bss/request4quote</base_url>
+                </field>
+                <field id="auto_login" translate="label comment" type="select" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label><![CDATA[Auto Logging For Customer]]></label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="validate_qty_product" translate="label comment" type="select" sortOrder="20" showInDefault="1"
+                       showInWebsite="1" showInStore="0">
+                    <label><![CDATA[Apply Default Qty Conditions for Quoted Products]]></label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+            <group id="request4quote_email_config" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label><![CDATA[Request4Quote Email Config]]></label>
+                <depends>
+                    <field id="bss_request4quote/general/enable">1</field>
+                </depends>
+                <field id="sender_email_identity" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label><![CDATA[Email Sender]]></label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Identity</source_model>
+                </field>
+                <field id="receive_email_identity" translate="label" type="select" sortOrder="30" showInDefault="20" showInWebsite="1" showInStore="1">
+                    <label><![CDATA[Email Receiver]]></label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Identity</source_model>
+                </field>
+                <field id="send_email_copy" translate="label comment" type="text" sortOrder="30" showInDefault="20" showInWebsite="1" showInStore="1">
+                    <label><![CDATA[Send Quote Email Copy to]]></label>
+                    <comment>Separate multiple emails with a comma</comment>
+                </field>
+                <field id="new_quote_extension" translate="label comment" type="select" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1" >
+                    <label><![CDATA[New Quote Email Template for The Admin]]></label>
+                    <comment>Email template chosen based on theme fallback when "Default" option is selected.</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                </field>
+                <field id="new_quote_extension_customer" translate="label comment" type="select" sortOrder="45" showInDefault="1" showInWebsite="1" showInStore="1" >
+                    <label><![CDATA[New Quote Email Template for Customers]]></label>
+                    <comment>Email template chosen based on theme fallback when "Default" option is selected.</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                </field>
+                <field id="quote_extension_customer_guest" translate="label comment" type="select" sortOrder="45" showInDefault="1" showInWebsite="1" showInStore="1" >
+                    <label><![CDATA[New Quote Email Template for Not-login Customer ]]></label>
+                    <comment>Email template chosen based on theme fallback when "Default" option is selected.</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                </field>
+                <field id="quote_extension_accept" translate="label comment" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1" >
+                    <label><![CDATA[Email Template for Accepted Quote]]></label>
+                    <comment>Email template chosen based on theme fallback when "Default" option is selected.</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                </field>
+                <field id="quote_extension_complete" translate="label comment" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1" >
+                    <label><![CDATA[Email Template for Complete Quote]]></label>
+                    <comment>Email template chosen based on theme fallback when "Default" option is selected.</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                </field>
+                <field id="quote_extension_cancelled" translate="label comment" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1" >
+                    <label><![CDATA[Email Template for Cancelled Quote]]></label>
+                    <comment>Email template chosen based on theme fallback when "Default" option is selected.</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                </field>
+                <field id="quote_extension_rejected" translate="label comment" type="select" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1" >
+                    <label><![CDATA[Email Template for Rejected Quote]]></label>
+                    <comment>Email template chosen based on theme fallback when "Default" option is selected.</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                </field>
+                <field id="quote_extension_expired" translate="label comment" type="select" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1" >
+                    <label><![CDATA[Email Template for Expired Quote]]></label>
+                    <comment>Email template chosen based on theme fallback when "Default" option is selected.</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                </field>
+                <field id="quote_extension_reminder_expired" translate="label comment" type="select" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1" >
+                    <label><![CDATA[Reminder Template for Soon-expired Quote]]></label>
+                    <comment>Email template chosen based on theme fallback when "Default" option is selected.</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                </field>
+                <field id="quote_extension_resubmit" translate="label comment" type="select" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1" >
+                    <label><![CDATA[Email Template for Resubmitted Quote]]></label>
+                    <comment>Email template chosen based on theme fallback when "Default" option is selected.</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                </field>
+                <field id="quote_extension_ordered" translate="label comment" type="select" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1" >
+                    <label><![CDATA[Email Template for Ordered Quote]]></label>
+                    <comment>Email template chosen based on theme fallback when "Default" option is selected.</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                </field>
+            </group>
+            <group id="request4quote_product_page_config" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label><![CDATA[Request4Quote Product Page Config]]></label>
+                <depends>
+                    <field id="bss_request4quote/general/enable">1</field>
+                </depends>
+                <field id="enable" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label><![CDATA[Enable for Product Page]]></label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="text" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label><![CDATA[Text]]></label>
+                </field>
+                <field id="style" translate="label comment" type="textarea" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label><![CDATA[Custom Style]]></label>
+                </field>
+            </group>
+            <group id="request4quote_product_other_page_config" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label><![CDATA[Request4Quote Other Page Config]]></label>
+                <depends>
+                    <field id="bss_request4quote/general/enable">1</field>
+                </depends>
+                <field id="enable" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label><![CDATA[Enable for Other Pages]]></label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="text" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label><![CDATA[Text]]></label>
+                </field>
+                <field id="style" translate="label comment" type="textarea" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label><![CDATA[Custom Style]]></label>
+                </field>
+            </group>
+        </section>
+        <section id="carriers" translate="label" type="text" sortOrder="320" showInDefault="1" showInWebsite="1" showInStore="1">
+            <group id="request4quote" translate="label" type="text" sortOrder="0" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label><![CDATA[Request4Quote Shipping]]></label>
+                <field id="active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label><![CDATA[Enabled]]></label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="name" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label><![CDATA[Method Name]]></label>
+                </field>
+                <field id="sort_order" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1">
+                    <label><![CDATA[Sort Order]]></label>
+                </field>
+                <field id="title" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label><![CDATA[Title]]></label>
+                </field>
+                <field id="specificerrmsg" translate="label" type="textarea" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label><![CDATA[Displayed Error Message]]></label>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

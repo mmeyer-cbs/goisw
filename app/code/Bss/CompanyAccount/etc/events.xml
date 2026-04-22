@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_CompanyAccount
+  * @author     Extension Team
+ * @copyright  Copyright (c) 2020 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+
+    <event name="checkout_submit_all_after">
+        <observer name="bss_companyaccount_order_place_after"
+                  instance="Bss\CompanyAccount\Observer\OrderPlaced"/>
+    </event>
+    <event name="email_invoice_set_template_vars_before">
+        <observer name="bss_companyaccount_email_invoice_send_to_sub_user"
+                  instance="Bss\CompanyAccount\Observer\Sales\Order\Email\Sender"/>
+    </event>
+    <event name="email_creditmemo_set_template_vars_before">
+        <observer name="bss_companyaccount_email_creditmemo_send_to_sub_user"
+                  instance="Bss\CompanyAccount\Observer\Sales\Order\Email\Sender"/>
+    </event>
+    <event name="email_shipment_set_template_vars_before">
+        <observer name="bss_companyaccount_email_shipment_send_to_sub_user"
+                  instance="Bss\CompanyAccount\Observer\Sales\Order\Email\Sender"/>
+    </event>
+    <event name="email_order_set_template_vars_before">
+        <observer name="bss_companyaccount_email_order_send_to_sub_user"
+                  instance="Bss\CompanyAccount\Observer\Sales\Order\Email\Sender"/>
+    </event>
+    <event name="email_order_comment_set_template_vars_before">
+        <observer name="bss_companyaccount_email_order_comment_send_to_sub_user"
+                  instance="Bss\CompanyAccount\Observer\Sales\Order\Email\Sender"/>
+    </event>
+    <event name="email_invoice_comment_set_template_vars_before">
+        <observer name="bss_companyaccount_email_invoice_comment_send_to_sub_user"
+                  instance="Bss\CompanyAccount\Observer\Sales\Order\Email\Sender"/>
+    </event>
+    <event name="email_shipment_comment_set_template_vars_before">
+        <observer name="bss_companyaccount_email_shipment_comment_send_to_sub_user"
+                  instance="Bss\CompanyAccount\Observer\Sales\Order\Email\Sender"/>
+    </event>
+    <event name="email_creditmemo_comment_set_template_vars_before">
+        <observer name="bss_companyaccount_email_creditmemo_comment_send_to_sub_user"
+                  instance="Bss\CompanyAccount\Observer\Sales\Order\Email\Sender"/>
+    </event>
+    <event name="quote_extension_save_before">
+        <observer name="company_account_quoteextension_place_before"
+                  instance="Bss\CompanyAccount\Observer\QuoteExtension\Add"/>
+    </event>
+    <event name="customer_save_after">
+        <observer name="bss_companyaccount_customer_save_after"
+                  instance="Bss\CompanyAccount\Observer\AfterSaveCustomer"/>
+    </event>
+    <event name="customer_save_before">
+        <observer name="bss_companyaccount_customer_save_before"
+                  instance="Bss\CompanyAccount\Observer\BeforeSaveCustomer"/>
+    </event>
+</config>

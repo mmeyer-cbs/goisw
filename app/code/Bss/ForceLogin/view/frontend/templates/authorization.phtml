@@ -1,0 +1,46 @@
+<?php
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_ForceLogin
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2017-2018 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+// @codingStandardsIgnoreFile
+?>
+<?php
+/**
+ * New Customer block template
+ *
+ * @var $block \Bss\ForceLogin\Block\Account\AuthorizationLink
+ */
+?>
+<?php
+$dataPostParam = '';
+$enable = $block->isEnable();
+$enableRegister = $block->isEnableRegister();
+if ($block->isLoggedIn()) {
+    $dataPostParam = sprintf(" data-post='%s'", $block->getPostParams());
+}
+?>
+<li class="authorization-link" 
+	data-label="<?php 
+	if ($enableRegister && $enable): 
+
+	else:
+		echo $block->escapeHtml(__('or'));
+	endif;
+	?>">
+    <a <?php /* @escapeNotVerified */ echo $block->getLinkAttributes(); ?><?php /* @escapeNotVerified */ echo $dataPostParam; ?>>
+        <?php echo $block->escapeHtml($block->getLabel()); ?>
+    </a>
+</li>

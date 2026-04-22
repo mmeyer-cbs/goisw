@@ -1,0 +1,111 @@
+<?php
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_CompanyAccount
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2020 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+
+/** @var $block \Bss\CompanyAccount\Block\SubUser\Index */
+
+$users = $block->getItems();
+?>
+<?php if (count($users)) : ?>
+
+    <div class="table-wrapper">
+        <table id="my-sub-user-table" class="data table">
+            <caption class="table-caption"><?= $block->escapeHtml(__('Sub-Users')) ?></caption>
+            <thead>
+            <tr>
+                <th scope="col" class="col id"><?= $block->escapeHtml(__('User #')) ?></th>
+                <th scope="col" class="col name"><?= $block->escapeHtml(__('Name')) ?></th>
+                <th scope="col" class="col email"><?= $block->escapeHtml(__('Email')) ?></th>
+                <th scope="col" class="col role"><?= $block->escapeHtml(__('Role')) ?></th>
+                <th scope="col" class="col status"><?= $block->escapeHtml(__('Status')) ?></th>
+                <th scope="col" class="col actions"><?= $block->escapeHtml(__('Actions')) ?></th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php /** @var \Bss\CompanyAccount\Api\Data\SubUserInterface $user */ ?>
+            <?php foreach ($users as $user) : ?>
+                <tr>
+                    <td data-th="<?= $block->escapeHtmlAttr(__('User #')) ?>" class="col id">
+                        <?= $block->escapeHtml($user->getSubId()) ?>
+                    </td>
+                    <td data-th="<?= $block->escapeHtmlAttr(__('Name')) ?>" class="col name">
+                        <?= $block->escapeHtml($user->getSubName()) ?>
+                    </td>
+                    <td data-th="<?= $block->escapeHtmlAttr(__('Email')) ?>" class="col email">
+                        <a href="mailto:<?= $block->escapeHtml($user->getSubEmail()) ?>">
+                            <?= $block->escapeHtml($user->getSubEmail()) ?>
+                        </a>
+                    </td>
+                    <td data-th="<?= $block->escapeHtmlAttr(__('Role')) ?>" class="col role">
+                        <?= $block->escapeHtml($user->getData('role_name')) ?>
+                    </td>
+                    <td data-th="<?= $block->escapeHtmlAttr(__('Status')) ?>" class="col status">
+                        <?= $block->escapeHtml(__(ucfirst($user->getStatusLabel()))) ?>
+                    </td>
+                    <td data-th="<?= $block->escapeHtmlAttr(__('Actions')) ?>"
+                        title="<?= $block->escapeHtmlAttr(__('Edit')) ?>"
+                        class="col bss actions">
+                        <a href="<?= $block->escapeUrl($block->getEditUrl($user)) ?>" class="action edit">
+                            <i class="material-icons">create</i>
+                        </a>
+                        <a href="javascript:void(0);"
+                           data-mage-init='{ "Bss_CompanyAccount/js/grid/actions": { "url": "<?= $block->escapeUrl($block->getDeleteUrl($user)) ?>"} }'
+                           title="<?= $block->escapeHtmlAttr(__('Delete')) ?>"
+                           class="action delete _delete">
+                            <i class="material-icons">delete</i>
+                        </a>
+                        <a href="javascript:void(0);"
+                           data-mage-init='{ "Bss_CompanyAccount/js/grid/actions": { "url": "<?= $block->escapeUrl($block->getResetPasswordUrl($user)) ?>", "cfTitle": "<?= __('Reset password sub-user') ?>", "cfContent": "<?= __('Are you sure you want to send reset password mail to the sub-user?') ?>" } }'
+                           title="<?= $block->escapeHtmlAttr(__('Reset Password')) ?>"
+                           class="action reset-password _reset">
+                            <i class="material-icons">vpn_key</i>
+                        </a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+
+    <?php if ($block->getChildHtml('pager')) : ?>
+        <div class="toolbar bottom">
+            <?= $block->getChildHtml('pager') ?>
+        </div>
+    <?php endif; ?>
+<?php else : ?>
+    <div class="message info empty"><span><?= $block->escapeHtml(__('You have not any sub-user yet.')) ?></span></div>
+<?php endif; ?>
+
+<div class="actions-toolbar">
+    <div class="primary">
+        <a href="<?= $block->escapeUrl($block->getCreateUrl()) ?>" class="action create primary">
+            <span><?= $block->escapeHtml(__('New Sub-user')) ?></span>
+        </a>
+    </div>
+</div>
+
+<script type="text/x-magento-init">
+    {
+        "._delete": {
+            "Bss_CompanyAccount/js/grid/actions": {
+                "cfTitle": "<?= __('Delete sub-user') ?>",
+                "cfContent": "<?= __('Are you sure you want to delete the sub-user?') ?>"
+            }
+        }
+    }
+
+</script>

@@ -1,0 +1,54 @@
+<?php
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_CompanyCredit
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2020 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+
+use Bss\CompanyCredit\Block\Customer\Account\CreditInfo;
+
+?>
+
+<?php
+// @codingStandardsIgnoreFile
+
+/** @var  $block CreditInfo */
+?>
+
+<?php
+$creditInfor = $block->getDataCompanyCredit();
+?>
+<div class="block block-companycredit">
+    <div class="block-title">
+        <strong><?= $block->escapeHtml(__('Company Credit Information')); ?></strong>
+    </div>
+    <?php if ($creditInfor) : ?>
+        <div class="block-content">
+            <table class="data-grid">
+                <tr>
+                    <th class="data-grid-th"><?= $block->escapeHtml(__("Credit Limit")) ?></th>
+                    <th class="data-grid-th"><?= $block->escapeHtml(__("Used Credit")) ?></th>
+                    <th class="data-grid-th"><?= $block->escapeHtml(__("Available Credit")) ?></th>
+                    <th class="data-grid-th"><?= $block->escapeHtml(__("Allow Excess")) ?></th>
+                </tr>
+                <tr>
+                    <td class="a-right"><?= __($creditInfor["credit_limit"]); ?></td>
+                    <td class="a-right"><?= __($creditInfor["used_credit"]); ?></td>
+                    <td class="a-right"><?= __($creditInfor["available_credit"]); ?></td>
+                    <td class="a-right"><?= __($creditInfor["allow_exceed"]); ?></td>
+                </tr>
+            </table>
+        </div>
+    <?php endif; ?>
+</div>

@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_CompanyCredit
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2020-2022 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
+    <template id="companycredit_email_update_credit_value" label="Email Template - Admin Updates Credit Value" file="update_credit_value.html" type="html" module="Bss_CompanyCredit" area="frontend"/>
+    <template id="companycredit_email_change_credit_limit" label="Email Template - Admin Changes Credit Limit" file="change_credit_limit.html" type="html" module="Bss_CompanyCredit" area="frontend"/>
+    <template id="companycredit_email_credit_limit_exceed" label="Email Template - Customer Exceeds Available Limit" file="credit_limit_exceed.html" type="html" module="Bss_CompanyCredit" area="frontend"/>
+    <template id="companycredit_email_due_date_payment_reminder" label="Email template - Due Date Payment Reminder" file="due_date_payment_reminder.html" type="html" module="Bss_CompanyCredit" area="frontend"/>
+    <template id="companycredit_email_notification_overdue" label="Email template - Notification Overdue payment for Admin" file="notification_overdue.html" type="html" module="Bss_CompanyCredit" area="frontend"/>
+</config>

@@ -1,0 +1,103 @@
+<?php
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_QuoteExtension
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2018-2019 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+
+// @codingStandardsIgnoreFile
+?>
+<?php /** @var $block \Bss\QuoteExtension\Block\Adminhtml\QuoteExtension\Edit\History */ ?>
+
+<?php if ($block->getHistoryCollection()->getSize() > 0 || $block->getQuote()->getCustomerNote()) : ?>
+<section class="admin__page-section order-view-account-information">
+    <strong class="title accordion-quote"><?php echo __('Quote History') ?></strong>
+    <div class="admin__page-section-item quote-comment panel">
+        <div class="admin__field field-comment ">
+            <?php $comment = []; ?>
+            <?php $historyDate = $block->formatDate(
+                $block->getQuote()->getCreatedAt(),
+                \IntlDateFormatter::MEDIUM,
+                true
+            );?>
+            <?php $comment[$historyDate] = ['customer' => $block->getQuote()->getCustomerNote()]; ?>
+            <?php foreach ($block->getHistoryCollection() as $history) : ?>
+                <div class="admin__field-control">
+                    <div class="history-log">
+                        <div class="control">
+                            <?php $historyDate = $block->formatDate(
+                                $history->getCreatedAt(),
+                                \IntlDateFormatter::MEDIUM,
+                                true
+                            );?>
+                            <a class="log-version"><strong class="version quote"><?php echo __('Log version ') ?><?php echo $history->getVersion(); ?></strong></a>
+                            <p><span class="date quote"><?php echo __('Date: ') ?> <?php echo $historyDate ?></span></p>
+                        </div>
+                        <table class="cart items data table item-log admin__table-primary">
+                            <thead>
+                                <tr>
+                                    <th class="col item" scope="col"><span><?php echo __('Quote Status') ?></span></th>
+                                    <th class="col price" scope="col"><span><?php echo __('Quote Comment') ?></span></th>
+                                    <th class="col qty" scope="col"><span><?php echo __('Items') ?></span></th>
+                                </tr>
+                            </thead>
+                            <tbody class="cart item">
+                                <tr>
+                                    <td><?php echo strtoupper($history->getStatus()); ?></td>
+                                    <td><?php echo $history->getComment(); ?></td>
+                                    <td><?php echo $block->prepareLogItems($history->getLog()); ?></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br>
+                    </div>
+                </div>
+                <?php if ($history->getComment()) : ?>
+                    <?php $area = $history->getAreaLog() ? 'admin' : 'customer'; ?>
+                    <?php $comment[$historyDate] = [$area => $history->getComment()]; ?>
+                <?php endif ?>
+            <?php endforeach; ?>
+        </div>
+        <div class="admin__page-section-item-title">
+            <span class="title">Comment for this Quote</span>
+        </div>
+        <div id="order_history_block" class="edit-order-comments">
+            <ul class="note-list">
+                <?php foreach ($comment as $date => $com) : ?>
+                <?php if (isset($com['customer'])): ?>
+                    <li class="note-list-item">
+                        <p><strong><?php echo __('Customer Comment') ?></strong> <span class="date quote right"> <?php echo $date ?></span></p>
+                        <div class="note-list-comment"><?php echo $com['customer'] ?></div>
+                    </li>
+                <?php elseif (isset($com['admin'])) : ?>
+                    <li class="note-list-item">
+                        <p><strong><?php echo __('Admin Comment') ?></strong> <span class="date quote right"> <?php echo $date ?></span></p>
+                        <div class="note-list-comment"><?php echo $com['admin'] ?></div>
+                    </li>
+                <?php endif ?>
+                <?php endforeach ?>
+            </ul>
+        </div>
+    </div>
+</section>
+<?php endif; ?>
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Bss_QuoteExtension/js/quote-view/version-log": {
+
+            }
+        }
+    }
+</script>

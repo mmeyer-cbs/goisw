@@ -1,0 +1,30 @@
+<?php
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_StoreCredit
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2017-2018 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+// @codingStandardsIgnoreFile
+?>
+<div class="entry-edit">
+    <fieldset id="storecredit_history" class="fieldset admin__fieldset">
+        <legend class="legend">
+            <span><?= $block->escapeHtml(('History')); ?></span>
+        </legend>
+        <?= $block->getLayout()
+                ->createBlock(Bss\StoreCredit\Block\Adminhtml\Edit\Tab\StoreCredit\History::class)
+                ->toHtml();
+        ?>
+    </fieldset>
+</div>

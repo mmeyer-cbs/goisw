@@ -1,0 +1,72 @@
+# BSS Commerce Co.
+#
+# NOTICE OF LICENSE
+#
+# This source file is subject to the EULA
+# that is bundled with this package in the file LICENSE.txt.
+# It is also available through the world-wide-web at this URL:
+# http://bsscommerce.com/Bss-Commerce-License.txt
+#
+# @category   BSS
+# @package    Bss_MultiWishlistGraphQl
+# @author     Extension Team
+# @copyright  Copyright (c) 2021 BSS Commerce Co. ( http://bsscommerce.com )
+# @license    http://bsscommerce.com/Bss-Commerce-License.txt
+
+type WishlistItem {
+    multi_wishlist_id: Int @resolver(class: "\\Bss\\MultiWishlistGraphQl\\Model\\Resolver\\Customer\\WishlistItemsResolver") @doc(description: "Multi wish list id")
+}
+type Mutation {
+    addProductsToBssWishlist(wishlistId: ID!, wishlistItems: [WishlistItemInput!]!): AddProductsToWishlistOutput
+    @doc(description: "Adds one or more products to the specified wish list. This mutation supports all product types")
+    @resolver(class: "\\Bss\\MultiWishlistGraphQl\\Model\\Resolver\\Wishlist\\AddProductsToWishlist")
+    updateProductsInBssWishlist(wishlistId: ID!, wishlistItems: [WishlistItemUpdateInput!]!): UpdateProductsInWishlistOutput
+    @doc(description: "Updates one or more products in the specified wish list")
+    @resolver(class: "\\Bss\\MultiWishlistGraphQl\\Model\\Resolver\\Wishlist\\UpdateProductsInWishlist")
+    createBssMultiWishlist(wishlist_name: String @doc(description: "Wislist name")): BssMultiWishlistOutput
+    @doc(description: "Create data in table bss multiwishlist")
+    @resolver(class: "\\Bss\\MultiWishlistGraphQl\\Model\\Resolver\\MultiWishlist\\Create")
+    updateBssMultiWishlist(multi_wishlist_id: Int, wishlist_name: String @doc(description: "Wishlist name")): BssMultiWishlistOutput
+    @doc(description: "Update wishlist name")
+    @resolver(class: "\\Bss\\MultiWishlistGraphQl\\Model\\Resolver\\MultiWishlist\\Update")
+    removeBssMultiWishlist(multi_wishlist_id: Int): RemoveBssMultiWishlistOutput
+    @doc(description: "Remove Bss Multi Wishlist by multi wishlist id")
+    @resolver(class: "\\Bss\\MultiWishlistGraphQl\\Model\\Resolver\\MultiWishlist\\Remove")
+}
+
+type BssMultiWishlistOutput @doc(description: "Output bss mulitwish list"){
+    bssMultiWishlist: BssMultiWishlist @doc(description: "Data bss multi wishlist item")
+    status: String @doc(description: "Status succes: true, error: false")
+    message: String @doc(description: "Message")
+}
+
+type BssMultiWishlist {
+    multi_wishlist_id: Int @doc(description: "Multi wishlist id")
+    wishlist_name: String @doc(description: "Wislist name")
+    customer_id: Int @doc(description: "Customer Id")
+}
+
+input WishlistItemInput @doc(description: "Add input multi_wishlist_id") {
+    multi_wishlist_id: Int @doc(description: "Multi wishlist id")
+}
+
+enum WishListUserInputErrorType @doc(description: "Add Wishlist-specific error code"){
+    ITEM_ID_NOT_FOUND
+    ERROR_SAVE
+}
+
+type Customer {
+    bssMultiWishlist : [BssMultiWishlist]
+    @resolver(class: "Bss\\MultiWishlistGraphQl\\Model\\Resolver\\MultiWishlist\\Get")
+    @doc(description: "Get bss multi wishlist")
+}
+
+type RemoveBssMultiWishlistOutput {
+    success: String!  @doc(description: "Status success: true, error: false")
+    message: String! @doc(description: "Message")
+}
+
+
+
+
+

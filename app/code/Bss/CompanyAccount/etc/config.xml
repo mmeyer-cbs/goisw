@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_CompanyAccount
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2020 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <bss_company_account>
+            <general>
+                <enable>1</enable>
+            </general>
+            <email>
+                <email_sender>support</email_sender>
+                <ca_approval>bss_company_account_sub_account_ca_approval</ca_approval>
+                <ca_remove>bss_company_account_sub_account_ca_remove</ca_remove>
+                <subuser_order_request>bss_company_account_sub_account_subuser_order_request</subuser_order_request>
+                <subuser_welcome>bss_company_account_sub_account_subuser_welcome</subuser_welcome>
+                <subuser_disable>bss_company_account_sub_account_subuser_disable</subuser_disable>
+                <subuser_remove>bss_company_account_sub_account_subuser_remove</subuser_remove>
+                <subuser_reset_password>bss_company_account_order_subuser_reset_password</subuser_reset_password>
+                <approve_order_request>bss_company_account_order_approve_order_request</approve_order_request>
+                <reject_order_request>bss_company_account_order_reject_order_request</reject_order_request>
+                <subuser_order_placed>bss_company_account_order_subuser_order_placed"</subuser_order_placed>
+                <subuser_info_update>bss_company_account_update_subuser_info_update</subuser_info_update>
+                <subuser_role_update>bss_company_account_update_subuser_role_update</subuser_role_update>
+            </email>
+        </bss_company_account>
+    </default>
+</config>

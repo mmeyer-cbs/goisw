@@ -1,0 +1,118 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_SalesRep
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2020 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+*/
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\User\Block\Role\Tab\Info">
+        <plugin name="is_sales_rep" type="Bss\SalesRep\Plugin\Block\Adminhtml\Role\Tab\Info" sortOrder="10"/>
+    </type>
+    <type name="Magento\Customer\Controller\Adminhtml\Index\Save">
+        <plugin name="send_email_assign" type="Bss\SalesRep\Plugin\Controller\Adminhtml\BeforeSave" sortOrder="10"/>
+    </type>
+    <type name="Magento\Backend\App\Action">
+        <plugin name="sales_rep_dispatch" type="Bss\SalesRep\Plugin\Controller\Adminhtml\Dispatch" sortOrder="10"/>
+    </type>
+    <type name="Magento\Customer\Controller\Adminhtml\Index\Edit">
+        <plugin name="sales_rep_customer_edit" type="Bss\SalesRep\Plugin\Controller\Adminhtml\Edit" sortOrder="10"/>
+    </type>
+    <type name="Magento\Sales\Controller\Adminhtml\Order">
+        <plugin name="sales_rep_customer_edit" type="Bss\SalesRep\Plugin\Controller\Adminhtml\Order\View" sortOrder="10"/>
+    </type>
+    <type name="Magento\Backend\Block\Widget\Button\Toolbar">
+        <plugin name="remove_back_button" type="Bss\SalesRep\Plugin\Block\Adminhtml\Order\View" sortOrder="10"/>
+    </type>
+    <type name="Magento\Sales\Controller\Adminhtml\Order\Create\Save">
+        <plugin name="after_order_success" type="Bss\SalesRep\Plugin\Block\Adminhtml\Order\Create\Save" sortOrder="10"/>
+    </type>
+    <type name="Magento\Customer\Block\Adminhtml\Edit\BackButton">
+        <plugin name="customer_back_button" type="Bss\SalesRep\Plugin\Block\Adminhtml\Customer\BackButton" sortOrder="10"/>
+    </type>
+    <type name="Magento\Customer\Block\Adminhtml\Edit\DeleteButton">
+        <plugin name="customer_delete_button" type="Bss\SalesRep\Plugin\Block\Adminhtml\Customer\Button" sortOrder="10"/>
+    </type>
+    <type name="Magento\Customer\Block\Adminhtml\Edit\OrderButton">
+        <plugin name="customer_order_button" type="Bss\SalesRep\Plugin\Block\Adminhtml\Customer\Button" sortOrder="10"/>
+    </type>
+    <type name="Magento\Customer\Block\Adminhtml\Edit\ResetPasswordButton">
+        <plugin name="customer_order_button" type="Bss\SalesRep\Plugin\Block\Adminhtml\Customer\Button" sortOrder="10"/>
+    </type>
+    <type name="Magento\Customer\Block\Adminhtml\Edit\InvalidateTokenButton">
+        <plugin name="customer_invalidate_token_button" type="Bss\SalesRep\Plugin\Block\Adminhtml\Customer\Button" sortOrder="10"/>
+    </type>
+    <type name="Magento\Customer\Controller\Adminhtml\Index\Save">
+        <plugin name="sales_rep_after_save_customer_success" type="Bss\SalesRep\Plugin\Controller\Adminhtml\Customer\Save" sortOrder="10"/>
+    </type>
+    <type name="Magento\Customer\Controller\Adminhtml\Index\Delete">
+        <plugin name="sales_rep_after_delete_customer_success" type="Bss\SalesRep\Plugin\Controller\Adminhtml\Customer\Delete" sortOrder="10"/>
+    </type>
+    <type name="Bss\QuoteExtension\Controller\Adminhtml\Manage\Index">
+        <plugin name="sales_rep_quote_back_button" type="Bss\SalesRep\Plugin\Controller\Adminhtml\Quote\BackUrl" sortOrder="10"/>
+    </type>
+    <type name="Magento\Ui\Controller\Adminhtml\Index\Render">
+        <plugin name="sales_rep_render" type="Bss\SalesRep\Plugin\View\Render" sortOrder="10"/>
+    </type>
+    <type name="Bss\QuoteExtension\Controller\Adminhtml\Manage\Edit">
+        <plugin name="sales_rep_quote_edit" type="Bss\SalesRep\Plugin\Controller\Adminhtml\Quote\Edit" sortOrder="10"/>
+    </type>
+    <type name="Magento\User\Controller\Adminhtml\User\Delete">
+        <plugin name="sales_rep_user_delete" type="Bss\SalesRep\Plugin\Controller\Adminhtml\User\Delete" sortOrder="10"/>
+    </type>
+    <type name="Magento\Sales\Block\Adminhtml\Order\Create">
+        <plugin name="sales_rep_user_delete" type="Bss\SalesRep\Plugin\Block\Adminhtml\Order\Create" sortOrder="10"/>
+    </type>
+    <type name="Magento\Sales\Block\Adminhtml\Order\Create\Customer">
+        <plugin name="remove_create_customer_button" type="Bss\SalesRep\Plugin\Block\Adminhtml\Order\CreateCustomer" sortOrder="10"/>
+    </type>
+    <preference for="Magento\Sales\Block\Adminhtml\Order\View" type="Bss\SalesRep\Block\Adminhtml\Order\View" />
+    <preference for="Magento\Sales\Model\ResourceModel\Order\Grid\Collection" type="Bss\SalesRep\Model\ResourceModel\Grid\Collection" />
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <plugin name="sales_rep_grid_custom" type="Bss\SalesRep\Plugin\Grid" sortOrder="20" />
+    </type>
+    <preference for="Magento\Sales\Model\ResourceModel\Order\Invoice\Grid\Collection" type="Bss\SalesRep\Model\ResourceModel\Order\Invoice\Collection" />
+    <type name="Magento\Customer\Model\ResourceModel\Customer\Collection">
+        <plugin name="check_role_sales_rep" type="Bss\SalesRep\Plugin\Order\Customer\Collection" sortOrder="10"/>
+    </type>
+    <type name="Magento\Sales\Block\Adminhtml\Order\View\Tab\Creditmemos">
+        <plugin name="show_tab_creditmemo_sales_rep" type="Bss\SalesRep\Plugin\Order\View\Tab\CreditmemoSalesRep" sortOrder="10"/>
+    </type>
+    <type name="Magento\Sales\Block\Adminhtml\Order\View\Tab\Invoices">
+        <plugin name="show_tab_invoices_sales_rep" type="Bss\SalesRep\Plugin\Order\View\Tab\InvoicesSalesRep" sortOrder="10"/>
+    </type>
+    <type name="Magento\Sales\Block\Adminhtml\Order\View\Tab\Shipments">
+        <plugin name="show_tab_shipments_sales_rep" type="Bss\SalesRep\Plugin\Order\View\Tab\ShipmentsSalesRep" sortOrder="10"/>
+    </type>
+    <type name="Magento\Framework\Authorization">
+        <plugin name="add_permission_shipment_sales_rep" type="Bss\SalesRep\Plugin\Controller\Adminhtml\Order\Shipment\Authorization" sortOrder="10"/>
+    </type>
+    <type name="Magento\Sales\Block\Adminhtml\Order\View\History">
+        <plugin name="add_permission_history_comment_sales_rep" type="Bss\SalesRep\Plugin\Sales\Block\Adminhtml\Order\View\History" sortOrder="10"/>
+    </type>
+
+    <type name="Magento\Sales\Controller\Adminhtml\Order\AddComment">
+        <plugin name="add_allow_comment_sales_rep" type="Bss\SalesRep\Plugin\Sales\Controller\Adminhtml\Order\AddComment" sortOrder="10"/>
+    </type>
+
+    <type name="Magento\Framework\Authorization">
+        <plugin name="add_allow_shipment_sales_rep" type="Bss\SalesRep\Plugin\Framework\Authorization" sortOrder="10"/>
+    </type>
+
+    <type name="Magento\Sales\Block\Adminhtml\Order\View\Info">
+        <plugin name="add_allow_edit_address_sales_rep" type="Bss\SalesRep\Plugin\Sales\Block\Adminhtml\Order\View\Info" sortOrder="10"/>
+    </type>
+
+</config>

@@ -1,0 +1,35 @@
+<?php
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_QuoteExtension
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2018-2019 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+
+/** @var $block \Bss\QuoteExtension\Block\QuoteExtension\View\Action */
+?>
+<?php // @codingStandardsIgnoreFile ?>
+
+<?php if ($block->canShowButton('print') && $block->isEnable()) : ?>
+    <?php $action = $block->getAction('quoteextension/quote/print'); ?>
+    <form action="<?= /* @escapeNotVerified */ $block->escapeUrl($action); ?>" method="post" class="quote-button">
+        <input type="hidden" name="quote" value="<?= /* @escapeNotVerified */ $block->getRequestQuote()->getId(); ?>">
+        <input type="hidden" name="quote_id" value="<?= /* @escapeNotVerified */ $block->getQuoteExtension()->getId(); ?>">
+        <?php echo $block->getBlockHtml('formkey')?>
+        <div class="primary">
+            <button type="submit" title="<?= $block->escapeHtml(__('Print')); ?>" class="action primary quote-submit quote-move-print">
+                <span><?= $block->escapeHtml(__('Print')); ?></span>
+            </button>
+        </div>
+    </form>
+<?php endif; ?>

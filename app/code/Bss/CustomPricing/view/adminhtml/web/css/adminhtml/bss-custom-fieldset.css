@@ -1,0 +1,38 @@
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_CustomPricing
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2020 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+.bss-fieldset-tab .fieldset-wrapper.fieldset-tab-child {
+    margin-left: -20px;
+    margin-right: -20px;
+    border: 0;
+}
+.bss-fieldset-tab .fieldset-wrapper.fieldset-tab-child.no-padding-top  .admin__fieldset {
+    padding-top: 0;
+}
+.bss-fieldset-tab .fieldset-wrapper.fieldset-tab-child .fieldset-wrapper-title {
+    padding: 0;
+    background: transparent;
+    border-bottom: 1px solid #cac3b4;
+}
+.bss-fieldset-tab .fieldset-tab-child .fieldset-wrapper-title .admin__collapsible-title {
+    padding: 7px 0px 10px;
+}
+.bss-fieldset-tab .fieldset-tab-child .fieldset-wrapper-title .admin__collapsible-title:before {
+    top: 1rem;
+}
+.bss-custom-field .admin__control-addon [class*='admin__control-'][class] ~ [class*='admin__addon-'] {
+    padding-left: 1rem;
+}

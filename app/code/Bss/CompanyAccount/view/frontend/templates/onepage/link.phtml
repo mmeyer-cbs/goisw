@@ -1,0 +1,48 @@
+<?php
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_CompanyAccount
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2020 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+/**
+ * @var $block Bss\CompanyAccount\Block\Checkout\Onepage\Link
+ * @var $escaper \Magento\Framework\Escaper
+ */
+?>
+<?php if (!$block->isPossibleOnepageCheckout()): ?>
+    <button type="button"
+            data-role="proceed-to-checkout"
+            title="<?= $escaper->escapeHtml(__('Send Order for Company Admin approve')) ?>"
+            data-mage-init='{
+                "sendRequest":{
+                }
+            }'
+            class="action primary checkout<?= ($block->isDisabled()) ? ' disabled' : '' ?>"
+            <?php if ($block->isDisabled()): ?>
+                disabled="disabled"
+            <?php endif; ?>>
+            <span><?= $escaper->escapeHtml(__('Send Order for Company Admin approve')) ?></span>
+    </button>
+<?php endif?>
+<?php if ($block->isCurrentQuote()) : ?>
+    <div class="actions action-back">
+        <div class="secondary">
+            <a class="action back-to-cart"
+               id="bss-back-to-cart"
+               href="<?= $block->escapeHtml($block->getBackCartUrl()) ?>">
+                <span>Back to your cart</span>
+            </a>
+        </div>
+    </div>
+<?php endif; ?>

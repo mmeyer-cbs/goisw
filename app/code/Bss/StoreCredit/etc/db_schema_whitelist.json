@@ -1,0 +1,82 @@
+{
+  "quote": {
+    "column": {
+      "base_bss_storecredit_amount": true,
+      "bss_storecredit_amount": true,
+      "base_bss_storecredit_amount_input": true,
+      "store_credit_currency_code": true,
+      "bss_storecredit_amount_input": true
+    }
+  },
+  "sales_invoice": {
+    "column": {
+      "base_bss_storecredit_amount": true,
+      "bss_storecredit_amount": true
+    }
+  },
+  "sales_creditmemo": {
+    "column": {
+      "base_bss_storecredit_amount": true,
+      "bss_storecredit_amount": true,
+      "base_bss_storecredit_amount_refund": true,
+      "bss_storecredit_amount_refund": true
+    }
+  },
+  "sales_order": {
+    "column": {
+      "base_bss_storecredit_amount": true,
+      "bss_storecredit_amount": true
+    }
+  },
+  "quote_address": {
+    "column": {
+      "base_bss_storecredit_amount": true,
+      "bss_storecredit_amount": true
+    }
+  },
+  "bss_storecredit_balance": {
+    "column": {
+      "balance_id": true,
+      "customer_id": true,
+      "balance_amount": true,
+      "website_id": true,
+      "currency_code": true
+    },
+    "index": {
+      "BSS_STORECREDIT_BALANCE_CUSTOMER_ID": true,
+      "BSS_STORECREDIT_BALANCE_WEBSITE_ID": true
+    },
+    "constraint": {
+      "PRIMARY": true,
+      "BSS_STORECREDIT_BALANCE_WEBSITE_ID_STORE_WEBSITE_WEBSITE_ID": true,
+      "BSS_STORECREDIT_BALANCE_CUSTOMER_ID_CUSTOMER_ENTITY_ENTITY_ID": false
+    }
+  },
+  "bss_storecredit_balance_history": {
+    "column": {
+      "history_id": true,
+      "customer_id": true,
+      "creditmemo_id": true,
+      "order_id": true,
+      "website_id": true,
+      "type": true,
+      "change_amount": true,
+      "balance_amount": true,
+      "comment_content": true,
+      "is_notified": true,
+      "created_time": true,
+      "updated_time": true,
+      "currency_code": true,
+      "credit_currency_code": true,
+      "change_amount_store_view": true
+    },
+    "index": {
+      "BSS_STORECREDIT_BALANCE_HISTORY_IS_NOTIFIED": true,
+      "BSS_STORECREDIT_BALANCE_HISTORY_CREDITMEMO_ID": true
+    },
+    "constraint": {
+      "PRIMARY": true,
+      "FK_F2E3B3C186C302DE222249DD370C893F": true
+    }
+  }
+}

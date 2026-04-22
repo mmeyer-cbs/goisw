@@ -1,0 +1,27 @@
+.email-increament{
+    font-weight: bold;
+}
+.email-increament-id{
+    font-size:20px;
+    margin-top: 10px;
+}
+.email-increament-id span{
+    font-weight: bold;
+}
+.quote-new-icon{
+    background-image: url("../images/Quote.png");
+    background-repeat: no-repeat;
+    height: 60px;
+    width: 60px;
+    margin: auto;
+}
+.email-intro{
+    border-bottom: 1px solid #ccc;
+}
+.quote-totals {
+    background: #fdf0d5;
+}
+tfoot tr td {
+    text-align: right;
+    background-color:#f5f5f5;
+}

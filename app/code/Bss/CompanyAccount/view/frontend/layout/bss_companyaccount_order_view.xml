@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_CompanyAccount
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2020 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="customer_account"/>
+    <body>
+        <referenceContainer name="page.main.title">
+            <block class="Bss\CompanyAccount\Block\Order\Info" name="order.status"
+                   template="Bss_CompanyAccount::order/order_status.phtml"/>
+            <block class="Bss\CompanyAccount\Block\Order\RequestTitle"
+                   name="bss_order"
+                   template="Bss_CompanyAccount::order/order_request.phtml"/>
+            <block class="Bss\CompanyAccount\Block\Order\Info" name="order.date"
+                   template="Bss_CompanyAccount::order/order_date.phtml"/>
+            <container name="order.actions.container" htmlTag="div" htmlClass="actions-toolbar order-actions-toolbar">
+                <block class="Bss\CompanyAccount\Block\Order\Buttons" as="buttons" name="sales.order.info.buttons" cacheable="false"/>
+            </container>
+        </referenceContainer>
+        <referenceContainer name="sales.order.info.buttons">
+            <block class="Magento\Sales\Block\Order\Info\Buttons\Rss" as="buttons.rss"
+                   name="sales.order.info.buttons.rss" cacheable="false"/>
+        </referenceContainer>
+        <referenceContainer name="content">
+            <block class="Bss\CompanyAccount\Block\Order\View" name="sales.order.view" cacheable="false"
+                   after="sales.order.info.links" template="Bss_CompanyAccount::order/view.phtml">
+                <block class="Bss\CompanyAccount\Block\Order\Items" as="bss.order.items" name="bss-order-items"
+                       template="Bss_CompanyAccount::order/items.phtml">
+                    <block class="Magento\Theme\Block\Html\Pager" name="sales_order_item_pager"/>
+                    <block class="Bss\CompanyAccount\Block\Order\Totals" name="order_totals"
+                           template="Bss_CompanyAccount::order/totals.phtml">
+                        <arguments>
+                            <argument name="label_properties" xsi:type="string">colspan="4" class="mark"</argument>
+                            <argument name="value_properties" xsi:type="string">class="amount"</argument>
+                        </arguments>
+                    </block>
+                </block>
+            </block>
+            <block class="Bss\CompanyAccount\Block\Order\Actions" name="bss-action-order" cacheable="false"
+                   after="sales.order.view" template="Bss_CompanyAccount::order/actions.phtml">
+            </block>
+            <block class="Bss\CompanyAccount\Block\Order\SubUserInfo"
+                   name="sub_user_infor"
+                   cacheable="false"
+                   template="Bss_CompanyAccount::sales/orders/sub_user_info.phtml">
+            </block>
+            <block class="Bss\CompanyAccount\Block\Order\ApproveUserInfo"
+                   name="approve_user_infor"
+                   cacheable="false"
+                   template="Bss_CompanyAccount::sales/orders/approve_user_info.phtml">
+            </block>
+        </referenceContainer>
+    </body>
+</page>

@@ -1,0 +1,133 @@
+<?php
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_QuoteExtension
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2018-2019 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+
+/** @var $block \Bss\QuoteExtension\Block\QuoteExtension\View */
+?>
+<?php // @codingStandardsIgnoreFile ?>
+
+<?php
+$quote = $block->getQuoteExtension();
+$requestQuote = $block->getRequestQuote();
+$helper = $block->getModuleHelper();
+?>
+<?php $mergedCells = ($block->getTaxHelper()->displayCartBothPrices() ? 2 : 1); ?>
+<?php $comment = []; ?>
+<?php $historyDate = $block->formatDate(
+    $block->getQuoteExtension()->getCreatedAt(),
+    \IntlDateFormatter::MEDIUM,
+    true
+);?>
+<?php
+    $comment[$historyDate] = ['customer' => $block->getQuoteExtension()->getCustomerNote()];
+    $hasComment = $block->isNoHistoryComment($block->getHistoryCollection()->getData());
+?>
+<?php if ($hasComment || $block->getQuoteExtension()->getCustomerNote()): ?>
+    <section class="order-view-account-information">
+        <div class="quote-title">
+            <span class="title"><?= $block->escapeHtml(__('Quote History')); ?></span>
+        </div>
+        <div class="quote-comment">
+            <div class="field-comment ">
+                <?php foreach ($block->getHistoryCollection() as $history): ?>
+                    <?php $historyDate = $block->formatDate(
+                        $history->getCreatedAt(),
+                        \IntlDateFormatter::MEDIUM,
+                        true
+                    );?>
+                    <?php if ($history->getComment()): ?>
+                        <?php $area = $history->getAreaLog() ? 'admin' : 'customer'; ?>
+                        <?php $comment[$historyDate] = [$area => $history->getComment()]; ?>
+                    <?php endif ?>
+                <?php endforeach; ?>
+                <ul class="note-list">
+                    <?php foreach ($comment as $date => $com): ?>
+                        <?php if (isset($com['customer'])): ?>
+                            <li class="note-list-item">
+                                <p><strong><?= $block->escapeHtml(__('Customer Comment')); ?></strong> <span class="date quote right"> <?= $block->escapeHtml($date); ?></span></p>
+                                <div class="note-list-comment"><?= $block->escapeHtml($com['customer']); ?></div>
+                            </li>
+                        <?php elseif (isset($com['admin'])): ?>
+                            <li class="note-list-item">
+                                <p><strong><?= $block->escapeHtml(__('Admin Comment')); ?></strong> <span class="date quote right"> <?= $block->escapeHtml($date); ?></span></p>
+                                <div class="note-list-comment"><?= $block->escapeHtml($com['admin']); ?></div>
+                            </li>
+                        <?php endif ?>
+                    <?php endforeach ?>
+                </ul>
+            </div>
+        </div>
+    </section>
+<?php endif; ?>
+<?php if ($block->canSubmitQuote()): ?>
+    <form id="form-update-quoteextension" action="<?= /* @escapeNotVerified */ $block->escapeUrl($block->getSubmitViewQuote()); ?>" method="post">
+        <?= $block->getBlockHtml('formkey'); ?>
+        <input type="hidden" name="quote_id" value="<?= $block->escapeHtmlAttr($quote->getEntityId()); ?>">
+        <input type="hidden" name="token" value="<?= $block->escapeHtmlAttr($requestQuote->getToken()); ?>">
+        <input type="hidden" name="request_entity_id" value="<?= $block->escapeHtmlAttr($requestQuote->getEntityId()); ?>">
+<?php endif; ?>
+    <div class="admin__page-section-title quote-title">
+        <span class="title"><?= $block->escapeHtml(__('Items Quote')); ?></span>
+    </div>
+    <div class="quote-items">
+        <div class="cart table-wrapper<?= $mergedCells == 2 ? ' detailed' : ''; ?>">
+            <table id="shopping-cart-table"
+                   class="cart items data table"
+                   data-mage-init='{"shoppingCart":{"emptyCartButton": "action.clear",
+            "updateCartActionContainer": "#update_cart_action_container"}}'>
+                <caption role="heading" aria-level="2" class="table-caption"><?= $block->escapeHtml(__('Quote Items')); ?></caption>
+                <thead>
+                <tr>
+                    <th class="col item" scope="col"><span><?= $block->escapeHtml(__('Item')); ?></span></th>
+                    <th class="col price" scope="col"><span><?= $block->escapeHtml(__('Price')); ?></span></th>
+                    <th class="col qty" scope="col"><span><?= $block->escapeHtml(__('Qty')); ?></span></th>
+                    <th class="col subtotal" scope="col"><span><?= $block->escapeHtml(__('Subtotal')); ?></span></th>
+                </tr>
+                </thead>
+                <?php foreach ($block->getItems() as $_item): ?>
+                    <?= $block->getItemHtml($_item) ?>
+                <?php endforeach ?>
+                <tfoot>
+                    <?= $block->getChildHtml('quote_totals'); ?>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+        <?= $block->getChildHtml('quoteextension.quote.submit'); ?>
+<?php if ($block->canSubmitQuote()): ?>
+    <div class="primary">
+        <label class="label" for="customer-note">
+            <span><?= $block->escapeHtml(__('Comment: ')); ?></span>
+        </label>
+        <textarea class="control-textarea" cols="15" title="<?= $block->escapeHtmlAttr(__('Customer Note')); ?>" rows="5" name="customer_note" id="customer-note" aria-required="true"></textarea>
+        <button type="submit" title="<?= $block->escapeHtmlAttr(__('Update Quote')); ?>" class="action primary quote-submit">
+            <span><?= $block->escapeHtml(__('Update Quote')); ?></span>
+        </button>
+        <button type="submit" title="<?= $block->escapeHtmlAttr(__('Re-submit Quote')); ?>" class="action primary quote-submit re-send-quote">
+            <span><?= $block->escapeHtml(__('Re-submit Quote')); ?></span>
+        </button>
+    </div>
+    </form>
+<?php endif; ?>
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Bss_QuoteExtension/js/quote-view/version-log": {},
+            "Bss_QuoteExtension/js/quote-view/re-send-quote": {}
+        }
+    }
+</script>

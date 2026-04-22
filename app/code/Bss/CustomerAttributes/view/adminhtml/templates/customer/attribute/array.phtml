@@ -1,0 +1,343 @@
+<?php
+
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_CustomerAttributes
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2018-2019 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+// @codingStandardsIgnoreFile
+/** @var \Bss\CustomerAttributes\Block\Form\Field\DynamicRow $block */
+?>
+<?php
+$_htmlId = $block->getHtmlId() ? $block->getHtmlId() : '_' . uniqid();
+$_colspan = $block->isAddAfter() ? 2 : 1;
+$collection = $block->getDataAttribute();
+$data = $block->decodeFunction($collection->getData('dependents_data'));
+$attributes = $block->getAllAttributesCollection();
+$blockObj = $attributes->getData();
+$blockValue = $block->getLayout()->createBlock('Bss\CustomerAttributes\Block\Adminhtml\Attribute\Edit\Options\Options');
+$attributeValues = $block->getAllAttributeDependentBe($attributes);
+$customerAttributeId = $block->getAttributeById();
+$blockObjUpdate = $block->validateAllAttributeDependentBe($blockObj, $customerAttributeId);
+?>
+
+<div class="design_theme_ua_regexp" id="grid<?= $block->escapeHtmlAttr($_htmlId) ?>">
+    <div class="admin__control-table-wrapper">
+        <table class="admin__control-table" id="<?= $block->escapeHtmlAttr($block->getElement()->getId()) ?>">
+            <thead>
+            <tr>
+                <?php foreach ($block->getColumns() as $columnName => $column) : ?>
+                    <th><?= $block->escapeHtml($column['label']) ?></th>
+                <?php endforeach; ?>
+                <th class="col-actions" colspan="<?= (int)$_colspan ?>"><?= $block->escapeHtml(__('Action')) ?></th>
+            </tr>
+            </thead>
+            <tfoot>
+            <tr>
+                <td colspan="<?= count($block->getColumns()) + $_colspan ?>" class="col-actions-add">
+                    <button id="addToEndBtn<?= $block->escapeHtmlAttr($_htmlId) ?>" class="action-add"
+                            title="<?= $block->escapeHtmlAttr(__('Add')) ?>" type="button">
+                        <span><?= $block->escapeHtml($block->getAddButtonLabel()) ?></span>
+                    </button>
+                </td>
+            </tr>
+            </tfoot>
+            <tbody id="addRow<?= $block->escapeHtmlAttr($_htmlId) ?>">
+            <?php
+            if ($data) {
+            foreach ($data as $key => $value) { ?>
+                <tr>
+                    <td><select name="relation_data[<?= $key ?>][attribute-values][value]">
+                            <option value="<?= $value['attribute-values']['value'] ?>"><?php
+                                if (is_numeric($value['attribute-values']['value']) && $block->getOptionValueById($value['attribute-values']['value']) !== null) {
+                                    foreach (
+                                        $block->getOptionValueById($value['attribute-values']['value']) as $keyAttr => $valueAttr
+                                    ) {
+                                        ?>
+                                        <?= $valueAttr['value'];
+                                    }
+                                }
+                                ?>
+                                <?php if (!is_numeric($value['attribute-values']['value'])) {
+                                    echo $value['attribute-values']['value'];
+                                }
+                                ?>
+                            </option>
+                            <?php
+                            if ($blockValue->getOptionValues() === []) { ?>
+                                <?php if ($value['attribute-values']['value'] == 'Yes') { ?>
+                                    <option>No</option>
+                                <?php } else { ?>
+                                    <option>Yes</option>
+                                <?php } ?>
+                            <?php } else {
+                                foreach ($blockValue->getOptionValues() as $blockK => $blockV) {
+                                    ?>
+                                    <?php if ($blockV['store0'] != $valueAttr['value']) { ?>
+                                        <option
+                                            value="<?php echo $blockV['id']; ?>"><?php echo $blockV['store0']; ?></option>
+                                    <?php }
+                                }
+                            }
+                            ?>
+                        </select>
+                    </td>
+                    <td><select class="dependent_attribute"
+                                name="relation_data[<?= $key ?>][attribute-values][dependent_attribute][value]"
+                                id="<?php
+                                $customerAttr = $block->getAttributeByCode($value['attribute-values']['dependent_attribute']['value'])->getData();
+                                foreach ($customerAttr as $keys => $values) {
+                                    echo $values['frontend_input'];
+                                }
+                                ?>">
+                            <option value="<?php
+                            $customerAttr = $block->getAttributeByCode($value['attribute-values']['dependent_attribute']['value'])->getData();
+                            foreach ($customerAttr as $keys => $values) {
+                                echo $values['attribute_code'];
+                            }
+                            ?>" name="<?php
+                            $customerAttr = $block->getAttributeByCode($value['attribute-values']['dependent_attribute']['value'])->getData();
+                            foreach ($customerAttr as $keys => $values) {
+                                echo $values['frontend_input'];
+                            }
+                            ?>" hidden> <?php
+                                $customerAttr = $block->getAttributeByCode($value['attribute-values']['dependent_attribute']['value'])->getData();
+                                foreach ($customerAttr as $keys => $values) {
+                                    echo $values['frontend_label'];
+                                }
+                                ?></option>
+                            <?php
+                            foreach ($blockObjUpdate as $k => $v) {
+                                ?>
+                                <option value="<?php echo $v['frontend_label']; ?>"
+                                        id="<?php echo $v['attribute_code']; ?>"
+                                        name="<?php echo $v['frontend_input']; ?>"><?php echo $v['frontend_label']; ?></option>
+                                <?php
+                            }
+                            ?>
+                        </select>
+                        <table class="dependent_values">
+                            <thead>
+                            <tr>
+                                <th>Dependent Values</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td><select class="attribute"
+                                            name="relation_data[<?= $key ?>][attribute-values][dependent_attribute][dependent_attribute_value][]"
+                                            multiple>
+                                        <?php if (isset($value['attribute-values']['dependent_attribute']['dependent_attribute_value'])) {
+                                            foreach ($attributeValues as $davKey => $davValues) {
+                                                ?>
+                                                <?php foreach ($davValues as $a => $b) {
+                                                    if (strcmp($value['attribute-values']['dependent_attribute']['value'], $davKey) == 0 && $b['label'] !== ' ') {
+                                                        ?>
+                                                        <option value="<?= $b['value'] ?>" <?php $count = 0;
+                                                        foreach ($value['attribute-values']['dependent_attribute']['dependent_attribute_value'] as $dependentKey => $dependentValue) {
+                                                            if (intval($dependentValue) == intval($b['value'])) {
+                                                                $count++;
+                                                            }
+                                                            if ($count != 0) {
+                                                                echo " selected";
+                                                            }
+                                                        } ?>><?= $b['label']; ?></option>
+                                                        <?php
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        ?>
+                                    </select></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                    <td class="col-actions">
+                        <button class="action-delete" type="button"><span>Delete</span></button>
+                    </td>
+                </tr>
+                <?php
+            } ?>
+            </tbody>
+            <?php
+            }
+            ?>
+        </table>
+    </div>
+    <input type="hidden" name="<?= $block->escapeHtmlAttr($block->getElement()->getName()) ?>[__empty]" value=""/>
+
+    <?php $scriptString = <<<script
+        require([
+            'mage/template',
+            'prototype'
+        ], function (mageTemplate) {
+        // create row creator
+        window.arrayRow{$block->escapeJs($_htmlId)} = {
+
+            // define row prototypeJS template
+            template: mageTemplate(
+                    '<tr id="<%- _id %>">'
+script;
+    foreach ($block->getColumns() as $columnName => $column) :
+        $scriptString .= <<<script
+
+                        + '<td>'
+                        + '{$block->escapeJs($block->renderCellTemplate($columnName))}'
+                        + '<\/td>'
+script;
+    endforeach;
+
+    if ($block->isAddAfter()) :
+        $scriptString .= <<<script
+
+                        + '<td><button class="action-add" type="button" id="addAfterBtn<%- _id %>"><span>'
+                        + '{$block->escapeJs(__('Add after'))}'
+                        + '<\/span><\/button><\/td>'
+script;
+    endif;
+    $scriptString .= <<<script
+
+                    + '<td class="col-actions"><button '
+                    + 'class="action-delete" type="button">'
+                    + '<span>{$block->escapeJs(__('Delete'))}<\/span><\/button><\/td>'
+                    + '<\/tr>'
+
+script;
+
+    $scriptString1 = $block->renderEventListenerAsTag(
+        'onclick',
+        "arrayRow" . $block->escapeJs($_htmlId) . ".del('<%- _id %>')",
+        "tr#<%- _id %> button.action-delete"
+    );
+
+    $scriptString .= " + '" . $block->escapeJs($scriptString1) . "'" . PHP_EOL;
+
+    $scriptString .= <<<script
+            ),
+
+            add: function(rowData, insertAfterId) {
+                // generate default template data
+                var templateValues;
+
+                // Prepare template values
+                if (rowData) {
+                    templateValues = rowData;
+                } else {
+                    var d = new Date();
+                    templateValues = {
+script;
+    foreach ($block->getColumns() as $columnName => $column) :
+        $scriptString .= <<<script
+
+                            {$block->escapeJs($columnName)}: '',
+                                'option_extra_attrs': {},
+script;
+    endforeach;
+    $scriptString .= <<<script
+
+                        _id: '_' + d.getTime() + '_' + d.getMilliseconds()
+                };
+            }
+
+            // Insert new row after specified row or at the bottom
+            if (insertAfterId) {
+                Element.insert($(insertAfterId), {after: this.template(templateValues)});
+            } else {
+                Element.insert($('addRow{$block->escapeJs($_htmlId)}'), {bottom: this.template(templateValues)});
+            }
+
+            // Fill controls with data
+            if (rowData) {
+                var rowInputElementNames = Object.keys(rowData.column_values);
+                for (var i = 0; i < rowInputElementNames.length; i++) {
+                    if ($(rowInputElementNames[i])) {
+                        $(rowInputElementNames[i]).setValue(rowData.column_values[rowInputElementNames[i]]);
+                    }
+                }
+            }
+
+            // Add event for {addAfterBtn} button
+
+script;
+    if ($block->isAddAfter()) :
+        $scriptString .= <<<script
+
+            Event.observe('addAfterBtn' + templateValues._id, 'click', this.add.bind(this, false, templateValues._id));
+
+script;
+    endif;
+    $scriptString .= <<<script
+
+            },
+
+            del: function(rowId) {
+                $(rowId).remove();
+            }
+        }
+
+        // bind add action to "Add" button in last row
+        Event.observe('addToEndBtn{$block->escapeJs($_htmlId)}',
+            'click',
+            arrayRow{$block->escapeJs($_htmlId)}.add.bind(
+                arrayRow{$block->escapeJs($_htmlId)}, false, false
+            )
+        );
+
+        // add existing rows
+
+script;
+
+    foreach ($block->getArrayRows() as $_rowId => $_row) {
+        $scriptString .=
+            /** @noEscape */
+            " arrayRow" . $block->escapeJs($_htmlId) .
+            ".add(" .
+            /** @noEscape */
+            $_row->toJson() . ");\n";
+    }
+    $scriptString .= <<<script
+
+        // Toggle the grid availability, if element is disabled (depending on scope)
+script;
+    if ($block->getElement()->getDisabled()) :
+        $scriptString .= <<<script
+
+        toggleValueElements({checked: true}, $('grid{$block->escapeJs($_htmlId)}').parentNode);
+script;
+    endif;
+    $scriptString .= <<<script
+
+        });
+script;
+    ?>
+
+    <?= /* @noEscape */
+    $block->renderTag('script', [], $scriptString, false) ?>
+</div>
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Bss_CustomerAttributes/js/array": {
+            "index" : "<?php if (isset($key) == false) {
+        echo 0;
+    } else {
+        echo $key;
+    }
+    ?>",
+            "attrValues" :"<?= $block->escapeJs($block->encodeFunction($attributeValues)) ?>"
+            }
+        }
+    }
+</script>

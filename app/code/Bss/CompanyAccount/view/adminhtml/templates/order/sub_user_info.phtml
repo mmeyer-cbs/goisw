@@ -1,0 +1,48 @@
+<?php
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_CompanyAccount
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2020 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+/** @var $block \Bss\CompanyAccount\Block\Sales\SubInfo */
+
+use Bss\CompanyAccount\Api\Data\SubUserInterface as SubUser;
+
+$subUserInfo = $block->getSubUserInfo();
+?>
+<?php if (!empty($subUserInfo)) : ?>
+    <section class="admin__page-section order-addresses">
+        <div class="admin__page-section-title">
+            <span class="title"><?= $block->escapeHtml(__('Ordered Sub-user Information')) ?></span>
+        </div>
+        <div class="admin__page-section-content">
+            <div class="admin__page-section-item order-billing-address">
+                <info class="admin__page-section-item-content">
+                    <div class="admin__page-section-item-content">
+                        <strong><?= $block->escapeHtml(__("Sub-Name: ")) ?></strong>
+                        <span class="price"><?= $block->escapeHtml($subUserInfo[SubUser::NAME]) ?></span>
+                    </div>
+                    <div class="admin__page-section-item-content">
+                        <strong><?= $block->escapeHtml(__("Sub-Email: ")) ?></strong>
+                        <span class="price"><?= $block->escapeHtml($subUserInfo[SubUser::EMAIL]) ?></span>
+                    </div>
+                    <div class="admin__page-section-item-content">
+                        <strong><?= $block->escapeHtml(__("Role: ")) ?></strong>
+                        <span class="price"><?= $block->escapeHtml($subUserInfo['role_name']) ?></span>
+                    </div>
+                </info>
+            </div>
+        </div>
+    </section>
+<?php endif; ?>

@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_QuoteExtension
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2018-2019 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="quoteextension_quote_item_renderers"/>
+    <update handle="quoteextension_quote_checkout"/>
+    <body>
+        <referenceContainer name="page.messages">
+            <block class="Bss\QuoteExtension\Block\QuoteExtension\ValidationMessages" name="quoteextension.quote.validationmessages"/>
+        </referenceContainer>
+        <referenceContainer name="content">
+            <block class="Bss\QuoteExtension\Block\QuoteExtension" name="quoteextension.quote" template="quoteextension.phtml" cacheable="false">
+                <container name="quoteextension.quote.items" as="with-items">
+                    <container name="quoteextension.quote.widget" as="checkout_cart_widget" label="Quote Extension Items After"/>
+                    <container name="quoteextension.quote.container" htmlTag="div" htmlClass="cart-container" before="-">
+                        <container name="quoteextension.quote.form.before" as="form_before" label="Quote Items Before" htmlTag="div" htmlClass="rewards"/>
+                            <container name="quoteextension.summary" label="Quote Summary Container" htmlTag="div" htmlClass="cart-summary" after="-" >
+                                <block class="Magento\Framework\View\Element\Template" name="quoteextension.quote.summary.title" before="-" template="Magento_Theme::text.phtml">
+                                    <arguments>
+                                        <argument translate="true" name="text" xsi:type="string">Quote Summary</argument>
+                                        <argument name="tag" xsi:type="string">strong</argument>
+                                        <argument name="css_class" xsi:type="string">summary title</argument>
+                                    </arguments>
+                                </block>
+                                <container name="quoteextension.quote.submit.container" as="submit" label="Quote Extension Submit"/>
+                            </container>
+                            <block class="Bss\QuoteExtension\Block\QuoteExtension" name="quoteextension.quote.form" as="quote-items" template="quoteextension/form.phtml">
+                                <block class="Magento\Framework\View\Element\RendererList" name="quoteextension.quote.item.renderers" as="renderer.list"/>
+                                <block class="Magento\Framework\View\Element\Text\ListText" name="quoteextension.quote.quote.actions"/>
+                            </block>
+                            <container name="checkout.cart.widget" as="checkout_cart_widget" label="Shopping Cart Items After"/>
+                        </container>
+                </container>
+                <container name="quoteextension.quote.noitems" as="no-items">
+                    <block class="Bss\QuoteExtension\Block\QuoteExtension" name="quoteextension.quote.empty" before="-" template="Bss_QuoteExtension::quoteextension/noitems.phtml"/>
+                    <container name="quoteextension.quote.empty.widget" as="quoteextension.quote_empty_widget" label="Empty Quote Extension Quote Content Before"/>
+                </container>
+            </block>
+        </referenceContainer>
+        <block class="Magento\Checkout\Block\Cart\Additional\Info" name="additional.product.info" template="cart/additional/info.phtml">
+            <block class="Bss\QuoteExtension\Block\QuoteExtension\Quote\Item\Renderer\DefaultRenderer" name="quoteextension.product.comment" template="Bss_QuoteExtension::quoteextension/item/comment.phtml"/>
+        </block>
+    </body>
+</page>

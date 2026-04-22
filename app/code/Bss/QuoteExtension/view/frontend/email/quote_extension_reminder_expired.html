@@ -1,0 +1,38 @@
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_QuoteExtension
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2018-2019 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+-->
+<!--@subject {{trans "A Quote Will Expire Soon"}} @-->
+<!--@vars {
+"var increment_id":"Increment Id",
+"var quote.getCustomerName()":"Customer Name"
+} @-->
+{{template config_path="design/email/header_template"}}
+{{inlinecss file="Bss_QuoteExtension::css/email-inline.css"}}
+<table style="width: 100%">
+    <tr class="email-intro">
+        <td>
+            <p class="greeting">{{trans "%customer_name," customer_name=$customer_name}}</p>
+            <p>
+                {{trans 'The Quote will expire soon.'}}<span class="email-increament">#{{var increment_id}}</span>
+                <br>
+                {{trans 'Expiry date: '}}<span class="email-increament">#{{var expired_day}}</span>
+            </p>
+        </td>
+    </tr>
+</table>
+{{template config_path="design/email/footer_template"}}

@@ -1,0 +1,32 @@
+If enabled the products qty column will be enabled in configurable grid view table.,If enabled the products qty column will be enabled in configurable grid view table.
+If enabled, the products have Stock Availability = "Out of stock" will be displayed in the configurable grid view table.,If enabled, the products have Stock Availability = "Out of stock" will be displayed in the configurable grid view table.
+If enabled the products SKU column will be enabled in configurable grid view table.,If enabled the products SKU column will be enabled in configurable grid view table.
+If enabled, subtotal column will be displayed in the configurable grid view table.,If enabled, subtotal column will be displayed in the configurable grid view table.
+If enabled the products unit price column will be enabled in configurable grid view table.,If enabled the products unit price column will be enabled in configurable grid view table.
+Choose 'Yes' to enable display configurations for mobile (less than 768px).,Choose 'Yes' to enable display configurations for mobile (less than 768px).
+Choose 'Yes' to enable display configurations for tablet (from 768px to 1024px).,Choose 'Yes' to enable display configurations for tablet (from 768px to 1024px).
+Sku,Sku
+Availability,Availability
+Unit Price,Unit Price
+Subtotal,Subtotal
+We can\'t add this item to your shopping cart right now.,We can\'t add this item to your shopping cart right now.
+We don\'t have as many "%1" as you requested,We don\'t have as many "%1" as you requested
+No items add to your shopping cart.,No items add to your shopping cart.
+We can\'t update the item right now.,We can\'t update the item right now.
+We can\'t find the quote item.,We can\'t find the quote item.
+Yes,Yes
+No,No
+Use General Options,Use General Options
+Only Different Price,Only Different Price
+We can\'t update your Wish List right now.,We can\'t update your Wish List right now.
+We can\'t specify a wish list item.,We can\'t specify a wish list item.
+%1 has been updated in your Wish List.,%1 has been updated in your Wish List.
+From:,From:
+To:,To:
+Total Qty:,Total Qty:
+Total:,Total:
+Choose an Option...,Choose an Option...
+Pre Order,Pre Order
+Available: Pre Order,Available: Pre Order
+Update Cart,Update Cart
+You can buy this product only in quantities of %1 at a time.,You can buy this product only in quantities of %1 at a time.

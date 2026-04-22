@@ -1,0 +1,95 @@
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_B2bRegistration
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2017-2018 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+& when (@media-common = true) {
+  .page-header .panel > .header.links {
+    display: flex;
+  }
+
+  .page-header .panel .bss-b2b-customer {
+    order: 4;
+  }
+
+  .customer-dob #dob-error {
+    width: 100%;
+    float: left;
+    margin: 10px 0 20px 0;
+  }
+}
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+  .block-authentication {
+    .block-new-customer {
+      .actions-toolbar {
+        div.primary {
+          float: none;
+          width: 100%;
+          display: table;
+          
+          a {
+            float: right;
+          }
+        }
+
+        .b2b-button {
+          margin-top: 10px;
+        }
+      }
+    }
+  }
+
+  #form-validate.bss-b2b-registration.form-create-account {
+    max-width: unset;
+    .fieldset-fullname {
+      .fields {
+        .field {
+          display: table-cell;
+          float: none !important;
+
+          & + .field {
+            padding-left: 10px;
+          }
+        }
+      }
+      .field-name-prefix,
+      .field-name-suffix {
+        width: 60px;
+      }
+    }
+    .fieldset>.field input.input-text {
+      line-height: normal;
+    }
+  }
+
+  #ui-datepicker-div {
+    width: 252px;
+    .ui-datepicker-prev,
+    .ui-datepicker-next {
+      top: 8px;
+    }
+  }
+}
+
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+  .block-authentication {
+    .actions-toolbar {
+      .primary {
+        width: 100%;
+      }
+    }
+  }
+}

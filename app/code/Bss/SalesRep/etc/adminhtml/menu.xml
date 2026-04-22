@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_SalesRep
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2020 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Bss_SalesRep::salesrep" title="Sales Rep Dashboard" module="Bss_SalesRep" sortOrder="30" resource="Bss_SalesRep::salesrep"/>
+
+        <add id="Bss_SalesRep::salesrep_customer" title="Customer" module="Bss_SalesRep" sortOrder="20" parent="Bss_SalesRep::salesrep" action="salesrep/index/customer" resource="Bss_SalesRep::salesrep"/>
+
+        <add id="Bss_SalesRep::salesrep_order" title="Order" module="Bss_SalesRep" sortOrder="30" parent="Bss_SalesRep::salesrep" action="salesrep/index/order" resource="Bss_SalesRep::salesrep"/>
+
+        <add id="Bss_SalesRep::salesrep_quotes" title="Quote" module="Bss_SalesRep" sortOrder="40" parent="Bss_SalesRep::salesrep" action="salesrep/index/quotes" resource="Bss_SalesRep::salesrep"/>
+
+    </menu>
+</config>

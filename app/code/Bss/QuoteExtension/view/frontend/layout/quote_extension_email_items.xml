@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_QuoteExtension
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2018-2019 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd" label="Email Order Items List" design_abstraction="custom">
+    <update handle="quote_extension_email_renderers"/>
+    <update handle="quote_extension_email_item_price"/>
+    <body>
+        <block class="Magento\Sales\Block\Order\Email\Items" name="items" template="Bss_QuoteExtension::email/items.phtml" cacheable="false">
+            <arguments>
+                  <argument name="view_model" xsi:type="object">Bss\QuoteExtension\ViewModel\Quote</argument>
+            </arguments>
+            <block class="Magento\Framework\View\Element\RendererList" name="quote.extension.email.renderers" as="renderer.list"/>
+            <block class="Magento\Sales\Block\Order\Email\Items" name="quote_totals" template="Bss_QuoteExtension::email/quoteextension/totals.phtml">
+                <arguments>
+                    <argument name="view_model" xsi:type="object">Bss\QuoteExtension\Block\QuoteExtension\Email\ViewModel\Helper</argument>
+                </arguments>
+            </block>
+        </block>
+    </body>
+</page>

@@ -1,0 +1,52 @@
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_TimeCountdown
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2018-2019 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+& when (@media-common = true) {
+  @color_1: #e02b27;
+  @color_2: #b30000;
+  @font_family_1: 'luma-icons';
+
+  .message_bss {
+    margin: 0 0 10px;
+    padding: 12px 20px 12px 25px;
+    display: block;
+    font-size: 1.3rem;
+    background: #fae5e5;
+    color: @color_1;
+    padding-left: 45px;
+    position: relative;
+    &:before {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      font-size: 24px;
+      line-height: 24px;
+      color: @color_2;
+      content: '\e61f';
+      font-family: @font_family_1;
+      margin: -12px 0 0;
+      vertical-align: middle;
+      display: inline-block;
+      font-weight: normal;
+      overflow: hidden;
+      speak: none;
+      left: 0;
+      top: 22px;
+      width: 45px;
+      position: absolute;
+      text-align: center;
+    }
+  }
+}

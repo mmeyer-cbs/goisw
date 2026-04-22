@@ -1,0 +1,35 @@
+<?php
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_QuoteExtension
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2018-2019 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+
+// @codingStandardsIgnoreFile
+?>
+<?php /** @var $block \Bss\QuoteExtension\Block\Adminhtml\QuoteExtension\Edit\Tab\Info */ ?>
+<?php $_quote = $block->getMageQuote() ?>
+<?php echo $block->getChildHtml('quote_extension_history') ?>
+<?php echo $block->getChildHtml('quote_extension_info') ?>
+<input type="hidden" name="quote_id" value="<?php echo $_quote->getId();?>"/>
+<input type="hidden" name="customer_id" value="<?php echo $_quote->getCustomerId();?>"/>
+<section id="order-search" style="display: none" class="admin__page-section order-search-items">
+    <?= $block->getChildHtml('quote_extension_search') ?>
+</section>
+<?php echo $block->getItemsHtml() ?>
+<section id="order-shipping_method" class="admin__page-section order-shipping_method">
+    <?php echo $block->getChildHtml('shipping_method') ?>
+</section>
+<?php echo $block->getChildHtml('quote_address') ?>
+<?php echo $block->getChildHtml('quote_extension_total') ?>

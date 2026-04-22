@@ -1,0 +1,56 @@
+.weltpixel-quickview-catalog-product-view .box-tocart .action.tocart,
+.weltpixel_quickview-catalog_product-view .box-tocart .action.tocart {
+  width: 100%;
+}
+.weltpixel-quickview-catalog-product-view .reviews-actions .add,
+.weltpixel_quickview-catalog_product-view .reviews-actions .add {
+  display: none;
+}
+.weltpixel-quickview-catalog-product-view .main-product-detail,
+.weltpixel_quickview-catalog_product-view .main-product-detail {
+  padding: 0;
+}
+.weltpixel-quickview-catalog-product-view .page-main,
+.weltpixel_quickview-catalog_product-view .page-main {
+  padding: 25px !important;
+  background: #fff;
+}
+.weltpixel-quickview-catalog-product-view .sidebar,
+.weltpixel_quickview-catalog_product-view .sidebar {
+  display: none;
+}
+.weltpixel-quickview-catalog-product-view .page-main,
+.weltpixel_quickview-catalog_product-view .page-main {
+  max-width: 100% !important;
+}
+.weltpixel-quickview-catalog-product-view .page-main .columns,
+.weltpixel_quickview-catalog_product-view .page-main .columns {
+  padding: 0 !important;
+}
+.weltpixel-quickview-catalog-product-view .page-wrapper,
+.weltpixel_quickview-catalog_product-view .page-wrapper {
+  max-width: 100% !important;
+  padding: 0 !important;
+  min-height: auto;
+}
+.weltpixel-quickview-catalog-product-view .column.main,
+.weltpixel_quickview-catalog_product-view .column.main {
+  width: 100%;
+  padding: 0;
+}
+.box-gotoproduct #product-gotoproduct-button {
+  background: none;
+  color: #222529;
+  border: none;
+  height: auto;
+  margin-top: 10px;
+  display: inline-block;
+  min-width: auto;
+  padding: 0;
+}
+.product-item .weltpixel-quickview {
+  display: none;
+}
+.products-grid .product-item .product-item-info {
+  position: relative;
+}

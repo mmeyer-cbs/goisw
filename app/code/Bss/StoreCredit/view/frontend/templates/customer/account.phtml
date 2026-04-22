@@ -1,0 +1,126 @@
+<?php
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_StoreCredit
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2017-2018 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+?>
+
+<?php
+// @codingStandardsIgnoreFile
+
+/** @var  $block \Bss\StoreCredit\Block\Customer\Account */
+?>
+
+<?php
+    $histories = $block->getHistory();
+?>
+<div class="block block-storecredit">
+    <div class="block-title">
+        <strong><?= $block->escapeHtml(__('Current Balance')); ?></strong>
+    </div>
+    <div class="block-content">
+        <span class="label">
+            <?= /* @noEscape */ __('Your balance is: %1', $block->getBalanceWebsite()); ?>
+        </span>
+    </div>
+</div>
+
+<div class="block block-storecredit-history">
+    <div class="block-title">
+        <strong><?= $block->escapeHtml(__('Balance History')); ?></strong>
+    </div>
+    <div class="block-content">
+        <div class="table-wrapper storecredit-history">
+            <?php if ($block->getPagerHtml()) : ?>
+                <div class="bss-storecredit-history-toolbar toolbar top">
+                    <?= /* @noEscape */ $block->getPagerHtml(); ?>
+                </div>
+            <?php endif; ?>
+            <table id="customerbalance-history" class="data table table-storecredit-history">
+                <caption class="table-caption"><?= $block->escapeHtml(__('Balance History')); ?></caption>
+                <thead>
+                    <tr>
+                        <th scope="col" class="col transaction">
+                            <?= $block->escapeHtml(__('Transaction ID')); ?>
+                        </th>
+                        <th scope="col" class="col actions">
+                            <?= $block->escapeHtml(__('Action')); ?>
+                        </th>
+                        <th scope="col" class="col change">
+                            <?= $block->escapeHtml(__('Balance Change')); ?>
+                        </th>
+                        <th scope="col" class="col balance">
+                            <?= $block->escapeHtml(__('Balance')); ?>
+                        </th>
+                        <th scope="col" class="col date">
+                            <?= $block->escapeHtml(__('Date')); ?>
+                        </th>
+                        <th scope="col" class="col addition">
+                            <?= $block->escapeHtml(__('Additional Info')); ?>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php if (!empty($histories)) : ?>
+                        <?php foreach ($histories as $history) : ?>
+                            <tr>
+                                <td data-th="<?= $block->escapeHtmlAttr(__('Transaction ID')); ?>"
+                                    class="col actions"
+                                >
+                                    <?= /* @noEscape */ $history->getHistoryId(); ?>
+                                </td>
+                                <td data-th="<?= $block->escapeHtmlAttr(__('Action')); ?>"
+                                    class="col actions"
+                                >
+                                    <?= /* @noEscape */ $block->getTypeAction($history->getType()); ?>
+                                </td>
+                                <td data-th="<?= $block->escapeHtmlAttr(__('Balance Change')); ?>"
+                                    class="col change"
+                                >
+                                    <?php if ($history->getChangeAmount() > 0) : ?>
+                                        <span class="bss-green">
+                                    <?php else : ?>
+                                        <span class="bss-red">
+                                    <?php endif; ?>
+                                        <?= /* @noEscape */ $block->convertPriceChangeAmount($history); ?>
+                                    </span>
+                                </td>
+                                <td data-th="<?= $block->escapeHtmlAttr(__('Balance')); ?>"
+                                    class="col balance"
+                                >
+                                    <?= /* @noEscape */ $block->convertPriceBalance($history->getBalanceAmount(), $history->getCreditCurrencyCode()); ?>
+                                </td>
+                                <td data-th="<?= $block->escapeHtmlAttr(__('Date')); ?>"
+                                    class="col date"
+                                >
+                                    <?= /* @noEscape */ $block->formatDateTime($history->getUpdatedTime()); ?>
+                                </td>
+                                <td data-th="<?= $block->escapeHtmlAttr(__('Addition Info')); ?>"
+                                    class="col addition">
+                                    <?= /* @noEscape */ $block->getAddition($history, $history->getType()); ?>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </tbody>
+            </table>
+        </div>
+        <?php if ($block->getPagerHtml()) : ?>
+            <div class="bss-storecredit-history-toolbar toolbar bottom">
+                <?= /* @noEscape */ $block->getPagerHtml(); ?>
+            </div>
+        <?php endif; ?>
+    </div>
+</div>

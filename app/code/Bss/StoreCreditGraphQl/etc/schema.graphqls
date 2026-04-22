@@ -1,0 +1,72 @@
+# BSS Commerce Co.
+#
+# NOTICE OF LICENSE
+#
+# This source file is subject to the EULA
+# that is bundled with this package in the file LICENSE.txt.
+# It is also available through the world-wide-web at this URL:
+# http://bsscommerce.com/Bss-Commerce-License.txt
+#
+# @category   BSS
+# @package    Bss_StoreCreditGraphQl
+# @author     Extension Team
+# @copyright  Copyright (c) 2021 BSS Commerce Co. ( http://bsscommerce.com )
+# @license    http://bsscommerce.com/Bss-Commerce-License.txt
+
+type Customer {
+    storecredit_credit : Credit @resolver(class: "Bss\\StoreCreditGraphQl\\Model\\Resolver\\Customer\\Credit")
+    storecredit_all_credit: [Credit] @resolver(class: "Bss\\StoreCreditGraphQl\\Model\\Resolver\\Customer\\AllCredit")
+    storecredit_history_credit: [History] @resolver(class: "Bss\\StoreCreditGraphQl\\Model\\Resolver\\Customer\\History")
+}
+
+type Credit {
+    balance_id: Int @doc(description: "Balance Id")
+    website_id: Int @doc(description: "Website Id")
+    customer_id : Int @doc(description: "Customer Id ")
+    balance_amount: Float @doc(description: "Balance Amount")
+}
+
+type History {
+    history_id: Int @doc(description: "History Id")
+    customer_id: Int @doc(description: "Customer Id")
+    creditmemo_id: Int @doc(description: "Credit memo Id")
+    order_id: String @doc(description: "Order Id")
+    website_id: Int @doc(description: "Website Id")
+    type: Int @doc(description: "Type")
+    change_amount: Float @doc(description: "Change amount")
+    balance_amount: Float @doc(description: "Change amount")
+    comment_content: String @doc(description: "Comment content")
+    created_time: String @doc(description: "Created time")
+    updated_time: String @doc(description: "Updated time")
+}
+
+type Cart {
+    storecredit_applied: StoreCreditApplied  @resolver(class: "\\Bss\\StoreCreditGraphQl\\Model\\Resolver\\Cart\\GetApplied") @doc(description: "Get information store credit applied on the cart")
+}
+
+type StoreCreditApplied {
+   base_bss_storecredit_amount : Float @doc(description: "Base Bss store credit amount")
+}
+
+type Mutation {
+    applyStoreCreditToCart(input: ApplyStoreCreditToCartInput): ApplyStoreCreditToCartOutput @resolver(class: "\\Bss\\StoreCreditGraphQl\\Model\\Resolver\\Cart\\Apply") @doc(description: "Apply store credit to the specified cart.")
+    removeStoreCreditFromCart(input: RemoveStoreCreditFromCartInput): RemoveStoreCreditFromCartOutput @resolver(class: "\\Bss\\StoreCreditGraphQl\\Model\\Resolver\\Cart\\Remove") @doc(description: "Remove store credit to the specified cart.")
+}
+
+input ApplyStoreCreditToCartInput @doc(description: "Apply store credit to the specified cart.") {
+    cart_id: String! @doc(description: "Cart id")
+    amount: Float @doc(description: "Amount")
+}
+
+type ApplyStoreCreditToCartOutput {
+  status: Boolean @doc(description: "Status")
+  message: String @doc(description: "Message")
+}
+
+input RemoveStoreCreditFromCartInput @doc(description: "Remove store credit to the specified cart.") {
+    cart_id: String! @doc(description: "Cart id")
+}
+
+type RemoveStoreCreditFromCartOutput {
+  status: Boolean @doc(description: "Status")
+}

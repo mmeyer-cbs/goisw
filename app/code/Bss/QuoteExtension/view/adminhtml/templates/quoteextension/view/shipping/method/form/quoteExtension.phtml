@@ -1,0 +1,72 @@
+<?php
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_QuoteExtension
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2018-2019 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+
+// @codingStandardsIgnoreFile
+?>
+<?php /** @var $block \Bss\QuoteExtension\Block\Adminhtml\QuoteExtension\Edit\Shipping\Method/Form/QuoteExtension */ ?>
+
+<?php $checked = $block->isMethodActive($block->getCode()) ? 'checked="checked"' : '' ?>
+    <input value="<?php echo $block->getCode() ?>"
+           id="s_method_<?php echo $block->getCode() ?>"
+           class="admin__control-radio"
+        <?php echo $checked ?>
+        <?php echo $block->getRadioProperty() ?>/>
+    <label class="admin__field-label" for="s_method_<?php echo $block->getCode() ?>">
+        <?php echo $block->getMethodTitle() ?>
+        <span id="s_method_<?php echo $block->getCode() ?>_price">-
+        <strong>
+            <?php $excl = $block->getShippingPrice(
+                $block->getRate()->getPrice(),
+                $block->getTaxHelper()->displayShippingPriceIncludingTax()
+            ); ?>
+            <?php $incl = $block->getShippingPrice($block->getRate()->getPrice(), true); ?>
+
+            <?php echo $excl; ?>
+            <?php if ($block->getTaxHelper()->displayShippingBothPrices() && $incl != $excl) : ?>
+                (<?php echo __('Incl. Tax'); ?><?php echo $incl; ?>)
+            <?php endif; ?>
+        </strong>
+        <a href="#"
+           id="s_method_<?php echo $block->getCode() ?>_change_button"
+           data-mage-init='{"Bss_QuoteExtension/js/quote/edit/shipping": {
+               "selector": {
+                    "input": "#s_method_<?php echo $block->getCode() ?>_input",
+                    "price": "#s_method_<?php echo $block->getCode() ?>_price",
+                    "submit": "#s_method_<?php echo $block->getCode() ?>_submit"
+                },
+                "method": "<?php echo $block->getCode() ?>"
+           }}'><?php echo __('Change') ?></a>
+    </span>
+    </label>
+    <div id="s_method_<?php echo $block->getCode() ?>_input" class="shipping-input" style="display: none;">
+        <input type="number" value="<?php echo $block->getPrice(
+            $block->getRate()->getPrice(),
+            $block->getTaxHelper()->displayShippingPriceIncludingTax()) ?>"/><br/>
+        <button id="s_method_<?php echo $block->getCode() ?>_submit" title="<?php echo __('Update') ?>"
+                type="button"
+                class="action-default scalable action-default scalable">
+            <span><?php echo __('Update') ?></span>
+        </button>
+    </div>
+
+<?php if ($this->getIsAjax()) : ?>
+    <script type="application/javascript">
+        jQuery("#s_method_<?php echo $block->getCode() ?>_change_button").trigger('contentUpdated');
+    </script>
+<?php
+endif;

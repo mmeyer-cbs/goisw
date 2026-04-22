@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_SalesRep
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2020 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+*/
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="salesrep_order_listing_data_source" xsi:type="string">
+                    Bss\SalesRep\Model\ResourceModel\Order\Grid\Collection
+                </item>
+                <item name="salesrep_customer_listing_data_source" xsi:type="string">
+                    Magento\Customer\Model\ResourceModel\Grid\Collection
+                </item>
+                <item name="salesrep_quotes_listing_data_source" xsi:type="string">
+                    Bss\SalesRep\Model\ResourceModel\ManageQuote\Grid\Collection
+                </item>
+            </argument>
+        </arguments>
+    </type>
+
+    <preference for="Bss\SalesRep\Api\SalesRepRepositoryInterface" type="Bss\SalesRep\Model\SalesRepRepository" />
+    <preference for="Bss\SalesRep\Api\SalesRepOrderRepositoryInterface" type="Bss\SalesRep\Model\SalesRepOrderRepository" />
+    <preference for="Bss\SalesRep\Api\SalesRepInterface" type="Bss\SalesRep\Model\SalesRep"/>
+    <preference for="Bss\SalesRep\Api\SalesRepOrderInterface" type="Bss\SalesRep\Model\SalesRepOrder"/>
+</config>

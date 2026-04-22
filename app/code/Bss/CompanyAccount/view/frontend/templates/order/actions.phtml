@@ -1,0 +1,55 @@
+<?php
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_CompanyAccount
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2020 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+/** @var $block Bss\CompanyAccount\Block\Order\Actions */
+?>
+<div class="bss-action-order" data-th="<?= $block->getOrderId() ?>">
+    <?php if ($block->canCheckout()) : ?>
+        <div class="bss-btn-action">
+            <input class="bss-btn-checkout bss-btn" type="button" value="Checkout">
+        </div>
+    <?php endif; ?>
+    <?php if ($block->approveOrder() && $block->isWaitingOrder()) : ?>
+        <div class="bss-btn-action reject">
+            <input type="button" value="Reject" class="bss-btn reject">
+        </div>
+        <div class="bss-btn-action approve">
+            <input type="button" value="Approve" class="bss-btn approve">
+        </div>
+    <?php endif; ?>
+</div>
+<div id="confirm-approve" style="display: none" class="approve popup">
+    <div class="modal-inner-content">
+        <h2><?= $block->escapeHtml(__('Order ID #')) ?></h2>
+        <p><?= $block->escapeHtml(__('Are you sure to approve this order?')) ?></p>
+    </div>
+</div>
+<div id="confirm-reject" style="display: none" class="reject popup">
+    <div class="modal-inner-content">
+        <h2><?= $block->escapeHtml(__('Order ID #')) ?></h2>
+        <p><?= $block->escapeHtml(__('Are you sure to reject this order?')) ?></p>
+    </div>
+</div>
+<div class="clear-float"></div>
+<script type="text/x-magento-init">
+    {
+        ".bss-action-order": {
+            "Bss_CompanyAccount/js/order/confirm": {
+            }
+        }
+    }
+</script>

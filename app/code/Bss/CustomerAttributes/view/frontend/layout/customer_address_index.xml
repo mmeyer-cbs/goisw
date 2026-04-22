@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="customer_account"/>
+    <body>
+        <referenceBlock name="head.components">
+            <block class="Magento\Framework\View\Element\Js\Components" name="customer_address_head_components" template="Magento_Customer::js/components.phtml"/>
+        </referenceBlock>
+        <referenceBlock name="address_book">
+            <action method='setTemplate'>
+                <argument name='template' xsi:type='string'>Bss_CustomerAttributes::address/book.phtml</argument>
+            </action>
+            <arguments>
+                <argument name="view_model" xsi:type="object">
+                    Bss\CustomerAttributes\ViewModel\Address\CustomAddressHelper
+                </argument>
+            </arguments>
+        </referenceBlock>
+    </body>
+</page>

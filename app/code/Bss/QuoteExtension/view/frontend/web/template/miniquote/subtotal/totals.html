@@ -1,0 +1,44 @@
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_QuoteExtension
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2018-2019 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+-->
+<div class="amount price-container">
+    <!-- ko if: displaySubtotal() -->
+    <!-- ko if: display_quote_subtotal_excl_tax -->
+    <span class="price-wrapper" data-bind="html: quote().subtotal_excl_tax"></span>
+    <!-- /ko -->
+
+    <!-- ko if: !display_quote_subtotal_excl_tax && display_quote_subtotal_incl_tax -->
+    <span class="price-wrapper" data-bind="html: quote().subtotal_incl_tax"></span>
+    <!-- /ko -->
+
+    <!-- ko if: !display_quote_subtotal_excl_tax && !display_quote_subtotal_incl_tax -->
+    <span class="price-wrapper price-including-tax"
+          data-bind="attr: { 'data-label': $t('Incl. Tax') }, html: quote().subtotal_incl_tax">
+            </span>
+
+    <span class="price-wrapper price-excluding-tax"
+          data-bind="attr: { 'data-label': $t('Excl. Tax') }, html: quote().subtotal_excl_tax">
+            </span>
+    <!-- /ko -->
+    <!-- /ko -->
+    <!-- ko ifnot: displaySubtotal() -->
+    <!-- ko foreach: getRegion('minicart-subtotal-hidden') -->
+    <!-- ko template: getTemplate() --><!-- /ko -->
+    <!-- /ko -->
+    <!-- /ko -->
+</div>

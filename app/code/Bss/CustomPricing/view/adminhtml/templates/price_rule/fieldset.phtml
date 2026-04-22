@@ -1,0 +1,46 @@
+<?php
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_CustomPricing
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2020 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+/**@var \Magento\Backend\Block\Widget\Form\Renderer\Fieldset $block */
+?>
+<?php $_element = $block->getElement() ?>
+<?php $_jsObjectName = $block->getFieldSetId() != null ? $block->getFieldSetId() : $_element->getHtmlId() ?>
+<div class="rule-tree">
+    <fieldset id="<?= $block->escapeHtmlAttr($_jsObjectName) ?>" <?= /* @noEscape */ $_element->serialize(['class']) ?> class="fieldset">
+    <?php if ($_element->getComment()) : ?>
+        <div class="messages">
+            <div class="message message-notice"><?= $block->escapeHtml($_element->getComment()) ?></div>
+        </div>
+    <?php endif; ?>
+    <div class="rule-tree-wrapper">
+        <?= $_element->getChildrenHtml() ?>
+    </div>
+    </fieldset>
+</div>
+<script>
+require([
+    "Bss_CustomPricing/js/customer-conditions-rules",
+    "prototype"
+], function(VarienRulesForm){
+
+window.<?= /* @noEscape */ $_jsObjectName ?> = new VarienRulesForm('<?= /* @noEscape */ $_jsObjectName ?>', '<?= /* @noEscape */ $block->getNewChildUrl() ?>');
+<?php if ($_element->getReadonly()) : ?>
+    <?= /* @noEscape */ $_element->getHtmlId() ?>.setReadonly(true);
+<?php endif; ?>
+
+});
+</script>

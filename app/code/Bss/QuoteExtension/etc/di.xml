@@ -1,0 +1,205 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_QuoteExtension
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2018-2021 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Customer\CustomerData\SectionPoolInterface">
+        <arguments>
+            <argument name="sectionSourceMap" xsi:type="array">
+                <item name="quote" xsi:type="string">Bss\QuoteExtension\CustomerData\QuoteExtension</item>
+            </argument>
+        </arguments>
+    </type>
+    <preference for="Bss\QuoteExtension\CustomerData\ItemPoolInterface" type="Bss\QuoteExtension\CustomerData\ItemPool"/>
+    <type name="Bss\QuoteExtension\CustomerData\ItemPoolInterface">
+        <arguments>
+            <argument name="itemMap" xsi:type="array">
+                <item name="configurable" xsi:type="string">Bss\QuoteExtension\CustomerData\ConfigurableItem</item>
+                <item name="grouped" xsi:type="string">Bss\QuoteExtension\CustomerData\GroupedItem</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Bss\QuoteExtension\CustomerData\ItemPool">
+        <arguments>
+            <argument name="defaultItemId" xsi:type="string">Bss\QuoteExtension\CustomerData\DefaultItem</argument>
+        </arguments>
+    </type>
+    <type name="Bss\QuoteExtension\Model\ResourceModel\ManageQuote\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">quote_extension</argument>
+            <argument name="resourceModel" xsi:type="string">Bss\QuoteExtension\Model\ResourceModel\ManageQuote</argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="quote_extension_manage_list_data_source" xsi:type="string">Bss\QuoteExtension\Model\ResourceModel\ManageQuote\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <virtualType name="Bss\QuoteExtension\Model\Pdf\Config" type="Magento\Sales\Model\Order\Pdf\Config">
+        <arguments>
+            <argument name="dataStorage" xsi:type="object">quotePdfConfigDataStorage</argument>
+        </arguments>
+    </virtualType>
+    <type name="Bss\QuoteExtension\Model\Pdf\PrintPdf">
+        <arguments>
+            <argument name="pdfConfig" xsi:type="object">Bss\QuoteExtension\Model\Pdf\Config</argument>
+        </arguments>
+    </type>
+    <virtualType name="Bss\QuoteExtension\Pdf\Config\Reader" type="Magento\Sales\Model\Order\Pdf\Config\Reader">
+        <arguments>
+            <argument name="fileName" xsi:type="string">quote_extension_pdf.xml</argument>
+            <argument name="converter" xsi:type="object">Magento\Sales\Model\Order\Pdf\Config\Converter</argument>
+            <argument name="schemaLocator" xsi:type="object">Bss\QuoteExtension\Model\Pdf\Config\SchemaLocator</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="quotePdfConfigDataStorage" type="Magento\Framework\Config\Data">
+        <arguments>
+            <argument name="reader" xsi:type="object">Bss\QuoteExtension\Pdf\Config\Reader</argument>
+            <argument name="cacheId" xsi:type="string">quote_extension_pdf_config</argument>
+        </arguments>
+    </virtualType>
+    <preference for="Magento\Quote\Model\Quote" type="Bss\QuoteExtension\Model\Quote" />
+    <preference for="Magento\Quote\Model\ResourceModel\Quote" type="Bss\QuoteExtension\Model\ResourceModel\Quote" />
+    <type name="Magento\Quote\Api\CartRepositoryInterface">
+        <plugin name="ignore_check_quote_active" type="Bss\QuoteExtension\Plugin\Model\QuoteRepository" sortOrder="10"/>
+    </type>
+    <type name="Magento\Webapi\Controller\Rest\ParamsOverrider">
+        <arguments>
+            <argument name="paramOverriders" xsi:type="array">
+                <item name="%cart_id%" xsi:type="object">Bss\QuoteExtension\Model\WebApi\ParamOverriderCartId</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Quote\Model\Quote\Address">
+        <plugin name="remove_quote_not_allow" type="Bss\QuoteExtension\Plugin\Model\Address" sortOrder="10"/>
+    </type>
+    <type name="Magento\SalesSequence\Model\EntityPool">
+        <arguments>
+            <argument name="entities" xsi:type="array">
+                <item name="quote_extension" xsi:type="string">quote_extension</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Bss\QuoteExtension\Model\Quote">
+        <plugin name="set_quote_is_active" type="Bss\QuoteExtension\Plugin\Model\Quote" sortOrder="10"/>
+    </type>
+    <preference for="Bss\QuoteExtension\Api\PlaceQuoteInterface" type="Bss\QuoteExtension\Model\PlaceQuote" />
+    <type name="Magento\Quote\Model\Quote\Item">
+        <plugin name="serialize_quote_item_option" type="Bss\QuoteExtension\Plugin\Model\Quote\Item" sortOrder="10"/>
+    </type>
+
+    <!-- This plugin ignore quote_extension to expired quote. Use for magento 2.3.3 or lower -->
+    <type name="Magento\Sales\Cron\CleanExpiredQuotes">
+        <plugin name="ignore_requestquote_quote_expired" type="Bss\QuoteExtension\Plugin\Cron\CleanExpiredQuotes" sortOrder="10"/>
+    </type>
+
+    <!-- This plugin ignore quote_extension to expired quote. Use for magento 2.3.4 or higher -->
+    <type name="Magento\Sales\Model\ResourceModel\Collection\ExpiredQuotesCollection">
+        <plugin name="ignore_requestquote_quote_expired" type="Bss\QuoteExtension\Plugin\Model\Quote\ExpiredQuotesCollection" sortOrder="10"/>
+    </type>
+
+    <!-- Disable multishipping when go to request quote before place card first time -->
+    <type name="Magento\Quote\Model\Cart\CartTotalRepository">
+        <plugin name="multishipping_shipping_addresses" disabled="true" sortOrder="10"/>
+    </type>
+    <type name="Magento\Quote\Model\Cart\CartTotalRepository">
+        <plugin name="bss_multishipping_shipping_addresses" type="Bss\QuoteExtension\Plugin\Model\Cart\CartTotalRepository" sortOrder="10"/>
+    </type>
+
+    <preference for="Magento\Checkout\Model\Session" type="Bss\QuoteExtension\Model\Session" />
+    <type name="Bss\QuoteExtension\Model\Session">
+        <plugin name="set_quote_is_super_mode" type="Bss\QuoteExtension\Plugin\Model\Session" sortOrder="10"/>
+    </type>
+    <!-- End -->
+
+    <preference for="Bss\QuoteExtension\Api\QuoteExtensionCustomerDelegateInterface" type="Bss\QuoteExtension\Model\QuoteExtensionCustomerDelegate" />
+    <preference for="Bss\QuoteExtension\Api\GuestPlaceQuoteInterface" type="Bss\QuoteExtension\Model\GuestPlaceQuote" />
+    <!-- Print -->
+    <type name="Bss\QuoteExtension\Model\Quote\Address\Renderer">
+        <plugin name="set_quote_is_super_mode_23" type="Bss\QuoteExtension\Plugin\QuoteExtension\Model\Quote\Address\Renderer" sortOrder="10"/>
+    </type>
+    <!-- End -->
+
+    <!-- Delete manage quote -->
+    <preference for="Bss\QuoteExtension\Api\Data\QEOldInterface"
+                type="Bss\QuoteExtension\Model\QEOld" />
+
+    <preference for="Bss\QuoteExtension\Api\QEOldRepositoryInterface"
+                type="Bss\QuoteExtension\Model\ResourceModel\QEOldRepository" />
+    <!-- End -->
+
+    <!-- Compatible with all version magento  -->
+    <type name="Bss\QuoteExtension\Block\Cart\Item\Renderer\Bundle">
+        <plugin name="q_e_cart_render_item_bundle" type="Bss\QuoteExtension\Plugin\QuoteExtension\Block\Cart\Item\Renderer\ProductType" sortOrder="10"/>
+    </type>
+
+    <type name="Bss\QuoteExtension\Block\Cart\Item\Renderer\Configurable">
+        <plugin name="q_e_cart_render_item_configurable" type="Bss\QuoteExtension\Plugin\QuoteExtension\Block\Cart\Item\Renderer\ProductType" sortOrder="10"/>
+    </type>
+
+    <type name="Bss\QuoteExtension\Block\Cart\Item\Renderer\Grouped">
+        <plugin name="q_e_cart_render_item_grouped" type="Bss\QuoteExtension\Plugin\QuoteExtension\Block\Cart\Item\Renderer\ProductType" sortOrder="10"/>
+    </type>
+    <!-- End -->
+     <!-- Command add sequence sales.. -->
+       <type name="Magento\Framework\Console\CommandList">
+          <arguments>
+              <argument name="commands" xsi:type="array">
+                 <item name="bss_qe_sequence" xsi:type="object">
+                       Bss\QuoteExtension\Console\Command\SequenceStore
+                  </item>
+            </argument>
+          </arguments>
+      </type>
+    <!-- End -->
+    <!--Api: Manage quote -->
+    <preference for="Bss\QuoteExtension\Api\Data\ManageQuoteInterface"
+                type="Bss\QuoteExtension\Model\ManageQuote" />
+
+    <preference for="Bss\QuoteExtension\Api\ManageQuoteRepositoryInterface"
+                type="Bss\QuoteExtension\Model\ManageQuoteRepository" />
+    <!-- End -->
+
+    <!--Api: Management -->
+    <preference for="Bss\QuoteExtension\Api\ManagementInterface"
+                type="Bss\QuoteExtension\Model\Management" />
+    <!-- End -->
+
+    <!--  Api add  to quote, submit quote -->
+    <preference for="Bss\QuoteExtension\Api\QEManagementInterface"
+                type="Bss\QuoteExtension\Model\QEManagement" />
+
+    <preference for="Bss\QuoteExtension\Api\QEItemRepositoryInterface"
+                type="Bss\QuoteExtension\Model\QEItemRepository" />
+    <!-- END -->
+
+    <preference for="Bss\QuoteExtension\Api\QuoteItemRepositoryInterface"
+                type="Bss\QuoteExtension\Model\QuoteItemRepository" />
+
+    <!--Compatible with CompanyAccount-->
+    <type name="Bss\CompanyAccount\Model\CompatibleQuoteExtension">
+        <plugin name="bss_r4q_get_number_quote_bu_sub_user"
+                type="Bss\QuoteExtension\Plugin\CompanyAccount\GetNumberQuoteBySubUser" sortOrder="20"/>
+    </type>
+    <type name="Bss\CompanyAccount\Controller\Order\SendRequest">
+        <plugin name="bss_r4q_change_status_quote"
+                type="Bss\QuoteExtension\Plugin\CompanyAccount\SendRequest"/>
+    </type>
+</config>

@@ -1,0 +1,44 @@
+<?php
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_CompanyAccount
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2020 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+/** @var $block \Bss\CompanyAccount\Block\Sales\Order\View\SubUserInfo */
+use Bss\CompanyAccount\Api\Data\SubUserInterface as SubUser;
+
+$subUserInfo = $block->getSubUserInfo();
+
+?>
+<?php if (!empty($subUserInfo)) : ?>
+    <div class="block block-order-details-view sub-user">
+        <div class="block-title">
+            <strong><?= $block->escapeHtml(__('Ordered Sub-user Information')) ?></strong>
+        </div>
+        <div class="block-content">
+            <div>
+                <strong><?= $block->escapeHtml(__('Sub-Name')) ?>:&nbsp;</strong>
+                <span><?= $block->escapeHtml($subUserInfo[SubUser::NAME]) ?></span>
+            </div>
+            <div>
+                <strong><?= $block->escapeHtml(__('Sub-Email')) ?>:&nbsp;</strong>
+                <span><?= $block->escapeHtml($subUserInfo[SubUser::EMAIL]) ?></span>
+            </div>
+            <div>
+                <strong><?= $block->escapeHtml(__('Role')) ?>:&nbsp;</strong>
+                <span><?= $block->escapeHtml($subUserInfo['role_name']) ?></span>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>

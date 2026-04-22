@@ -1,0 +1,30 @@
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_CompanyAccount
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2020 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+-->
+<!--@subject {{trans "A new order has been placed by sub user!"}} @-->
+{{template config_path="design/email/header_template"}}
+
+<p class="greeting">{{trans "Dear %name," name=$name}}</p>
+<p>{{trans "A new order #%order has been placed by %sub_name." order=$increment_id sub_name=$sub_email}}</p>
+<p>{{trans "You can check the order by click " }}
+    <a href="{{var this.getUrl($store,'sales/order/view/'}}{{trans 'order_id/%orderId' orderId=$order_id}}"
+       target="_blank">{{trans "here"}}</a>.</p>
+<p>{{trans 'If you have questions about your order, you can email us at <a href="mailto:%store_email">%store_email</a>'
+    store_email=$store_email |raw}}</p>
+
+{{template config_path="design/email/footer_template"}}

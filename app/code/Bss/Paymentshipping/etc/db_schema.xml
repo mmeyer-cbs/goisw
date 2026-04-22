@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!--
+/**
+* BSS Commerce Co.
+*
+* NOTICE OF LICENSE
+*
+* This source file is subject to the EULA
+* that is bundled with this package in the file LICENSE.txt.
+* It is also available through the world-wide-web at this URL:
+* http://bsscommerce.com/Bss-Commerce-License.txt
+*
+* @category   BSS
+* @package    Bss_Paymentshipping
+* @author     Extension Team
+* @copyright  Copyright (c) 2017-2022 BSS Commerce Co. ( http://bsscommerce.com )
+* @license    http://bsscommerce.com/Bss-Commerce-License.txt
+*/
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+  <table name="bss_methods_visibility" resource="default" engine="innodb" comment="Shipping and Payment fo Customer Group">
+    <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" identity="true" comment="ID"/>
+    <column xsi:type="text" name="type" nullable="false" comment="Type"/>
+    <column xsi:type="int" name="website_id" padding="10" unsigned="true" nullable="false" identity="false" comment="Website Id"/>
+    <column xsi:type="varchar" name="method" nullable="false" length="255" default="" comment="Method"/>
+    <column xsi:type="text" name="group_ids" nullable="true"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="entity_id"/>
+    </constraint>
+    <index referenceId="BSS_METHODS_VISIBILITY_ENTITY_ID" indexType="btree">
+      <column name="entity_id"/>
+    </index>
+  </table>
+</schema>

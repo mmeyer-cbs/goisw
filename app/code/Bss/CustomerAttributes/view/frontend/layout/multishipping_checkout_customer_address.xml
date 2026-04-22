@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="customer_address_edit">
+            <action method='setTemplate'>
+                <argument name='template' xsi:type='string'>Bss_CustomerAttributes::form/edit_address.phtml</argument>
+            </action>
+            <block ifconfig="bss_customer_attribute/general/enable" class="Magento\Customer\Block\Address\Edit"
+                   name="bss_customer_address_edit" template="Bss_CustomerAttributes::address/edit.phtml">
+                <arguments>
+                    <argument name="view_model" xsi:type="object">
+                        Bss\CustomerAttributes\ViewModel\Address\CustomAddressHelper
+                    </argument>
+                </arguments>
+            </block>
+        </referenceBlock>
+    </body>
+</page>

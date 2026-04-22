@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_QuoteExtension
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2018-2021 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="core_collection_abstract_load_before">
+        <observer name="Bss\QuoteExtension\Observer\Quote\JoinItemComment"
+                  instance="Bss\QuoteExtension\Observer\Quote\JoinItemComment"/>
+    </event>
+    <event name='sales_model_service_quote_submit_success'>
+        <observer name='Bss\QuoteExtension\Observer\PlaceOrder'
+                  instance='Bss\QuoteExtension\Observer\PlaceOrder'
+        />
+    </event>
+    <event name="quote_extension_clone_after">
+        <observer name="Bss\QuoteExtension\Observer\Quote\AddItemComment"
+                  instance="Bss\QuoteExtension\Observer\Quote\AddItemComment" />
+    </event>
+
+    <!-- Don't calculation tax for quote if tax base on billing address -->
+   <!-- <event name="sales_quote_address_collect_totals_after">
+        <observer name="bss_change_tax_amount"
+                  instance="Bss\QuoteExtension\Observer\Quote\ChangeTaxAmount" />
+    </event>-->
+
+    <!-- Upgrade customer email -->
+    <event name="customer_save_after_data_object">
+        <observer name="upgrade_quote_extension_customer_email"
+                  instance="Bss\QuoteExtension\Observer\QuoteExtension\UpgradeCustomerEmail"/>
+    </event>
+    <!-- End -->
+
+    <event name="quote_extension_save_after_send">
+        <observer name="mask_quote_create_after_save_qe"
+                  instance="Bss\QuoteExtension\Observer\Quote\MaskQuoteForGuest" />
+    </event>
+</config>

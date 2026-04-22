@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_SalesRep
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2020 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+*/
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="view_block_abstract_to_html_before">
+        <observer name="additional_add_permission_view_block_abstract_to_html_before"
+                  instance="Bss\SalesRep\Observer\Permission\Additional\ViewBlockAbstractToHtmlBefore"/>
+    </event>
+    <event name="admin_user_save_after">
+        <observer name="save_sales_rep_admin_user_save_before"
+                  instance="Bss\SalesRep\Observer\Model\User"/>
+    </event>
+    <event name="adminhtml_customer_prepare_save">
+        <observer name="save_sales_rep_admin_customer"
+                  instance="Bss\SalesRep\Observer\Model\Customer"/>
+    </event>
+    <event name="admin_permissions_role_prepare_save">
+        <observer name="admin_permissions_role_prepare_save"
+                  instance="Bss\SalesRep\Observer\Model\Role"/>
+    </event>
+    <event name="backend_auth_user_login_success">
+        <observer name="add_to_admin_session"
+                  instance="Bss\SalesRep\Observer\Model\Session"/>
+    </event>
+</config>

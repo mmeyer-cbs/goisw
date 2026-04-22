@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Bss Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   Bss
+ * @package    Bss_CatalogPermission
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2018-2019 Bss Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="controller_action_predispatch_catalog_category_view">
+        <observer name="bss_add_mess_catalog" instance="Bss\CatalogPermission\Observer\Category\Catalog" />
+    </event>
+
+    <event name="controller_action_predispatch_catalog_product_view">
+        <observer name="bss_add_mess_product" instance="Bss\CatalogPermission\Observer\Category\Product" />
+    </event>
+
+    <event name="controller_action_postdispatch_cms_page_view">
+        <observer name="bss_add_mess_cms" instance="Bss\CatalogPermission\Observer\Category\Cms" />
+    </event>
+
+    <event name="bss_fast_order_prepare_product_add">
+        <observer name="bss_product_add_observer" instance="Bss\CatalogPermission\Observer\Category\ProductAdd" />
+    </event>
+
+    <event name="catalog_category_collection_load_before">
+        <observer name="catalog_category_collection_load_before" instance="Bss\CatalogPermission\Observer\Model\BeforeLoadCollection" />
+    </event>
+</config>

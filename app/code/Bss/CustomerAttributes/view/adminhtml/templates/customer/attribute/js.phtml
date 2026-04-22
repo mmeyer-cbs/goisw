@@ -1,0 +1,39 @@
+<?php
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_CustomerAttributes
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2018-2021 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+/** @var \Bss\CustomerAttributes\Block\Adminhtml\EditJs $block */
+
+// @codingStandardsIgnoreFile
+?>
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Bss_CustomerAttributes/js/notDisplayCustomerGrid": {
+                "notDisplayCustomerGrid" : <?= $block->notDisplayCustomerGrid() ?>
+            }
+        }
+    }
+</script>
+
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Bss_CustomerAttributes/js/option/create": {
+            }
+        }
+    }
+</script>

@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_QuoteExtension
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2018-2022 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Customer:etc/sections.xsd">
+    <action name="quoteextension/quote/add">
+        <section name="quote"/>
+    </action>
+    <action name="quoteextension/quote/updateQuote">
+        <section name="quote"/>
+    </action>
+    <action name="quoteextension/quote/updateItemOptions">
+        <section name="quote"/>
+    </action>
+    <action name="quoteextension/quote/delete">
+        <section name="quote"/>
+    </action>
+    <action name="quoteextension/quote/clearQuote">
+        <section name="quote"/>
+    </action>
+    <action name="quoteextension/quote/emptyQuote">
+        <section name="quote"/>
+    </action>
+    <action name="quoteextension/quote/save">
+        <section name="quote"/>
+    </action>
+    <action name="customer/account/logout">
+        <section name="quote"/>
+    </action>
+    <action name="customer/account/loginPost">
+        <section name="quote"/>
+    </action>
+    <action name="customer/account/createPost">
+        <section name="quote"/>
+    </action>
+    <action name="customer/ajax/login">
+        <section name="quote"/>
+    </action>
+    <action name="quoteextension/quote/movetoQuote">
+        <section name="quote"/>
+        <section name="cart"/>
+    </action>
+    <action name="quoteextension/quote/adda">
+        <section name="quote"/>
+    </action>
+    <action name="quoteextension/quote/addmultiple">
+        <section name="quote"/>
+    </action>
+    <action name="rest/*/V1/quoteextension/*/place-quote">
+        <section name="quote"/>
+    </action>
+    <action name="quoteextension/sidebar/updateItemQty">
+        <section name="quote"/>
+    </action>
+
+    <action name="quoteextension/wishlist/add">
+        <section name="quote"/>
+    </action>
+</config>

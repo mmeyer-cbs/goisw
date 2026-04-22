@@ -1,0 +1,101 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_QuoteExtension
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2018-2022 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+  <table name="quote" resource="default">
+    <column xsi:type="int" name="quote_extension" padding="11" unsigned="false" nullable="true" identity="false" comment="Quote Extension"/>
+    <column xsi:type="decimal" name="quote_shipping_price" scale="4" precision="12" unsigned="false" nullable="false" comment="Quote Shipping Price"/>
+    <column xsi:type="text" name="customer_note" nullable="true"/>
+  </table>
+  <table name="quote_extension" resource="default" engine="innodb" comment="Quote Extension Table">
+    <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Entity Id"/>
+    <column xsi:type="int" name="quote_id" padding="10" unsigned="true" nullable="false" identity="false" comment="Quote Id"/>
+    <column xsi:type="int" name="backend_quote_id" padding="11" unsigned="false" nullable="true" identity="false" comment="Backend Quote Id"/>
+    <column xsi:type="int" name="target_quote" padding="11" unsigned="false" nullable="true" identity="false" comment="Target Quote"/>
+    <column xsi:type="varchar" name="increment_id" nullable="true" length="32" comment="Increment Id"/>
+    <column xsi:type="smallint" name="store_id" padding="5" unsigned="true" nullable="true" identity="false" comment="Store Id"/>
+    <column xsi:type="int" name="customer_id" padding="11" unsigned="false" nullable="true" identity="false" comment="CustomerID"/>
+    <column xsi:type="varchar" name="status" nullable="true" length="32" comment="Status"/>
+    <column xsi:type="varchar" name="token" nullable="false" length="255" comment="Token"/>
+    <column xsi:type="varchar" name="email" nullable="false" length="255" comment="Email"/>
+    <column xsi:type="smallint" name="email_sent" padding="6" unsigned="false" nullable="false" identity="false" default="0" comment="Email Sent"/>
+    <column xsi:type="timestamp" name="updated_at" on_update="true" nullable="false" default="CURRENT_TIMESTAMP" comment="Updated At"/>
+    <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Created At"/>
+    <column xsi:type="timestamp" name="expiry" on_update="false" nullable="true" comment="Expiry"/>
+    <column xsi:type="smallint" name="expiry_email_sent" padding="6" unsigned="false" nullable="false" identity="false" default="0" comment="Expiry Email Sent"/>
+    <column xsi:type="int" name="version" padding="10" unsigned="true" nullable="false" identity="false" comment="Version"/>
+    <column xsi:type="text" name="old_quote" nullable="true" comment="Old Quote"/>
+    <column xsi:type="smallint" name="is_admin_submitted" padding="6" unsigned="false" nullable="true" identity="false" default="0" comment="Is Submitted"/>
+    <column xsi:type="smallint" name="user_id" padding="6" unsigned="false" nullable="true" identity="false" comment="User Id"/>
+    <column xsi:type="smallint" name="move_checkout" padding="6" unsigned="false" nullable="true" identity="false" comment="Move Checkout"/>
+    <column xsi:type="text" name="customer_name" nullable="true" comment="Customer Name"/>
+    <column xsi:type="text" name="customer_email" nullable="true" comment="Customer Email"/>
+    <column xsi:type="smallint" name="customer_is_guest" padding="6" unsigned="false" nullable="true" identity="false" comment="Customer is guest"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="entity_id"/>
+    </constraint>
+    <constraint xsi:type="unique" referenceId="QUOTE_EXTENSION_INCREMENT_ID_STORE_ID">
+      <column name="increment_id"/>
+      <column name="store_id"/>
+    </constraint>
+    <index referenceId="QUOTE_EXTENSION_ENTITY_ID" indexType="btree">
+      <column name="entity_id"/>
+    </index>
+  </table>
+  <table name="quote_extension_item" resource="default" engine="innodb" comment="Quote Extension Items">
+    <column xsi:type="int" name="id" padding="10" unsigned="true" nullable="false" identity="true" comment="ID"/>
+    <column xsi:type="int" name="item_id" padding="10" unsigned="true" nullable="false" identity="false" comment="Item ID"/>
+    <column xsi:type="text" name="comment" nullable="true" comment="Comment"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="id"/>
+    </constraint>
+    <constraint xsi:type="foreign" referenceId="QUOTE_EXTENSION_ITEM_ITEM_ID_QUOTE_ITEM_ITEM_ID" table="quote_extension_item" column="item_id" referenceTable="quote_item" referenceColumn="item_id" onDelete="CASCADE"/>
+    <index referenceId="QUOTE_EXTENSION_ITEM_ID" indexType="btree">
+      <column name="id"/>
+    </index>
+  </table>
+  <table name="quote_extension_comment_version" resource="default" engine="innodb" comment="Quote Extension Comment Version">
+    <column xsi:type="int" name="id" padding="10" unsigned="true" nullable="false" identity="true" comment="ID"/>
+    <column xsi:type="int" name="quote_id" padding="10" unsigned="true" nullable="false" identity="false" comment="Quote ID"/>
+    <column xsi:type="int" name="version" padding="10" unsigned="true" nullable="false" identity="false" comment="Version"/>
+    <column xsi:type="varchar" name="status" nullable="true" length="32" comment="Status"/>
+    <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Created At"/>
+    <column xsi:type="text" name="comment" nullable="true" comment="Comment"/>
+    <column xsi:type="varchar" name="area_log" nullable="true" length="32" comment="Area Log"/>
+    <column xsi:type="text" name="log" nullable="true" comment="Log Version Quote"/>
+    <column xsi:type="int" name="quote_id_not_comment" padding="11" unsigned="false" nullable="true" identity="false" comment="Quote id not comment"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="id"/>
+    </constraint>
+    <index referenceId="QUOTE_EXTENSION_COMMENT_VERSION_ID" indexType="btree">
+      <column name="id"/>
+    </index>
+  </table>
+  <table name="quote_extension_old" resource="default" engine="innodb" comment="Quote Extension old">
+    <column xsi:type="int" name="id" padding="10" unsigned="true" nullable="false" identity="true" comment="ID"/>
+    <column xsi:type="text" name="quote_ids" nullable="true" comment="Quote IDS"/>
+    <column xsi:type="varchar" name="type" nullable="true" length="64" comment="Type"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="id"/>
+    </constraint>
+    <index referenceId="QUOTE_EXTENSION_OLD_ID" indexType="btree">
+      <column name="id"/>
+    </index>
+  </table>
+</schema>

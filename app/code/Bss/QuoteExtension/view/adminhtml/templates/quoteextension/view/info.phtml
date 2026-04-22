@@ -1,0 +1,211 @@
+<?php
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_QuoteExtension
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2018-2022 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+use Bss\QuoteExtension\Block\Adminhtml\QuoteExtension\Edit\Info;
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php /** @var $block Info */ ?>
+<?php
+$mageQuote = $block->getMageQuote();
+$quoteExtension = $block->getQuoteExtension();
+$helperQuoteStatus = $this->helper('Bss\QuoteExtension\Helper\QuoteExtension\Status');
+$orderAdminDate = $block->formatDate(
+    $block->getQuoteAdminDate($quoteExtension->getCreatedAt()),
+    IntlDateFormatter::MEDIUM,
+    true
+);
+$store = $block->getStore($mageQuote->getStoreId());
+
+$orderStoreDate = $block->formatDate(
+    $quoteExtension->getCreatedAt(),
+    IntlDateFormatter::MEDIUM,
+    true,
+    $block->getTimezoneForStore($store)
+);
+$expired = $quoteExtension->getExpiry() ? $block->formatDate($quoteExtension->getExpiry(), IntlDateFormatter::MEDIUM) : null;
+?>
+
+<section class="admin__page-section order-view-account-information" id="order-infomation">
+    <div class="admin__page-section-title">
+        <strong class="title"><?php echo __('Quote & Account Information') ?></strong>
+    </div>
+    <div class="admin__page-section-content">
+        <div class="admin__page-section-item order-information">
+            <?php /* Quote Information */ ?>
+            <div class="admin__page-section-item-title">
+                <span class="title">
+                    <?php echo __('Quote # %1', $quoteExtension->getIncrementId()); ?>
+                </span>
+            </div>
+            <div class="admin__page-section-item-content">
+                <table class="admin__table-secondary order-information-table">
+                    <tr>
+                        <th><?php echo __('Quote Date') ?></th>
+                        <td><?php echo $orderAdminDate ?></td>
+                    </tr>
+                    <?php if ($orderAdminDate != $orderStoreDate): ?>
+                        <tr>
+                            <th><?php echo __(
+                                    'Quote Date (%1)',
+                                    $block->getTimezoneForStore($mageQuote->getStore())
+                                ) ?></th>
+                            <td><?php echo $orderStoreDate ?></td>
+                        </tr>
+                    <?php endif; ?>
+                    <tr>
+                        <th><?php echo __('Quote Status') ?></th>
+                        <td>
+                                <span id="order_status">
+                                    <?php echo $helperQuoteStatus->getStatusLabel($quoteExtension->getStatus()) ?>
+                                </span>
+                        </td>
+                    </tr>
+                    <?php echo $block->getChildHtml(); ?>
+                    <?php if ($block->isSingleStoreMode() == false): ?>
+                        <tr>
+                            <th><?php echo __('Purchased From') ?></th>
+                            <td><?php echo $block->getQuoteStoreName() ?></td>
+                        </tr>
+                    <?php endif; ?>
+                    <?php if ($mageQuote->getRelationChildId()): ?>
+                        <tr>
+                            <th><?php echo __('Link to the New Order') ?></th>
+                            <td><a href="<?php echo $block->getViewUrl($mageQuote->getRelationChildId()) ?>">
+                                    <?php echo $mageQuote->getRelationChildRealId() ?>
+                                </a></td>
+                        </tr>
+                    <?php endif; ?>
+                    <?php if ($mageQuote->getRelationParentId()): ?>
+                        <tr>
+                            <th><?php echo __('Link to the Previous Order') ?></th>
+                            <td><a href="<?php echo $block->getViewUrl($mageQuote->getRelationParentId()) ?>">
+                                    <?php echo $mageQuote->getRelationParentRealId() ?>
+                                </a></td>
+                        </tr>
+                    <?php endif; ?>
+                    <?php if ($mageQuote->getRemoteIp()): ?>
+                        <tr>
+                            <th><?php echo __('Placed from IP') ?></th>
+                            <td><?php echo $mageQuote->getRemoteIp();
+                                echo ($mageQuote->getXForwardedFor()) ? ' (' . $block->escapeHtml($mageQuote->getXForwardedFor()) . ')' : ''; ?></td>
+                        </tr>
+                    <?php endif; ?>
+                    <tr>
+                        <th><?php echo __('Expiry Date') ?></th>
+                        <td>
+                            <input id="quote-expiry" type="text" name="expiry" class="input-text admin__control-text"
+                                   value="<?php echo $expired ? $expired : '' ?>"/>
+                            <script type="text/x-magento-init">
+                                    {
+                                        "#quote-expiry": {
+                                            "adminInputExpiry": {
+                                            "dateFormat": "<?= $block->getDateFormat(); ?>"
+                                            }
+                                        }
+                                    }
+
+                            </script>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="admin__page-section-item order-account-information">
+            <?php /* Account Information */ ?>
+            <div class="admin__page-section-item-title">
+                <span class="title"><?php echo __('Account Information') ?></span>
+                <div class="actions"><?php echo $block->getAccountEditLink() ?></div>
+            </div>
+            <div class="admin__page-section-item-content">
+                <table class="admin__table-secondary order-account-information-table">
+                    <tr>
+                        <th><?php echo __('Customer Name') ?></th>
+                        <td>
+                            <?php if ($_customerUrl = $block->getCustomerViewUrl()) : ?>
+                                <a href="<?php echo $_customerUrl ?>" target="_blank">
+                                    <span><?php echo $block->escapeHtml($block->getCustomerName()) ?></span>
+                                </a>
+                            <?php else: ?>
+                                <?php echo $block->escapeHtml($block->getCustomerName()) ?>
+                            <?php endif; ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><?php echo __('Email') ?></th>
+                        <td>
+                            <a href="mailto:<?php echo $block->escapeHtml($mageQuote->getCustomerEmail()) ?>"><?php echo $block->escapeHtml($mageQuote->getCustomerEmail()) ?></a>
+                        </td>
+                    </tr>
+                    <?php if ($_groupName = $block->getCustomerGroupName()) : ?>
+                        <tr>
+                            <th><?php echo __('Customer Group') ?></th>
+                            <td><?php echo $_groupName ?></td>
+                        </tr>
+                    <?php endif; ?>
+                    <?php foreach ($block->getCustomerAccountData() as $data): ?>
+                        <tr>
+                            <th><?php echo $data['label'] ?></th>
+                            <td><?php echo $data['value'] ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                    <tr>
+                        <th> <?php echo __('Email sent') ?> </th>
+                        <td> <?php echo $quoteExtension->getEmailSent() ? __('Sent') : __('Not send email') ?></td>
+                    </tr>
+                    <?php if ($quoteExtension->getSubName()) : ?>
+                        <tr>
+                            <th><b><?= $block->escapeHtml(__('Created By')) ?></b></th>
+                            <td>
+                                <span id="sub_user_name">
+                                    <?= $block->escapeHtml(__($quoteExtension->getSubName())) ?>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th><?= $block->escapeHtml(__('Sub User Email')) ?></th>
+                            <td>
+                                <span id="sub_user_email">
+                                    <?= $block->escapeHtml(__($quoteExtension->getSubEmail())) ?>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th><?= $block->escapeHtml(__('Sub User Role')) ?></th>
+                            <td>
+                                <span id="sub_user_email">
+                                    <?= $block->escapeHtml(__($quoteExtension->getRoleName())) ?>
+                                </span>
+                            </td>
+                        </tr>
+                    <?php else : ?>
+                        <tr>
+                            <th><b><?= $block->escapeHtml(__('Created By')) ?></b></th>
+                            <td>
+                                <span id="sub_user_name">
+                                    <?= $block->escapeHtml(__($quoteExtension->getCustomerName())) ?>
+                                </span>
+                            </td>
+                        </tr>
+                    <?php endif ?>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>

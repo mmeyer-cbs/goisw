@@ -1,0 +1,74 @@
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_QuoteExtension
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2018-2019 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+-->
+<!--@subject {{trans "Your Quote has been completed"}} @-->
+<!--@vars {
+"var increment_id":"Increment Id",
+"var created_at":"Create At",
+"layout handle=\"quote_extension_email_items\" quote=$quote":"Grid item quote",
+"var this.getUrl($store, 'customer/account/')":"Customer Account URL",
+"var quote.getCustomerName()":"Customer Name",
+"var quote.getCustomerNote()":"Customer Note",
+"var quote.shipping_description":"Shipping Description"
+} @-->
+{{template config_path="design/email/header_template"}}
+{{inlinecss file="Bss_QuoteExtension::css/email-inline.css"}}
+<table style="width: 100%">
+    <tr class="email-intro">
+        <td>
+            {{depend quote.getCustomerName()}}
+            <p class="greeting">{{trans "%customer_name," customer_name=$quote.getCustomerName()}}</p>
+            {{/depend}}
+            <p>
+                {{trans "Your Quote Request has been reviewed and completed. "}}
+                <a href="{{var request_url}}" target="_blank">{{trans "click here"}}</a> {{trans "to see."}}
+            </p>
+        </td>
+    </tr>
+    <tr class="email-summary">
+        <td>
+            <h1>{{trans 'Quote Request ' }}<span class="no-link">#{{var increment_id}}</span></h1>
+            <p>{{trans 'Placed on ' }}<span class="no-link">{{var created_at}}</span></p>
+        </td>
+    </tr>
+    <tr class="email-information">
+        <td>
+            {{depend quote.getCustomerNote()}}
+            <table class="message-info">
+                <tr>
+                    <td>
+                        {{trans 'Comment: '}}
+                        {{var quote.getCustomerNote()|escape|nl2br}}
+                    </td>
+                </tr>
+            </table>
+            {{/depend}}
+            {{layout handle="quote_extension_email_items" quote=$quote quoteId=$quote.getEntityId() area="frontend"}}
+        </td>
+    </tr>
+    <tr class="comments">
+        <td>
+            {{depend comments}}
+            <h2>{{trans 'Admin's comment:'}}</h2>
+            {{layout handle="quote_extension_email_comment" comments=$comments area="frontend"}}
+            {{/depend}}
+        </td>
+    </tr>
+</table>
+
+{{template config_path="design/email/footer_template"}}

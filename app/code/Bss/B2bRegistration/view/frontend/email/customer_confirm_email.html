@@ -1,0 +1,12 @@
+<!--@subject {{trans "%store_name Confirmation of Your B2B Registration with Us" store_name=$store.getFrontendName()}} @-->
+<!--@vars {
+"var varCompany":"B2b Registration: Company Name"
+} @-->
+{{template config_path="design/email/header_template"}}
+<table>
+    <tr>{{trans "Hi %name," name=$varName}}</tr>
+    <tr>Thank you for registering to be one of our B2B customers.
+        We are looking into your application, and will get back to you soon. </tr>
+    <tr>Have a great day! </tr>
+</table>
+{{template config_path="design/email/footer_template"}}

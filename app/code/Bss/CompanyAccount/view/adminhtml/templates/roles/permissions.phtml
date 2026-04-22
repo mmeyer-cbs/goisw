@@ -1,0 +1,220 @@
+<?php
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_CompanyAccount
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2020 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+/** @var $block \Bss\CompanyAccount\Block\Adminhtml\Edit\Role\Permission */
+?>
+<div class="admin__field-label">
+    <label>
+        <span><?= $block->escapeHtml(__('Permissions')) ?></span>
+    </label>
+</div>
+<div class="admin__field-control tree x-tree" data-role="resource-tree">
+</div>
+<input type="hidden" data-form-part="bss_companyaccount_customer_listroles_form" name="role_type" value=""
+       id="role_type">
+<?php if ($block->checkMagentoVersionHigherV244() === true) : ?>
+    <script>
+        require([
+            'jquery',
+            'jquery/ui',
+            'jquery/jstree/jquery.jstree'
+        ], function ($) {
+            'use strict';
+            let rulesTree = $('.x-tree');
+            let roleType = $('#role_type');
+
+            rulesTree.jstree({
+                plugins: ['checkbox'],
+                checkbox: {
+                    // jscs:disable requireCamelCaseOrUpperCaseIdentifiers
+                    three_state: true,
+                    // jscs:enable requireCamelCaseOrUpperCaseIdentifiers
+                },
+                core: {
+                    data: <?= $block->getSerializer()->serialize($block->getDataRules($block->getSelectedRules(), true)) ?>,
+                    themes: {
+                        dots: false
+                    },
+                    "expand_selected_onload" : true
+                }
+            });
+            rulesTree.on('select_node.jstree', $.proxy(_selectChildNodes, this));
+            rulesTree.on('deselect_node.jstree', $.proxy(_deselectChildNodes, this));
+            rulesTree.on('changed.jstree', $.proxy(_changedNode, this));
+
+            function _selectChildNodes(event, selected) {
+                // jscs:disable requireCamelCaseOrUpperCaseIdentifiers
+                selected.instance.open_node(selected.node);
+                if (selected.node.children.length > 0) {
+                    selected.node.children.forEach(function (id) {
+                        var selector = '[id="' + id + '"]';
+                        selected.instance.select_node(
+                            selected.instance.get_node($(selector), false)
+                        );
+                    });
+                }
+                // jscs:enable requireCamelCaseOrUpperCaseIdentifiers
+            }
+
+            function _changedNode(event, selected) {
+                //Disable role 12 (Place order request)
+                if (selected.selected.includes('13') || selected.selected.includes('11')) {
+                    selected.selected = selected.selected.filter(function (ele) {
+                        return ele != '12';
+                    });
+                    $('#12_anchor').removeClass('jstree-clicked').addClass('jstree-unchecked').css(
+                        'color', '#c7bcbc'
+                    ).prop('checked', false);
+                } else {
+                    $('#12_anchor').css('color', 'black');
+                }
+
+                //Enable rule 7 when rule 13 is enabled
+                if (selected.selected.includes('13') && !selected.selected.indexOf('7')) {
+                    $('#7_anchor').removeClass('jstree-unchecked').addClass('jstree-clicked').children().prop('checked', true);
+                    selected.selected = selected.selected.push('7');
+                }
+                var fieldName = 'role_type',
+                    items = selected.selected.concat(rulesTree.jstree('get_undetermined')),
+                    checkRules = [];
+                items.forEach(function (ruleId) {
+                    if (ruleId != "0") {
+                        checkRules.push(ruleId);
+                    }
+                });
+
+                rulesTree.find('input[name="' + fieldName + '"]').remove();
+                document.getElementById('role_type').value = checkRules.join(",");
+            }
+
+            function _deselectChildNodes (event, selected) {
+                selected.node.children.forEach(function (id) {
+                    var selector = '[id="' + id + '"]';
+
+                    // jscs:disable requireCamelCaseOrUpperCaseIdentifiers
+                    selected.instance.deselect_node(
+                        selected.instance.get_node($(selector), false)
+                    );
+                    // jscs:enable requireCamelCaseOrUpperCaseIdentifiers
+                });
+            }
+        });
+
+    </script>
+<?php else : ?>
+    <script>
+        var checkedRules = <?= $block->getSerializer()->serialize($block->getSelectedRules()) ?>;
+        require([
+            'jquery',
+            'jquery/ui',
+            'jquery/jstree/jquery.jstree'
+        ], function ($) {
+            'use strict';
+            let rulesTree = $('.x-tree');
+
+            rulesTree.jstree({
+                plugins: ['themes', 'json_data', 'ui', 'crrm', 'types', 'vcheckbox'],
+
+                vcheckbox: {
+                    'two_state': true,
+                    'real_checkboxes': true,
+
+                    /**
+                     * @param {*} n
+                     * @return {Array}
+                     */
+                    'real_checkboxes_names': function (n) {
+                        return ['rule[]', $(n).data('id')];
+                    }
+                },
+                ui: {
+                    'select_limit': 0
+                },
+                'json_data': {
+                    data: <?= $block->getSerializer()->serialize($block->getDataRules()) ?>
+                },
+                types: {
+                    'types': {
+                        'disabled': {
+                            'check_node': false,
+                            'uncheck_node': false
+                        }
+                    }
+                }
+            }).bind('change_state.jstree', function () {
+                var roleApproveOrder = $('[data-id="13"]');
+                if (roleApproveOrder.attr('class').search("jstree-checked") > 0) {
+                    $('[data-id="7"]').removeClass('jstree-unchecked').addClass('jstree-checked').children().prop('checked', true);
+                }
+                if (roleApproveOrder.attr('class').search("jstree-checked") > 0
+                    || $('[data-id="11"]').attr('class').search("jstree-checked") > 0
+                ) {
+                    $('[data-id="12"]').removeClass('jstree-checked').addClass('jstree-unchecked').children().css(
+                        'color', 'gray'
+                    ).prop('checked', false);
+                } else {
+                    $('[data-id="12"]').children('a').css('color', 'black');
+                }
+            });
+            rulesTree.on('loaded.jstree', $.proxy(_checkNodes, this));
+            rulesTree.on('click.jstree', 'a', $.proxy(_checkNode, this));
+            rulesTree.on("check_node.jstree uncheck_node.jstree", function () {
+                processRulesData();
+            });
+
+            function _checkNode(event) {
+                event.stopPropagation();
+                rulesTree.jstree(
+                    'change_state',
+                    event.currentTarget,
+                    rulesTree.jstree('is_checked', event.currentTarget)
+                ).trigger('check_node.jstree');
+            }
+
+            function processRulesData() {
+                checkedRules = [];
+                rulesTree.jstree('get_checked', null, true).each(function () {
+                    let ruleId = $(this).attr('data-id');
+                    if (ruleId != "0") {
+                        checkedRules.push(ruleId);
+                    }
+                });
+                document.getElementById('role_type').value = checkedRules.join(",");
+            }
+
+            function _checkNodes() {
+                checkedRules = arrayRemove(checkedRules, "");
+                let defaultCheck = '';
+                if (checkedRules.length > 0) {
+                    defaultCheck = '[data-id="0"],';
+                }
+                var $items = $(defaultCheck + '[data-id="' + checkedRules.join('"],[data-id="') + '"]');
+
+                $items.removeClass('jstree-unchecked').addClass('jstree-checked');
+                $items.children(':checkbox').prop('checked', true);
+                processRulesData();
+            }
+
+            function arrayRemove(arr, value) {
+                return arr.filter(function (ele) {
+                    return ele != value;
+                });
+            }
+        });
+
+    </script>
+<?php endif; ?>

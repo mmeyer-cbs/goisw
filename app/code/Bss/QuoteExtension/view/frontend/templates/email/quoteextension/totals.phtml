@@ -1,0 +1,90 @@
+<?php
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_QuoteExtension
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2018-2019 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+
+/**
+ * @var $block \Magento\Sales\Block\Order\Totals
+ * @see \Magento\Sales\Block\Order\Totals
+ */
+?>
+<?php // @codingStandardsIgnoreFile ?>
+
+<?php
+$helper = $block->getViewModel();
+$item = $block->getQuote();
+if (!$item) {
+    $item = $helper->getQuoteById($block->getQuoteId());
+}
+$grand_total = $item->getData('grand_total');
+$subtotal = $item->getData('subtotal');
+$subtotal_with_discount = $item->getData('subtotal_with_discount');
+$discount = $subtotal - $subtotal_with_discount;
+$shippingAmount = $item->getShippingAddress()->getShippingAmount();
+$shippingDesciption = $item->getShippingAddress()->getShippingDescription();
+$qty = $item->getData('items_qty');
+$tax = ($grand_total - $subtotal_with_discount - $shippingAmount);
+$helper = $helper->getModuleHelper();
+?>
+<?php if (!$item->getNeedHidePrice()) :?>
+    <tr class="subtotal">
+        <th colspan="3" scope="row">
+            <?= $block->escapeHtml(__('Sub Total'));?>
+        </th>
+        <td  data-th="<?= $block->escapeHtmlAttr(__('Sub Total'));?>">
+            <?= /* @escapeNotVerified */ $helper->formatPrice($subtotal); ?>
+        </td>
+    </tr>
+<?php endif; ?>
+<?php if($subtotal != $subtotal_with_discount) : ?>
+    <tr class="discount">
+        <th colspan="3" scope="row">
+            <?= $block->escapeHtml(__('Discount'));?>
+        </th>
+        <td  data-th="<?= $block->escapeHtmlAttr(__('Discount'));?>">
+            <?= /* @escapeNotVerified */ $helper->formatPrice($discount); ?>
+        </td>
+    </tr>
+<?php endif; ?>
+<?php if ($shippingAmount) : ?>
+    <tr class="tax">
+        <th colspan="3" scope="row">
+            <?= $block->escapeHtml(__('Shipping & Handling'));?>
+        </th>
+        <td  data-th="<?= $block->escapeHtmlAttr(__('Shipping & Handling') . '(' . $shippingDesciption . ')') ;?>">
+            <?= /* @escapeNotVerified */ $helper->formatPrice($shippingAmount); ?>
+        </td>
+    </tr>
+<?php endif; ?>
+<tr class="tax">
+    <th colspan="3" scope="row">
+        <?= $block->escapeHtml(__('Tax'));?>
+    </th>
+    <td  data-th="<?= $block->escapeHtmlAttr(__('Tax'));?>">
+        <?= /* @escapeNotVerified */ $helper->formatPrice($tax); ?>
+    </td>
+</tr>
+<?php if (!$item->getNeedHidePrice()) :?>
+    <tr class="tax">
+        <th colspan="3" scope="row">
+            <?= $block->escapeHtml(__('Grand Total'));?>
+        </th>
+        <td  data-th="<?= $block->escapeHtmlAttr(__('Grand Total'));?>">
+            <?= /* @escapeNotVerified */ $helper->formatPrice($grand_total); ?>
+        </td>
+    </tr>
+<?php endif; ?>
+

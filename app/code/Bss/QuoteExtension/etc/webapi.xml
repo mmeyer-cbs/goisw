@@ -1,0 +1,123 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_QuoteExtension
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2018-2022 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+-->
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
+    <route url="/V1/quoteextension/mine/place-quote" method="POST">
+        <service class="Bss\QuoteExtension\Api\PlaceQuoteInterface" method="saveShippingInformationAndPlaceQuote"/>
+        <resources>
+            <resource ref="self" />
+        </resources>
+        <data>
+            <parameter name="cartId" force="true">%cart_id%</parameter>
+        </data>
+    </route>
+
+    <route url="/V1/quoteextension/guest/place-quote" method="POST">
+        <service class="Bss\QuoteExtension\Api\GuestPlaceQuoteInterface" method="saveShippingInformationAndPlaceQuote"/>
+        <resources>
+            <resource ref="anonymous" />
+        </resources>
+        <data>
+            <parameter name="cartId" force="true">%cart_id%</parameter>
+        </data>
+    </route>
+
+    <!-- Config module -->
+    <route method="GET" url="/V1/quoteextension/getConfig/:storeId">
+        <service class="Bss\QuoteExtension\Api\ManagementInterface" method="getConfigByStoreId"/>
+        <resources>
+            <resource ref="Bss_QuoteExtension::api"/>
+        </resources>
+    </route>
+
+    <route method="GET" url="/V1/quoteextension/getConfig">
+        <service class="Bss\QuoteExtension\Api\ManagementInterface" method="getConfig"/>
+        <resources>
+            <resource ref="Bss_QuoteExtension::api"/>
+        </resources>
+    </route>
+
+    <!-- End -->
+
+    <!-- Manage quote -->
+    <route url="/V1/quoteextension/manageQuote/save" method="POST">
+        <service class="Bss\QuoteExtension\Api\ManageQuoteRepositoryInterface" method="save"/>
+        <resources>
+            <resource ref="Bss_QuoteExtension::save_quote" />
+        </resources>
+    </route>
+
+    <route url="/V1/quoteextension/manageQuote/getById/:id" method="GET">
+        <service class="Bss\QuoteExtension\Api\ManageQuoteRepositoryInterface" method="getById"/>
+        <resources>
+            <resource ref="Bss_QuoteExtension::quote_extension_manager" />
+        </resources>
+    </route>
+
+    <route url="/V1/quoteextension/manageQuote/getByCustomerId/:customerId" method="GET">
+        <service class="Bss\QuoteExtension\Api\ManageQuoteRepositoryInterface" method="getByCustomerId"/>
+        <resources>
+            <resource ref="Bss_QuoteExtension::quote_extension_manager" />
+        </resources>
+    </route>
+
+    <route url="/V1/quoteextension/manageQuote/deleteById/:entityId" method="DELETE">
+        <service class="Bss\QuoteExtension\Api\ManageQuoteRepositoryInterface" method="deleteById"/>
+        <resources>
+            <resource ref="Bss_QuoteExtension::delete_quote" />
+        </resources>
+    </route>
+
+    <!-- End -->
+
+    <!-- add quote -->
+
+        <route url="/V1/quoteextension/quote/mine" method="POST">
+            <service class="Bss\QuoteExtension\Api\QEManagementInterface" method="createEmptyQuoteForCustomer"/>
+            <resources>
+                <resource ref="self" />
+            </resources>
+            <data>
+                <parameter name="customerId" force="true">%customer_id%</parameter>
+            </data>
+        </route>
+
+    <route url="/V1/quoteextension/quote/mine" method="GET">
+        <service class="Bss\QuoteExtension\Api\QEManagementInterface" method="getQuoteForCustomer"/>
+        <resources>
+            <resource ref="self" />
+        </resources>
+        <data>
+            <parameter name="customerId" force="true">%customer_id%</parameter>
+        </data>
+    </route>
+
+
+    <route url="/V1/quoteextension/quote/mine/items" method="POST">
+        <service class="Magento\Quote\Api\CartItemRepositoryInterface" method="save"/>
+        <resources>
+            <resource ref="self" />
+        </resources>
+        <data>
+            <parameter name="cartItem.quote_id" force="true">%cart_id%</parameter>
+        </data>
+    </route>
+
+</routes>

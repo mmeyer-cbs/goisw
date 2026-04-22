@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_QuoteExtension
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2018-2019 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Backend::admin">
+                <resource id="Bss_QuoteExtension::quote_extension" title="Bss Commerce" sortOrder="100">
+                    <resource id="Bss_QuoteExtension::quote_extension_manager" title="Manage Quote Extension" sortOrder="80">
+                        <resource id="Bss_QuoteExtension::edit_quote" title="BSS Edit Quote" sortOrder="10" />
+                        <resource id="Bss_QuoteExtension::accept_quote" title="BSS Accept Quote" sortOrder="20" />
+                        <resource id="Bss_QuoteExtension::agree_quote" title="BSS Agree Quote" sortOrder="20" />
+                        <resource id="Bss_QuoteExtension::create_order" title="BSS Create Order" sortOrder="30" />
+                        <resource id="Bss_QuoteExtension::print_quote" title="BSS Print Quote" sortOrder="40" />
+                        <resource id="Bss_QuoteExtension::reject_quote" title="BSS Reject Quote" sortOrder="50" />
+                        <resource id="Bss_QuoteExtension::save_quote" title="BSS Save Quote" sortOrder="60" />
+                        <resource id="Bss_QuoteExtension::assign_customer_to_quote" title="BSS Assign Customer to Quote" sortOrder="60" />
+                        <resource id="Bss_QuoteExtension::delete_quote" title="BSS Delete Quote" sortOrder="70" />
+                    </resource>
+                </resource>
+                <resource id="Magento_Backend::stores">
+                    <resource id="Magento_Backend::stores_settings">
+                        <resource id="Magento_Config::config">
+                            <resource id="Bss_QuoteExtension::module_config" title="BSS Request For Quote" sortOrder="80" />
+                        </resource>
+                    </resource>
+                </resource>
+            </resource>
+        </resources>
+    </acl>
+</config>

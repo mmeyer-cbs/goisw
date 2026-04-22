@@ -1,0 +1,53 @@
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_QuoteExtension
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2018-2019 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+//  @screen__xxs: 320px;
+//  @screen__xs: 480px;
+//  @screen__s: 640px;
+//  @screen__m: 768px;
+//  @screen__l: 1024px;
+//  @screen__xl: 1440px;
+
+//
+//  Common
+//  _____________________________________________
+
+
+& when (@media-common = true) {
+    .balance-credit {
+        float: right;
+    }
+    .bss-companycredit-green {
+        color: #0a0;
+    }
+    .bss-companycredit-red {
+        color: #f00;
+    }
+}
+
+/* Hide arrows input type number */
+/* Chrome, Safari, Edge, Opera */
+input.hide-arrows::-webkit-outer-spin-button,
+input.hide-arrows::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input.hide-arrows[type=number] {
+    -moz-appearance: textfield;
+}
+/* Hide arrows input type number */

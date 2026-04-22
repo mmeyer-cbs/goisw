@@ -1,0 +1,32 @@
+<?php
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_CompanyAccount
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2020 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+/** @var $block \Bss\CompanyAccount\Block\Order\RequestTitle */
+
+?>
+<?php if ($block->getOrderId()) : ?>
+<div>
+    <h3 class="page-title order-request">
+        <span class="base">
+            <a href="<?= $block->getOrderViewUrl() ?>">
+            <?= $block->escapeHtml(__('Order #') . $block->getOrderId()[1]) ?>
+        </a>
+        </span>
+    </h3>
+</div>
+<?php endif; ?>
+

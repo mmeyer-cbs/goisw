@@ -1,0 +1,118 @@
+<?php
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_QuoteExtension
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2018-2019 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+
+/** @var Bss\QuoteExtension\Block\QuoteExtension\View\Address $block */
+?>
+<?php // @codingStandardsIgnoreFile ?>
+
+<?php if ($block->isRequiredAddress()) : ?>
+    <?php if (!$block->getQuoteExtension()->getIsVirtual()) : ?>
+        <div class="quote-title">
+            <span class="title"><?= $block->escapeHtml(__('Quote Information')); ?></span>
+        </div>
+        <div class="block-content">
+            <?php if ($block->getFormattedAddress('shipping')) : ?>
+                <div class="box box-order-shipping-address">
+                    <strong class="box-title">
+                        <span><?= $block->escapeHtml(__('Shipping Address')); ?></span>
+                    </strong>
+                    <div class="block-content">
+                        <?= $block->getFormattedAddress('shipping'); ?>
+                    </div>
+                </div>
+                <?php if ($_rate = $block->getActiveMethodRate()) : ?>
+                    <div class="box box-order-shipping-method">
+                        <?php
+                        if ($_rate->getMethodTitle()) {
+                            $methodTitle = $block->escapeHtml($_rate->getMethodTitle());
+                        } else {
+                            $methodTitle = $block->escapeHtml($_rate->getMethodDescription());
+                        }
+                        ?>
+                        <strong class="box-title">
+                            <span><?= $block->escapeHtml(__('Shipping Method')); ?></span>
+                        </strong>
+                        <div class="block-content">
+                            <?php echo $methodTitle ?>
+                            -
+                            <strong>
+                                <?php
+                                $_excl = $block->getShippingPrice(
+                                    $_rate->getPrice(),
+                                    $block->getTaxHelper()->displayShippingPriceIncludingTax()
+                                );
+                                ?>
+                                <?php $_incl = $block->getShippingPrice($_rate->getPrice(), true); ?>
+
+                                <?= $_excl; ?>
+                                <?php if ($block->getTaxHelper()->displayShippingBothPrices() && $_incl != $_excl) : ?>
+                                    (<?= $block->escapeHtml(__('Incl. Tax')); ?><?php echo $_incl; ?>)
+                                <?php endif; ?>
+                            </strong>
+                        </div>
+                    </div>
+                <?php endif; ?>
+            <?php endif ?>
+        </div>
+    <?php endif; ?>
+    <?php if ($block->canSubmitQuote()): ?>
+    <div class="field choice">
+        <input type="checkbox" name="change_shipping_info" id="change-shipping-info" data-role="change-shipping-info" value="1" title="Change Shipping Information" class="checkbox">
+        <label class="label" for="change-email"><span><?= $block->escapeHtml(__('Change Shipping Information')) ?></span></label>
+    </div>
+    <div id="quoteSubmit" data-bind="scope:'block-submit'" class="quote-summary">
+        <div id="quote-loader" data-role="quote-loader" class="loading-mask" data-mage-init='{"checkoutLoader": {}}'>
+            <div class="loader">
+                <img src="<?= /* @escapeNotVerified */
+                    $block->escapeUrl($block->getViewFileUrl('images/loader-1.gif')); ?>"
+                     alt="<?= /* @escapeNotVerified */
+                     $block->escapeHtml(__('Loading...')); ?>"
+                     style="position: absolute;">
+            </div>
+        </div>
+        <!-- ko template: getTemplate() --><!-- /ko -->
+        <script type="text/x-magento-init">
+            {
+                "#quoteSubmit": {
+                    "Magento_Ui/js/core/app": <?php /* @escapeNotVerified */
+                echo $block->getJsLayout(); ?>
+                },
+                "*": {
+                    "Magento_Ui/js/block-loader": "<?= /* @escapeNotVerified */ $block->getViewFileUrl('images/loader-1.gif') ?>"
+                }
+            }
+
+        </script>
+        <script>
+            window.checkoutConfig = <?php /* @escapeNotVerified */ echo \Laminas\Json\Json::encode($block->getCheckoutConfig()); ?>;
+            // Create aliases for customer.js model from customer module
+            window.isCustomerLoggedIn = window.checkoutConfig.isCustomerLoggedIn;
+            window.customerData = window.checkoutConfig.customerData;
+            window.isRequiredAddress = window.checkoutConfig.isRequiredAddress;
+        </script>
+        <script type="text/x-magento-init">
+        {
+            "#change-shipping-info": {
+                "Bss_QuoteExtension/js/quote-view/change-shipping": {}
+            }
+        }
+
+    </script>
+    </div>
+<?php endif ?>
+<?php endif; ?>

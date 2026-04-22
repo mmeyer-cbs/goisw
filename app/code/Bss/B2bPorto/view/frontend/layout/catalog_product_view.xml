@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_B2bPorto
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2020 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <!-- Configurable Grid View -->
+        <referenceBlock name="product.info.addtocart.additional">
+            <action method="setTemplate">
+                <argument name="template" xsi:type="helper" helper="Bss\B2bPorto\Helper\Data::isUseConfigurableGridModTemplate">
+                    <param name="name">Bss_B2bPorto::product/view/addtocart.phtml</param>
+                </argument>
+            </action>
+            <action method="setSerializer">
+                <argument name="serializer" xsi:type="helper" helper="Bss\B2bPorto\Helper\Data::getJsonSerializer" />
+            </action>
+            <action method="setIsCGVEnabled">
+                <argument name="cgvDataHelper" xsi:type="helper" helper="Bss\B2bPorto\Helper\Data::isConfigurableGridModEnabled"/>
+            </action>
+        </referenceBlock>
+        <!-- ./END Configurable Grid View -->
+    </body>
+</page>

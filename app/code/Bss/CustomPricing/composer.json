@@ -1,0 +1,16 @@
+{
+    "name": "bsscommerce/custom-pricing",
+    "version": "1.1.0",
+    "description": "product custom pricing module for Magento 2",
+    "type": "magento2-module",
+    "license": [
+        "OSL-3.0",
+        "AFL-3.0"
+    ],
+    "autoload": {
+        "files": ["registration.php"],
+        "psr-4": {
+            "Bss\\CustomPricing\\": ""
+        }
+    }
+}

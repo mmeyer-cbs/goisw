@@ -1,0 +1,20 @@
+<form data-role="persional-information" class="form">
+<div id="personal-information" class="fieldset">
+<div class="field _required" name="personal-information.firstname">
+
+    <label class="label"  for="personal-information.firstname"><span data-bind="i18n: 'First Name'">First Name</span></label>
+
+    <div class="control" data-bind="css: {'_with-tooltip': element.tooltip}">
+        <input class="input-text" type="text"  name="personal-information-firstname" aria-required="true" aria-invalid="false" id="personal-information.firstname" data-validate="{required:true}">
+    </div>
+</div>
+    <div class="field _required" name="personal-information.lastname">
+
+        <label class="label"  for="personal-information.lastname"><span data-bind="i18n: 'Last Name'">Last Name</span></label>
+
+        <div class="control" data-bind="css: {'_with-tooltip': element.tooltip}">
+            <input class="input-text" type="text" name="personal-information-lastname" aria-required="true" aria-invalid="false" id="personal-information.lastname" data-validate="{required:true}">
+        </div>
+    </div>
+</div>
+</form>

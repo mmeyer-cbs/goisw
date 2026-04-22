@@ -1,0 +1,53 @@
+# BSS Commerce Co.
+#
+# NOTICE OF LICENSE
+#
+# This source file is subject to the EULA
+# that is bundled with this package in the file LICENSE.txt.
+# It is also available through the world-wide-web at this URL:
+# http://bsscommerce.com/Bss-Commerce-License.txt
+#
+# @category   BSS
+# @package    Bss_ReorderProductGraphQl
+# @author     Extension Team
+# @copyright  Copyright (c) 2022 BSS Commerce Co. ( http://bsscommerce.com )
+# @license    http://bsscommerce.com/Bss-Commerce-License.txt
+
+type Query
+{
+    configReorder : getConfigOutput @resolver(class: "Bss\\ReorderProductGraphQl\\Model\\Resolver\\GetConfigOutput")
+    @doc(description:"Get config in Admin/Configuration/BssCommerce/ReoderProduct")
+    listProductReorder(
+        pageSize: Int  @doc(description: "number of records to display") ,
+        currentPage: Int =1 @doc(description: "page number curent default page 1"),
+    ): [getListProductReorderOutput]
+    @resolver(class: "Bss\\ReorderProductGraphQl\\Model\\Resolver\\ListProductReorder")
+    @doc(description: "paging list product")
+}
+
+type getConfigOutput @doc (description: "Output getconfig") {
+    active : String  @doc(description: "Config is enable/1 or disable/0"),
+    redirect_cart : String @doc(description: "Config Redirect to Cart after Adding Products to Cart enable yes/no"),
+    redirect_wishlist : String @doc(description: "Config Redirect to Wishlist after Adding Products to Wishlist enable yes/no"),
+    ignore_buy_request : String @doc(description: "Config ignore buy request to merge item"),
+    btnwishlist : String @doc(description: "Config Enable to Add All Products to Wishlist enable yes/no"),
+    show_quickview : String @doc(description: "Show Quick View Button in Column"),
+    show_sku : String @doc(description: "Config Show SKU enable yes/no"),
+    qty_inventory : String @doc(description: "Config Show Quantity enable yes/no"),
+    list_per_page_values : String @doc(description: "Separated by commas"),
+    list_per_page : String @doc(description: "must be in the allowed values list"),
+    sort_by : String @doc(description: "list sort by:name, price, ordered date, ordered qty"),
+    list_allow_all : String @doc(description: "Config Allow Showing All Products per Page enable yes/no"),
+}
+
+type getListProductReorderOutput @doc (description: "output listProduct"){
+    sku : String @doc(description: "skud product")
+    price: Float @doc(description: "The quantity of product .")
+    name: String @doc(description: "name of product"),
+    stock_status: String  @doc(description: "show stock 1/0"),
+    image: String @doc(description: "Url_image"),
+    product_type: String @doc(description: "type prodcut"),
+    qty_order: String @doc(description: "qty orrder"),
+    create_at: String @doc(description: "date create"),
+    currency: String @doc(description: "get currency product"),
+}

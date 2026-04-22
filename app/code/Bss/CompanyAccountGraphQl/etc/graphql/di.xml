@@ -1,0 +1,164 @@
+<?xml version="1.0" ?>
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_CompanyAccountGraphQl
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2021 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Bss\CompanyAccountGraphQl\Model\Resolver\DeleteRole">
+        <arguments>
+            <argument name="subModelRepository" xsi:type="object">Bss\CompanyAccount\Api\SubRoleRepositoryInterface</argument>
+        </arguments>
+    </type>
+    <type name="Bss\CompanyAccountGraphQl\Model\Resolver\GetRole">
+        <arguments>
+            <argument name="subModelRepository" xsi:type="object">Bss\CompanyAccount\Api\SubRoleRepositoryInterface</argument>
+        </arguments>
+    </type>
+    <type name="Bss\CompanyAccountGraphQl\Model\Resolver\SaveRole">
+        <arguments>
+            <argument name="subModelRepository" xsi:type="object">Bss\CompanyAccount\Api\SubRoleRepositoryInterface</argument>
+        </arguments>
+    </type>
+    <type name="Bss\CompanyAccountGraphQl\Model\Resolver\GetSubUsersByRole">
+        <arguments>
+            <argument name="subModelRepository" xsi:type="object">Bss\CompanyAccount\Api\SubRoleRepositoryInterface</argument>
+        </arguments>
+    </type>
+    <type name="Bss\CompanyAccountGraphQl\Model\Resolver\GetSubUser">
+        <arguments>
+            <argument name="subModelRepository" xsi:type="object">Bss\CompanyAccount\Api\SubUserRepositoryInterface</argument>
+        </arguments>
+    </type>
+    <type name="Bss\CompanyAccountGraphQl\Model\Resolver\DeleteSubUser">
+        <arguments>
+            <argument name="subModelRepository" xsi:type="object">Bss\CompanyAccount\Api\SubUserRepositoryInterface</argument>
+        </arguments>
+    </type>
+    <type name="Magento\StoreGraphQl\Model\Resolver\Store\StoreConfigDataProvider">
+        <arguments>
+            <argument name="extendedConfigData" xsi:type="array">
+                <item name="company_account_enable" xsi:type="string">bss_company_account/general/enable</item>
+                <item name="company_account_email_sender" xsi:type="string">bss_company_account/email/email_sender</item>
+                <item name="company_account_ca_approval" xsi:type="string">bss_company_account/email/ca_approval</item>
+                <item name="company_account_send_approval_copy_to" xsi:type="string">bss_company_account/email/send_approval_copy_to</item>
+                <item name="company_account_ca_remove" xsi:type="string">bss_company_account/email/ca_remove</item>
+                <item name="company_account_send_remove_copy_to" xsi:type="string">bss_company_account/email/send_remove_copy_to</item>
+                <item name="company_account_subuser_welcome" xsi:type="string">bss_company_account/email/subuser_welcome</item>
+                <item name="company_account_subuser_remove" xsi:type="string">bss_company_account/email/subuser_remove</item>
+                <item name="company_account_subuser_reset_password" xsi:type="string">bss_company_account/email/subuser_reset_password</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <preference for="Bss\CompanyAccountGraphQl\Model\UserContextInterface" type="Bss\CompanyAccountGraphQl\Model\CompositeUserContext"/>
+    <type name="Magento\Authorization\Model\CompositeUserContext">
+        <arguments>
+            <argument name="userContexts" xsi:type="array">
+                <item name="tokenSubUserContext" xsi:type="array">
+                    <item name="type" xsi:type="object">Bss\CompanyAccountGraphQl\Model\Authorization\TokenSubUserContext</item>
+                    <item name="sortOrder" xsi:type="string">90</item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\GraphQl\Model\Query\ContextFactory">
+        <arguments>
+            <argument name="contextParametersProcessors" xsi:type="array">
+                <item name="add_sub_user_info_to_context" xsi:type="object">Bss\CompanyAccountGraphQl\Model\Context\AddSubUserInfoToContext</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Bss\CompanyAccountGraphQl\Model\Authorization\TokenSubUserContext">
+        <arguments>
+            <argument name="dateTime" xsi:type="object">Magento\Framework\Stdlib\DateTime</argument>
+            <argument name="date" xsi:type="object">Magento\Framework\Stdlib\DateTime\DateTime</argument>
+            <argument name="oauthHelper" xsi:type="object">Magento\Integration\Helper\Oauth\Data</argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\QuoteGraphQl\Model\Resolver\PlaceOrder">
+        <plugin name="sub_user_place_order" type="Bss\CompanyAccountGraphQl\Plugin\SubUserPlaceOrder" sortOrder="50" />
+    </type>
+    <!-- SubUser order listing plugin -->
+    <type name="Magento\SalesGraphQl\Model\Resolver\CustomerOrders">
+        <plugin name="rebuild_list_order"
+                type="Bss\CompanyAccountGraphQl\Plugin\CustomerOrders"
+                sortOrder="100" />
+    </type>
+    <!-- Sub-user can create address -->
+    <type name="Magento\CustomerGraphQl\Model\Resolver\CreateCustomerAddress">
+        <plugin name="sub_user_create_address_permission"
+                type="Bss\CompanyAccountGraphQl\Plugin\SubUserAddressAction"
+                sortOrder="100" />
+    </type>
+    <type name="Magento\CustomerGraphQl\Model\Resolver\UpdateCustomerAddress">
+        <plugin name="sub_user_update_address_permission"
+                type="Bss\CompanyAccountGraphQl\Plugin\SubUserAddressAction"
+                sortOrder="100" />
+    </type>
+    <type name="Magento\CustomerGraphQl\Model\Resolver\DeleteCustomerAddress">
+        <plugin name="sub_user_delete_address_permission"
+                type="Bss\CompanyAccountGraphQl\Plugin\SubUserAddressAction"
+                sortOrder="100" />
+    </type>
+    <!-- view downlodaable products -->
+    <type name="Magento\CustomerDownloadableGraphQl\Model\Resolver\CustomerDownloadableProducts">
+        <plugin name="sub_user_view_downloadable_permission"
+                type="Bss\CompanyAccountGraphQl\Plugin\CustomerDownloadableProducts"
+                sortOrder="100" />
+    </type>
+
+    <!-- view payment method -->
+    <type name="Magento\VaultGraphQl\Model\Resolver\PaymentTokens">
+        <plugin name="sub_user_view_payment_methods"
+                type="Bss\CompanyAccountGraphQl\Plugin\PaymentTokens"
+                sortOrder="100" />
+    </type>
+    <!-- wishlist action -->
+    <type name="Magento\WishlistGraphQl\Model\Resolver\CustomerWishlistResolver">
+        <plugin name="sub_user_wishlist_action"
+                type="Bss\CompanyAccountGraphQl\Plugin\CustomerWishlistResolver"
+                sortOrder="100" />
+    </type>
+    <type name="Magento\WishlistGraphQl\Model\Resolver\CustomerWishlists">
+        <plugin name="sub_user_wishlist_action"
+                type="Bss\CompanyAccountGraphQl\Plugin\CustomerWishlistResolver"
+                sortOrder="100" />
+    </type>
+    <type name="Magento\WishlistGraphQl\Model\Resolver\WishlistById">
+        <plugin name="sub_user_wishlist_action"
+                type="Bss\CompanyAccountGraphQl\Plugin\CustomerWishlistResolver"
+                sortOrder="100" />
+    </type>
+    <type name="Magento\WishlistGraphQl\Model\Resolver\AddProductsToWishlist">
+        <plugin name="sub_user_wishlist_action"
+                type="Bss\CompanyAccountGraphQl\Plugin\CustomerWishlistResolver"
+                sortOrder="100" />
+    </type>
+    <type name="Magento\WishlistGraphQl\Model\Resolver\RemoveProductsFromWishlist">
+        <plugin name="sub_user_wishlist_action"
+                type="Bss\CompanyAccountGraphQl\Plugin\CustomerWishlistResolver"
+                sortOrder="100" />
+    </type>
+    <type name="Magento\WishlistGraphQl\Model\Resolver\UpdateProductsInWishlist">
+        <plugin name="sub_user_wishlist_action"
+                type="Bss\CompanyAccountGraphQl\Plugin\CustomerWishlistResolver"
+                sortOrder="100" />
+    </type>
+</config>

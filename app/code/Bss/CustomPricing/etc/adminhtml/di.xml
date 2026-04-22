@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_CustomPricing
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2020 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Bss\CustomPricing\Model\Rule\Condition\Customer\Combine">
+        <arguments>
+            <argument name="data" xsi:type="array">
+                <item name="form_name" xsi:type="string">bss_price_rule_form</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Bss\CustomPricing\Model\Rule\Condition\Customer\Customer">
+        <arguments>
+            <argument name="data" xsi:type="array">
+                <item name="form_name" xsi:type="string">bss_price_rule_form</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Catalog\Model\Category">
+        <plugin name="bss_assign_price_rule" type="Bss\CustomPricing\Plugin\Indexer\Category" sortOrder="20" />
+    </type>
+</config>

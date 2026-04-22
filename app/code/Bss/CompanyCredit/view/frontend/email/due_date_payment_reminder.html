@@ -1,0 +1,35 @@
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_CompanyCredit
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2020-2022 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+-->
+<!--@subject {{trans "%store_name: An order is due for payment!" store_name=$store.getFrontendName()}} @-->
+    {{template config_path="design/email/header_template"}}
+<table cellspacing="0" cellpadding="0" border="0" width="100%">
+    <tr>
+        <td>
+            <p>{{trans "Hi %customer_name," customer_name=$customer_name}}</p>
+            <p>
+                {{trans "We did want to quickly remind you that the following order %order_id with
+                PO number %po_number will be coming due for payment on %payment_due_date
+                (%x_day day(s) from today)." order_id=$order_id po_number=$po_number payment_due_date=$payment_due_date x_day=$x_day}}
+            </p>
+            <p>{{trans "Please check your account balance and make payment on time."}}</p>
+            <p>{{trans "Thank you."}}</p>
+        </td>
+    </tr>
+</table>
+    {{template config_path="design/email/footer_template"}}

@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+<!--
+/**
+* BSS Commerce Co.
+*
+* NOTICE OF LICENSE
+*
+* This source file is subject to the EULA
+* that is bundled with this package in the file LICENSE.txt.
+* It is also available through the world-wide-web at this URL:
+* http://bsscommerce.com/Bss-Commerce-License.txt
+*
+* @category   BSS
+* @package    Bss_StoreCredit
+* @author     Extension Team
+* @copyright  Copyright (c) 2017-2022 BSS Commerce Co. ( http://bsscommerce.com )
+* @license    http://bsscommerce.com/Bss-Commerce-License.txt
+*/
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+  <table name="quote" resource="default">
+    <column xsi:type="decimal" name="base_bss_storecredit_amount" scale="4" precision="12" unsigned="false" nullable="true" comment="Store Credit Base Amount"/>
+    <column xsi:type="decimal" name="bss_storecredit_amount" scale="4" precision="12" unsigned="false" nullable="true" comment="Store Credit Amount"/>
+    <column xsi:type="decimal" name="base_bss_storecredit_amount_input" scale="4" precision="12" unsigned="false" nullable="true" comment="Base Store Credit Amount Input"/>
+    <column xsi:type="text" name="store_credit_currency_code" nullable="true" comment="Store Credit Currency"/>
+    <column xsi:type="decimal" name="bss_storecredit_amount_input" scale="4" precision="12" unsigned="false" nullable="true" comment="Store Credit Amount Input"/>
+  </table>
+  <table name="sales_invoice" resource="default">
+    <column xsi:type="decimal" name="base_bss_storecredit_amount" scale="4" precision="12" unsigned="false" nullable="true" comment="Store Credit Base Amount"/>
+    <column xsi:type="decimal" name="bss_storecredit_amount" scale="4" precision="12" unsigned="false" nullable="true" comment="Store Credit Amount"/>
+  </table>
+  <table name="sales_creditmemo" resource="default">
+    <column xsi:type="decimal" name="base_bss_storecredit_amount" scale="4" precision="12" unsigned="false" nullable="true" comment="Store Credit Base Amount"/>
+    <column xsi:type="decimal" name="bss_storecredit_amount" scale="4" precision="12" unsigned="false" nullable="true" comment="Store Credit Amount"/>
+    <column xsi:type="decimal" name="base_bss_storecredit_amount_refund" scale="4" precision="12" unsigned="false" nullable="true" comment="Store Credit Base Amount Refund"/>
+    <column xsi:type="decimal" name="bss_storecredit_amount_refund" scale="4" precision="12" unsigned="false" nullable="true" comment="Store Credit Amount Refund"/>
+  </table>
+  <table name="sales_order" resource="default">
+    <column xsi:type="decimal" name="base_bss_storecredit_amount" scale="4" precision="12" unsigned="false" nullable="true" comment="Store Credit Base Amount"/>
+    <column xsi:type="decimal" name="bss_storecredit_amount" scale="4" precision="12" unsigned="false" nullable="true" comment="Store Credit Amount"/>
+  </table>
+  <table name="quote_address" resource="default">
+    <column xsi:type="decimal" name="base_bss_storecredit_amount" scale="4" precision="12" unsigned="false" nullable="true" comment="Store Credit Base Amount"/>
+    <column xsi:type="decimal" name="bss_storecredit_amount" scale="4" precision="12" unsigned="false" nullable="true" comment="Store Credit Amount"/>
+  </table>
+  <table name="bss_storecredit_balance" resource="default" engine="innodb" comment="bss_storecredit_balance">
+    <column xsi:type="int" name="balance_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Balance ID"/>
+    <column xsi:type="int" name="customer_id" padding="10" unsigned="true" nullable="false" identity="false" default="0" comment="Customer Id"/>
+    <column xsi:type="decimal" name="balance_amount" scale="4" precision="12" unsigned="false" nullable="false" default="0" comment="Balance Amount"/>
+    <column xsi:type="smallint" name="website_id" padding="5" unsigned="true" nullable="true" identity="false" comment="Website Id"/>
+    <column xsi:type="text" name="currency_code" nullable="true" comment="Currency"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="balance_id"/>
+    </constraint>
+    <constraint xsi:type="foreign" referenceId="BSS_STORECREDIT_BALANCE_WEBSITE_ID_STORE_WEBSITE_WEBSITE_ID" table="bss_storecredit_balance" column="website_id" referenceTable="store_website" referenceColumn="website_id" onDelete="SET NULL"/>
+    <index referenceId="BSS_STORECREDIT_BALANCE_CUSTOMER_ID" indexType="btree">
+      <column name="customer_id"/>
+    </index>
+    <index referenceId="BSS_STORECREDIT_BALANCE_WEBSITE_ID" indexType="btree">
+      <column name="website_id"/>
+    </index>
+  </table>
+  <table name="bss_storecredit_balance_history" resource="default" engine="innodb" comment="bss_storecredit_balance_history">
+    <column xsi:type="int" name="history_id" padding="10" unsigned="true" nullable="false" identity="true" comment="History ID"/>
+    <column xsi:type="int" name="customer_id" padding="10" unsigned="true" nullable="false" identity="false" default="0" comment="Balance ID"/>
+    <column xsi:type="int" name="creditmemo_id" padding="10" unsigned="true" nullable="false" identity="false" default="0" comment="Creditmemo ID"/>
+    <column xsi:type="int" name="order_id" padding="10" unsigned="true" nullable="false" identity="false" default="0" comment="Order ID"/>
+    <column xsi:type="smallint" name="website_id" padding="5" unsigned="true" nullable="true" identity="false" comment="Website ID"/>
+    <column xsi:type="smallint" name="type" padding="5" unsigned="true" nullable="true" identity="false" comment="Type"/>
+    <column xsi:type="decimal" name="change_amount" scale="4" precision="12" unsigned="false" nullable="false" default="0" comment="Change Amount"/>
+    <column xsi:type="decimal" name="balance_amount" scale="4" precision="12" unsigned="false" nullable="false" default="0" comment="Balance Amount"/>
+    <column xsi:type="varchar" name="comment_content" nullable="true" length="255" comment="Comment Content"/>
+    <column xsi:type="smallint" name="is_notified" padding="5" unsigned="true" nullable="false" identity="false" default="0" comment="Is Notified"/>
+    <column xsi:type="varchar" name="customer_name" nullable="true" length="255" comment="Customer Name"/>
+    <column xsi:type="varchar" name="customer_email" nullable="true" length="255" comment="Customer Email"/>
+    <column xsi:type="timestamp" name="created_time" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Creation Time"/>
+    <column xsi:type="timestamp" name="updated_time" on_update="true" nullable="false" default="CURRENT_TIMESTAMP" comment="Updated Time"/>
+    <column xsi:type="text" name="currency_code" nullable="true" comment="Currency Code"/>
+    <column xsi:type="text" name="credit_currency_code" nullable="true" comment="Credit Currency Code"/>
+    <column xsi:type="float" name="change_amount_store_view" scale="0" precision="0" unsigned="false" nullable="true" default="0" comment="Change Amount"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="history_id"/>
+    </constraint>
+    <constraint xsi:type="foreign" referenceId="FK_F2E3B3C186C302DE222249DD370C893F" table="bss_storecredit_balance_history" column="customer_id" referenceTable="bss_storecredit_balance" referenceColumn="customer_id" onDelete="CASCADE"/>
+    <index referenceId="BSS_STORECREDIT_BALANCE_HISTORY_CUSTOMER_ID" indexType="btree">
+      <column name="customer_id"/>
+    </index>
+    <index referenceId="BSS_STORECREDIT_BALANCE_HISTORY_IS_NOTIFIED" indexType="btree">
+      <column name="is_notified"/>
+    </index>
+    <index referenceId="BSS_STORECREDIT_BALANCE_HISTORY_CREDITMEMO_ID" indexType="btree">
+      <column name="creditmemo_id"/>
+    </index>
+  </table>
+</schema>

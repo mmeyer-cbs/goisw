@@ -1,0 +1,37 @@
+<?php
+/**
+ *  BSS Commerce Co.
+ *
+ *  NOTICE OF LICENSE
+ *
+ *  This source file is subject to the EULA
+ *  that is bundled with this package in the file LICENSE.txt.
+ *  It is also available through the world-wide-web at this URL:
+ *  http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category    BSS
+ * @package     BSS_AddMultipleProducts
+ * @author      Extension Team
+ * @copyright   Copyright © 2020 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license     http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+?>
+<?php
+/**
+ * Category view template
+ *
+ * @var $block \Magento\Catalog\Block\Category\View
+ */
+?>
+<?php if (!$block->isContentMode() || $block->isMixedMode()) :?>
+    <?= $block->getProductListHtml() ?>
+<?php endif; ?>
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Bss_AddMultipleProducts/js/ajaxlayer-addmultipleproducts": {
+                "isAjaxLayerEnabled": "<?php echo $block->getIsAjaxLayerEnabled() ?? '0' ?>"
+            }
+        }
+    }
+</script>

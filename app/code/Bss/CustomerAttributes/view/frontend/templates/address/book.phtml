@@ -1,0 +1,132 @@
+<?php
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_CustomerAttributes
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2018-2019 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+
+/** @var \Magento\Customer\Block\Address\Book $block */
+/** @var $viewModel \Bss\CustomerAttributes\ViewModel\Address\CustomAddressHelper */
+// @codingStandardsIgnoreFile
+?>
+
+<?php $viewModel = $block->getViewModel(); ?>
+<?php $attributeHelper = $viewModel->getAttributeHelper();?>
+
+<div class="block block-addresses-default">
+    <div class="block-title"><strong><?= $block->escapeHtml(__('Default Addresses')) ?></strong></div>
+    <div class="block-content">
+        <?php if ($_pAddsses = $block->getDefaultBilling()): ?>
+            <div class="box box-address-billing">
+                <strong class="box-title">
+                    <span><?= $block->escapeHtml(__('Default Billing Address')) ?></span>
+                </strong>
+                <div class="box-content">
+                    <address>
+                        <?= $block->getAddressHtml($block->getAddressById($_pAddsses)) ?>
+                    </address>
+                    <?php if ($attributeHelper->isEnable() && $viewModel->getBillingAddressAttribute()!== null): ?>
+                        <?php  foreach ($attributeHelper->getAddressCollection() as $customAddress): ?>
+                            <?php
+                            $fieldValue = '';
+                            $customAttributeCode = $customAddress->getAttributeCode();
+                            if ($viewModel->getBillingAddressAttribute()->getCustomAttribute($customAttributeCode)!==null) {
+                                $fieldValue = $viewModel->getBillingAddressAttribute()->getCustomAttribute($customAttributeCode)->getValue();
+                            } elseif ($customAddress->getDefaultValue()) {
+                                $fieldValue = $customAddress->getDefaultValue();
+                            }
+                            $optionValue =  $attributeHelper->getValueAddressAttributeOption($customAttributeCode, $fieldValue);
+                            if ($optionValue) {
+                                $fieldValue = $optionValue === 'file' ? $attributeHelper->getFileName($fieldValue) : $optionValue;
+                            }
+                            if ($customAddress->getFrontendInput() == 'date'){
+                                $fieldValue = $attributeHelper->formatDate($fieldValue);
+                            }
+                            ?>
+                            <?php if ($attributeHelper->isAddressShowInBook($customAddress->getAttributeCode()) &&
+                                $fieldValue!=='' &&  $attributeHelper->isVisible($customAddress->getAttributeCode())):?>
+                                <div class="field custom_attribute">
+                                    <?= $customAddress->getStoreLabel($attributeHelper->getStoreId()) . ': ' . $fieldValue ?>
+                                </div>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </div>
+                <div class="box-actions">
+                    <a class="action edit" href="<?= $block->escapeUrl($block->getAddressEditUrl($_pAddsses)) ?>">
+                        <span><?= $block->escapeHtml(__('Change Billing Address')) ?></span>
+                    </a>
+                </div>
+            </div>
+        <?php else : ?>
+            <div class="box box-billing-address">
+                <strong class="box-title"><span><?= $block->escapeHtml(__('Default Billing Address')) ?></span></strong>
+                <div class="box-content">
+                    <p><?= $block->escapeHtml(__('You have no default billing address in your address book.')) ?></p>
+                </div>
+            </div>
+        <?php endif ?>
+
+        <?php if ($_pAddsses = $block->getDefaultShipping()) : ?>
+            <div class="box box-address-shipping">
+                <strong class="box-title">
+                    <span><?= $block->escapeHtml(__('Default Shipping Address')) ?></span>
+                </strong>
+                <div class="box-content">
+                    <address>
+                        <?= $block->getAddressHtml($block->getAddressById($_pAddsses)) ?>
+                    </address>
+                    <?php if ($attributeHelper->isEnable() && $viewModel->getShippingAddressAttribute()!== null): ?>
+                        <?php  foreach ($attributeHelper->getAddressCollection() as $customAddress): ?>
+                            <?php
+                            $fieldValue = '';
+                            $customAttributeCode = $customAddress->getAttributeCode();
+                            if ($viewModel->getShippingAddressAttribute()->getCustomAttribute($customAttributeCode)!==null) {
+                                $fieldValue = $viewModel->getShippingAddressAttribute()->getCustomAttribute($customAttributeCode)->getValue();
+                            } elseif ($customAddress->getDefaultValue()) {
+                                $fieldValue = $customAddress->getDefaultValue();
+                            }
+                            $optionValue =  $attributeHelper->getValueAddressAttributeOption($customAttributeCode, $fieldValue);
+                            if ($optionValue) {
+                                $fieldValue = $optionValue === 'file' ? $attributeHelper->getFileName($fieldValue) : $optionValue;
+                            }
+                            if ($customAddress->getFrontendInput() == 'date'){
+                                $fieldValue = $attributeHelper->formatDate($fieldValue);
+                            }
+                            ?>
+                            <?php if ($attributeHelper->isAddressShowInBook($customAddress->getAttributeCode()) &&
+                                $fieldValue!=='0' && $fieldValue!=='' &&  $attributeHelper->isVisible($customAddress->getAttributeCode())):?>
+                                <div class="field custom_attribute">
+                                    <label class="label"><span><?= $customAddress->getStoreLabel($attributeHelper->getStoreId()) . ': ' . $fieldValue ?></label>
+                                </div>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </div>
+                <div class="box-actions">
+                    <a class="action edit" href="<?= $block->escapeUrl($block->getAddressEditUrl($_pAddsses)) ?>">
+                        <span><?= $block->escapeHtml(__('Change Shipping Address')) ?></span>
+                    </a>
+                </div>
+            </div>
+        <?php else : ?>
+            <div class="box box-shipping-address">
+                <strong class="box-title"><span><?= $block->escapeHtml(__('Default Shipping Address')) ?></span></strong>
+                <div class="box-content">
+                    <p><?= $block->escapeHtml(__('You have no default shipping address in your address book.')) ?></p>
+                </div>
+            </div>
+        <?php endif ?>
+    </div>
+</div>

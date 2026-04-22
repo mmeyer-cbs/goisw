@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_QuoteExtension
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2018-2019 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
+    <template id="bss_request4quote_request4quote_email_config_new_quote_extension" label="New Quote Email Template for The Admin" file="quote_extension_new.html" type="html" module="Bss_QuoteExtension" area="frontend"/>
+    <template id="bss_request4quote_request4quote_email_config_new_quote_extension_customer" label="New Quote Email Template for Customers" file="quote_extension_new_customer.html" type="html" module="Bss_QuoteExtension" area="frontend"/>
+    <template id="bss_request4quote_request4quote_email_config_quote_extension_customer_guest" label="New Quote Email Template for Not-Login Customers" file="quote_extension_customer_guest.html" type="html" module="Bss_QuoteExtension" area="frontend"/>
+    <template id="bss_request4quote_request4quote_email_config_quote_extension_accept" label="Email Template for Accepted Quote" file="quote_extension_accept.html" type="html" module="Bss_QuoteExtension" area="frontend"/>
+    <template id="bss_request4quote_request4quote_email_config_quote_extension_complete" label="Email Template for Complete Quote" file="quote_extension_complete.html" type="html" module="Bss_QuoteExtension" area="frontend"/>
+    <template id="bss_request4quote_request4quote_email_config_quote_extension_cancelled" label="Email Template for Cancelled Quote" file="quote_extension_cancelled.html" type="html" module="Bss_QuoteExtension" area="frontend"/>
+    <template id="bss_request4quote_request4quote_email_config_quote_extension_rejected" label="Email Template for Rejected Quote" file="quote_extension_rejected.html" type="html" module="Bss_QuoteExtension" area="frontend"/>
+    <template id="bss_request4quote_request4quote_email_config_quote_extension_expired" label="Email Template for Expired Quote" file="quote_extension_expired.html" type="html" module="Bss_QuoteExtension" area="frontend"/>
+    <template id="bss_request4quote_request4quote_email_config_quote_extension_reminder_expired" label="Reminder Template for Soon-expired Quote" file="quote_extension_reminder_expired.html" type="html" module="Bss_QuoteExtension" area="frontend"/>
+    <template id="bss_request4quote_request4quote_email_config_quote_extension_resubmit" label="Email Template for Resubmitted Quote" file="quote_extension_resubmit.html" type="html" module="Bss_QuoteExtension" area="frontend"/>
+    <template id="bss_request4quote_request4quote_email_config_quote_extension_ordered" label="Email Template for Ordered Quote" file="quote_extension_ordered.html" type="html" module="Bss_QuoteExtension" area="frontend"/>
+</config>

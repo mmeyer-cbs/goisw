@@ -1,0 +1,96 @@
+<?php
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_CompanyAccount
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2020 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+
+/** @var Items $block */
+
+use Bss\CompanyAccount\Block\Order\Items;
+
+?>
+<div class="table-wrapper order-items">
+    <table class="data table table-order-items" id="my-orders-table">
+        <caption class="table-caption"><?= $block->escapeHtml(__('Items Ordered')) ?></caption>
+        <thead>
+        <?php if ($block->isPagerDisplayed()) : ?>
+            <tr>
+                <td colspan="5" data-block="order-items-pager-top" class="order-pager-wrapper order-pager-wrapper-top">
+                    <?= $block->getPagerHtml() ?>
+                </td>
+            </tr>
+        <?php endif ?>
+        <tr>
+            <th class="col name"><?= $block->escapeHtml(__('Product Name')) ?></th>
+            <th class="col sku"><?= $block->escapeHtml(__('SKU')) ?></th>
+            <th class="col price"><?= $block->escapeHtml(__('Price')) ?></th>
+            <th class="col qty"><?= $block->escapeHtml(__('Qty')) ?></th>
+            <th class="col subtotal"><?= $block->escapeHtml(__('Subtotal')) ?></th>
+        </tr>
+        </thead>
+        <?php $items = $block->getItems(); ?>
+        <?php foreach ($items as $item) :
+            if ($item->getParentItem()) :
+                continue;
+            endif;
+            ?>
+            <tbody>
+            <tr id="order-item-row-30">
+                <td class="col name" data-th="Product Name">
+                    <strong class="product name product-item-name"><?= $item->getName() ?></strong>
+                </td>
+                <td class="col sku" data-th="SKU"><?= $item->getSku() ?></td>
+                <td class="col price" data-th="Price">
+                    <span class="price-excluding-tax" data-label="Excl.&#x20;Tax">
+                        <span class="cart-price">
+                            <span class="price"><?= $block->formatValue($item->getPrice()) ?></span>
+                        </span>
+                    </span>
+                </td>
+                <td class="col qty" data-th="Qty">
+                    <ul class="items-qty">
+                        <li class="item">
+                            <span class="title">Ordered</span>
+                            <span class="content"><?= $item->getQty() ?></span>
+                        </li>
+                    </ul>
+                </td>
+                <td class="col subtotal" data-th="Subtotal">
+                    <span class="price-excluding-tax" data-label="Excl.&#x20;Tax">
+                        <span class="cart-price">
+                            <span class="price">
+                                <?php $qty = $item->getQty();
+                                $price = $item->getPrice();
+                                $total = $price * $qty;
+                                echo($block->formatValue($total)) ?></span>
+                        </span>
+                    </span>
+                </td>
+            </tr>
+            </tbody>
+        <?php endforeach; ?>
+        <tfoot>
+        <?php if ($block->isPagerDisplayed()) : ?>
+            <tr>
+                <td colspan="5" data-block="order-items-pager-bottom"
+                    class="order-pager-wrapper order-pager-wrapper-bottom">
+                    <?= $block->getPagerHtml() ?>
+                </td>
+            </tr>
+        <?php endif ?>
+        <?= $block->getChildHtml('order_totals') ?>
+        </tfoot>
+    </table>
+</div>

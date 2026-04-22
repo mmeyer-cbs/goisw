@@ -1,0 +1,74 @@
+<?php
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_QuoteExtension
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2018-2019 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+
+/**  @var $block \Bss\QuoteExtension\Block\QuoteExtension */
+?>
+<?php // @codingStandardsIgnoreFile ?>
+
+<?php $form = $block->getForm(); ?>
+
+<form action="<?= $block->escapeUrl($block->getUrl('quoteextension/quote/updateQuote')); ?>" method="post" id="form-validate"
+      data-mage-init='{"validation":{}}' class="form form-cart">
+    <?= $block->getBlockHtml('formkey'); ?>
+    <?= $block->escapeHtml($block->getCustomerNote()); ?>
+
+    <div class="cart table-wrapper">
+        <table id="shopping-cart-table" class="cart items data table">
+            <caption role="heading" aria-level="2" class="table-caption"><?= $block->escapeHtml(__('Quote Items')); ?></caption>
+            <thead>
+            <tr>
+                <th class="col item" scope="col"><span><?= $block->escapeHtml(__('Item')); ?></span></th>
+                <th class="col price" scope="col"><span><?= $block->escapeHtml(__('Price')); ?></span></th>
+                <th class="col qty" scope="col"><span><?= $block->escapeHtml(__('Qty')); ?></span></th>
+                <th class="col qty" scope="col"><span><?= $block->escapeHtml(__('Subtotal')); ?></span></th>
+            </tr>
+            </thead>
+
+            <?php foreach ($block->getItems() as $item): ?>
+                <?= $block->getItemHtml($item) ?>
+            <?php endforeach ?>
+
+            <div class="cart main actions">
+                <td colspan="4">
+                    <div style="text-align: right; margin-right: 5px;">
+                        <button type="submit" name="update_quote_action"
+                                value="update_qty"
+                                title="<?= $block->escapeHtml(__('Update Quote')); ?>"
+                                class="action update"
+                                id="update_quote_button"
+                                style="margin: 10px 5px 0 0;">
+                            <span><?= $block->escapeHtml(__('Update Quote')); ?></span>
+                        </button>
+                        <button type="submit" name="update_quote_action"
+                                value="empty_quote"
+                                title="<?= $block->escapeHtml(__('Clear Quote')); ?>"
+                                class="action clear"
+                                id="empty_quote_button"
+                                style="margin: 10px 5px 0 0;">
+                            <span><?= $block->escapeHtml(__('Clear Quote')); ?></span>
+                        </button>
+                    </div>
+                </td>
+            </div>
+        </table>
+    </div>
+</form>
+<?= $block->getChildHtml('quoteextension.quote.order.actions') ?>
+<?= $block->getChildHtml('quoteextension.quote.table.after'); ?>
+<?= $block->escapeHtml($form); ?>
+

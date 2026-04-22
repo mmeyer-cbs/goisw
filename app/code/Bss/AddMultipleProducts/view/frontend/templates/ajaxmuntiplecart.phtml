@@ -1,0 +1,107 @@
+<?php
+// @codingStandardsIgnoreFile
+
+/** @var $block \Bss\AddMultipleProducts\Block\ConfigData */
+
+?>
+<?php
+$jsonDisplay = $block->applyClass();
+$priceIncludesTax = $block->priceIncludesTax();
+$group_Id = $block->getGroupCustomerId();
+?>
+<?php if ($block->getBackgroundStick()) : ?>
+    <style>
+        .ad-mt-stick{
+            background-image: url(<?= /* @escapeNotVerified */ $block->getBackgroundStick() ?>);
+        }
+    </style>
+<?php endif ?>
+
+<?php if ($block->isEnabled() && !empty($jsonDisplay)) : ?>
+    <div id="bss_ajaxmuntiple_cart_popup"></div>
+    <input type="hidden" name="" id="currency-add" value="<?= /* @escapeNotVerified */ $block->getCurrentCurrency(); ?>">
+    <script type="text/x-magento-init">
+    {
+        "*": {
+            "Bss_AddMultipleProducts/js/addmultipleproducts": {
+                "jsonClassApply": <?= /* @escapeNotVerified */ json_encode($block->applyClass(), JSON_FORCE_OBJECT) ?>,
+                "jsonDisplayAddMultipleCart": "<?= /* @escapeNotVerified */   $block->displayAddMultipleCart()?>",
+                "jsonDisplayAddMultipleQuote": "<?= /* @escapeNotVerified */   $block->displayAddMultipleQuote()?>",
+                "showCheckbox": <?= /* @escapeNotVerified */ $block->showSelectProduct()? $block->showSelectProduct() : 'false'  ?>,
+                "showStick": <?= /* @escapeNotVerified */ $block->showStick()? $block->showStick() : 'false' ?>,
+                "positionBT": <?= /* @escapeNotVerified */ $block->positionButton()? $block->positionButton() : '0' ?>,
+                "urlAddToCart": "<?= /* @escapeNotVerified */ $block->geturlAddToCart(); ?>",
+                "urlAddToQuote": "<?= /* @escapeNotVerified */ $block->getUrlAddToQuote(); ?>",
+                "urlAddMultipleToQuote": "<?= /* @escapeNotVerified */ $block->getUrlAddMultipleToQuote(); ?>",
+                "priceIncludesTax": <?= /* @escapeNotVerified */ $priceIncludesTax? $priceIncludesTax : 'false' ?>
+            }
+        }
+    }
+</script>
+<?php endif ?>
+<!-- form -->
+<script id="form-multiple-add" type="text/x-magento-template">
+    <form action="<?= /* @escapeNotVerified */ $block->geturlAddMultipleToCart() ?>" method="post" id="<%- data.id %>" name="<%- data.name %>" class="<%- data.class %>">
+        <div class="add-option" style="display: none;">
+            <!-- content -->
+        </div>
+    </form>
+</script>
+<!-- input qty -->
+<script id="qty-multiple-add" type="text/x-magento-template">
+    <input type="text" class="qty-m-c" data-group="<%- data.group %>" name="qty" placeholder="<?= /* @escapeNotVerified */ $block->defaultQty()?>" value="<?= /* @escapeNotVerified */ $block->defaultQty()?>">
+</script>
+<script id="qty-multiple-add-hide-price" type="text/x-magento-template">
+    <input type="hidden" class="hide-price qty-m-c-h-p-<%- data.productHidePrice %>"  name="qty-hide-price" value="1">
+</script>
+<!-- check box -->
+<script id="checkbox-multiple-add" type="text/x-magento-template">
+    <?php if ($block->showSelectProduct()) : ?>
+        <input type="checkbox" name="product-select[]" id="<%- data.id %>" data-froma="<%- data.froma %>" class="<%- data.class %>" value="<%- data.value %>">
+    <?php else : ?>
+        <input type="hidden" name="product-select[]" id="<%- data.id %>" data-froma="<%- data.froma %>" class="<%- data.class %>" value="<%- data.value %>">
+    <?php endif ?>
+</script>
+<!-- button add all -->
+<script id="button-multiple-add" type="text/x-magento-template">
+    <div class="button-bs-ad">
+        <?php if ($block->showSelectProduct()) : ?>
+            <input type="checkbox" name="addall" data-formid="<%- data.form_id %>" class="add-all-product" value="" id="checkall-<%- data.form_id %>">
+            <label for="checkall-<%- data.form_id %>" style="margin-right: 15px; user-select: none">
+                <?= /* @escapeNotVerified */ __('Check All') ?>
+            </label>
+        <?php endif ?>
+        <% if(data.displayAddMultipleCart){%>
+        <button type="button" title="<?= /* @escapeNotVerified */ __('Add all products to Cart') ?>" id="<%- data.id %>" data-froma="<%- data.froma %>" class="<%- data.class %> action primary addmanytocart">
+            <span><?= /* @escapeNotVerified */ __('Add all products to Cart') ?></span>
+            <?php if ($block->showTotal() == 1) : ?>
+                <span class="total_products">(<?= /* @escapeNotVerified */ __('Total Products') ?>: <span>0</span>)</span>
+            <?php endif ?>
+            <?php if ($block->showTotal() == 2) : ?>
+                <span class="total_qty">(<?= /* @escapeNotVerified */ __('Total Qty') ?>: <span>0</span>)</span>
+            <?php endif ?>
+        </button>
+        <% }%>
+        <% if(data.displayAddMultipleQuote){%>
+        <?php if($block->isEnableOtherPageQuoteExtension()) : ?>
+            <button type="button" title="<?= /* @escapeNotVerified */ __('Add all products to Quote') ?>" id="<%- data.id %>" data-froma="<%- data.froma %>" class="<%- data.class %> action primary addmanytocart addmanytoquote">
+                <span><?= /* @escapeNotVerified */ __('Add all products to Quote') ?></span>
+                <?php if ($block->showTotal() == 1) : ?>
+                    <span class="total_qty total_products_quote">(<?= /* @escapeNotVerified */ __('Total Products') ?>: <span>0</span>)</span>
+                <?php endif ?>
+                <?php if ($block->showTotal() == 2) : ?>
+                    <span class="total_qty total_qty_quote">(<?= /* @escapeNotVerified */ __('Total Qty') ?>: <span>0</span>)</span>
+                <?php endif ?>
+            </button>
+        <?php endif ?>
+        <% }%>
+    </div>
+</script>
+
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Bss_AddMultipleProducts/js/configurable_list": {}
+        }
+    }
+</script>

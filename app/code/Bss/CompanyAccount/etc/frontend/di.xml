@@ -1,0 +1,167 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_CompanyAccount
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2020 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Framework\View\Element\Message\MessageConfigurationsPool">
+        <arguments>
+            <argument name="configurationsMap" xsi:type="array">
+                <item name="bss_customerAlreadyExistsErrorMessage" xsi:type="array">
+                    <item name="renderer" xsi:type="const">
+                        \Magento\Framework\View\Element\Message\Renderer\BlockRenderer::CODE
+                    </item>
+                    <item name="data" xsi:type="array">
+                        <item name="template" xsi:type="string">
+                            Bss_CompanyAccount::messages/customerAlreadyExistsErrorMessage.phtml
+                        </item>
+                    </item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Checkout\Model\CompositeConfigProvider">
+        <arguments>
+            <argument name="configProviders" xsi:type="array">
+                <item name="bss_company_account_config" xsi:type="object">
+                    Bss\CompanyAccount\Model\CompositeConfigProvider
+                </item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Customer\CustomerData\SectionPoolInterface">
+        <arguments>
+            <argument name="sectionSourceMap" xsi:type="array">
+                <item name="bssSubuserRoleOrder" xsi:type="string">
+                    Bss\CompanyAccount\CustomerData\CheckoutMinicart
+                </item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Checkout\Helper\Data">
+        <plugin name="bss_company_account_disable_checkout"
+                type="Bss\CompanyAccount\Plugin\Checkout\Helper\Data" sortOrder="20"/>
+    </type>
+
+    <type name="Magento\Multishipping\Helper\Data">
+        <plugin name="bss_company_account_disable_multi_checkout_address"
+                type="Bss\CompanyAccount\Plugin\Multishipping\Helper\Data" sortOrder="20"/>
+    </type>
+
+    <type name="Magento\Sales\Controller\AbstractController\View">
+        <plugin name="Magento_Sales_Controller_AbstractController_View_middleware"
+                type="Bss\CompanyAccount\Plugin\Sales\OrderView" sortOrder="20"/>
+    </type>
+
+    <type name="Magento\Sales\Block\Order\History">
+        <plugin name="bss_company_account_sub_user_order_history_middleware"
+                type="Bss\CompanyAccount\Plugin\Sales\History" sortOrder="20"/>
+    </type>
+
+    <type name="Magento\Sales\Block\Order\History\Container">
+        <plugin name="bss_company_account_Magento\Sales\Block\Order\History\Container"
+                type="Bss\CompanyAccount\Plugin\Sales\History\Container" sortOrder="20"/>
+    </type>
+
+    <preference for="Magento\Sales\Block\Order\Recent"
+                type="Bss\CompanyAccount\Block\Order\Recent"/>
+
+    <type name="Magento\Downloadable\Controller\Customer\Products">
+        <plugin name="bss_company_account_can_view_downloadable_product_middleware"
+                type="Bss\CompanyAccount\Plugin\Customer\Permissions\DownloadableProducts" sortOrder="20"/>
+    </type>
+    <type name="Magento\Wishlist\Controller\Index\Index">
+        <plugin name="bss_company_account_can_view_wishlist_middleware"
+                type="Bss\CompanyAccount\Plugin\Customer\Permissions\WishList" sortOrder="20"/>
+    </type>
+    <type name="Magento\Wishlist\Model\Wishlist">
+        <plugin name="bss_company_account_can_add_wishlist_middleware"
+                type="Bss\CompanyAccount\Plugin\Customer\Permissions\WishListAdd" sortOrder="20"/>
+    </type>
+
+    <type name="Magento\Customer\Controller\Address\Index">
+        <plugin name="bss_company_account_can_view_address_book_middleware"
+                type="Bss\CompanyAccount\Plugin\Customer\Permissions\AddressBook" sortOrder="20"/>
+    </type>
+    <type name="Magento\Vault\Controller\Cards\ListAction">
+        <plugin name="bss_company_account_can_view_store_payment_method_middleware"
+                type="Bss\CompanyAccount\Plugin\Customer\Permissions\StorePaymentMethod" sortOrder="20"/>
+    </type>
+    <type name="Magento\Wishlist\Controller\Index\Fromcart">
+        <plugin name="bss_company_account_can_add_wishlist_from_cart_middleware"
+                type="Bss\CompanyAccount\Plugin\Customer\Permissions\WishListAddFromCart" sortOrder="20"/>
+    </type>
+    <type name="Bss\MultiWishlist\Controller\Index\AssignWishlist">
+        <plugin name="bss_company_account_can_add_multiwishlist_middleware"
+                type="Bss\CompanyAccount\Plugin\Customer\Permissions\MultiWishListAdd" sortOrder="20"/>
+    </type>
+    <type name="Bss\MultiWishlist\Controller\Index\Popup">
+        <plugin name="bss_company_account_can_show_add_to_wishlist_popup_middleware"
+                type="Bss\CompanyAccount\Plugin\Customer\Permissions\AddMultiWishlistPopup" sortOrder="20"/>
+    </type>
+    <type name="Bss\MultiWishlist\Controller\Index\AssignWishlistFromCart">
+        <plugin name="bss_company_account_can_add_multiwishlist_from_cart_middleware"
+                type="Bss\CompanyAccount\Plugin\Customer\Permissions\MultiWishListAddFromCart" sortOrder="20"/>
+    </type>
+    <type name="Magento\Customer\Controller\Address\FormPost">
+        <plugin name="bss_company_account_multishipping_checkout_address_new_shipping"
+                type="Bss\CompanyAccount\Plugin\Multishipping\CreateAddressPermissionCheck"
+                sortOrder="20"/>
+    </type>
+
+    <type name="Bss\QuoteExtension\Helper\Data">
+        <plugin name="bss_company_account_can_add_quote"
+                type="Bss\CompanyAccount\Plugin\QuoteExtension\CanAddToQuote" sortOrder="20"/>
+    </type>
+    <type name="Bss\QuoteExtension\Controller\Quote\View">
+        <plugin name="bss_company_account_view_id_quote_page"
+                type="Bss\CompanyAccount\Plugin\QuoteExtension\Controller\Quote\View" sortOrder="20"/>
+    </type>
+    <type name="Bss\QuoteExtension\Block\QuoteExtension\View\Action">
+        <plugin name="bss_company_account_view_action_quote"
+                type="Bss\CompanyAccount\Plugin\QuoteExtension\Block\ActionButton" sortOrder="20"/>
+    </type>
+    <type name="Bss\QuoteExtension\Observer\LoadCustomerQuoteObserver">
+        <plugin name="bss_company_account_load_quotes_extension"
+                type="Bss\CompanyAccount\Plugin\QuoteExtension\Observer\LoadCustomerQuoteObserver" sortOrder="20"/>
+    </type>
+    <type name="Bss\QuoteExtension\Block\QuoteExtension\Submit">
+        <plugin name="bss_company_account_button_submit_quote"
+                type="Bss\CompanyAccount\Plugin\QuoteExtension\Block\Submit" sortOrder="20"/>
+    </type>
+    <type name="Bss\QuoteExtension\Block\QuoteExtension\History">
+        <plugin name="bss_company_account_view_quotes_page"
+                type="Bss\CompanyAccount\Plugin\QuoteExtension\Block\History" sortOrder="20"/>
+    </type>
+    <type name="Bss\QuoteExtension\Block\QuoteExtension\View">
+        <plugin name="bss_company_account_view_submit"
+                type="Bss\CompanyAccount\Plugin\QuoteExtension\Block\ActionButton" sortOrder="20"/>
+    </type>
+    <type name="Bss\QuoteExtension\Model\CompatibleCompanyAccount">
+        <plugin name="bss_company_account_checkout_html"
+                type="Bss\CompanyAccount\Plugin\QuoteExtension\CompatibleCompanyAccount" sortOrder="20"/>
+    </type>
+
+    <type name="Bss\AddMultipleProducts\Helper\Data">
+        <plugin name="bss_company_account_add_to_quote"
+                type="Bss\CompanyAccount\Plugin\AddMultipleProducts\Helper\Data" sortOrder="20"/>
+    </type>
+</config>

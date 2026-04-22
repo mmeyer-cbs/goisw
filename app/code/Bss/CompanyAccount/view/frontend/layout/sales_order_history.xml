@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *\
+ * @category   BSS
+ * @package    Bss_CompanyAccount
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2020 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="sales.order.history.extra.column.header">
+            <block name="bss.company.account.created.by.column.header"
+                   template="Bss_CompanyAccount::sales/orders/history-header.phtml"/>
+        </referenceBlock>
+
+        <referenceBlock name="sales.order.history.extra.container">
+            <block class="Bss\CompanyAccount\Block\Sales\Order\CreatedByCol"
+                   name="bss.company.account.created.by.column.data"
+                   template="Bss_CompanyAccount::sales/orders/history.phtml"/>
+        </referenceBlock>
+
+        <referenceContainer name="content">
+            <block class="Bss\CompanyAccount\Block\Order\Tabs\Tabs"
+                   name="bss.sales.order.history.before"
+                   template="Bss_CompanyAccount::sales/orders/tabs/history-tabs-before.phtml"
+                   before="sales.order.history">
+            </block>
+            <block class="Bss\CompanyAccount\Block\Order\Tabs\Waiting"
+                   name="bss.sales.order.history.waiting"
+                   template="Bss_CompanyAccount::sales/orders/tabs/history-tabs-waiting.phtml"
+                   after="sales.order.history">
+            </block>
+            <block class="Bss\CompanyAccount\Block\Order\Tabs\Approve"
+                   name="bss.sales.order.history.approve"
+                   template="Bss_CompanyAccount::sales/orders/tabs/history-tabs-approve.phtml"
+                   after="bss.sales.order.history.waiting">
+            </block>
+            <block class="Bss\CompanyAccount\Block\Order\Tabs\Reject"
+                   name="bss.sales.order.history.reject"
+                   template="Bss_CompanyAccount::sales/orders/tabs/history-tabs-reject.phtml"
+                   after="bss.sales.order.history.approve">
+            </block>
+        </referenceContainer>
+    </body>
+</page>
