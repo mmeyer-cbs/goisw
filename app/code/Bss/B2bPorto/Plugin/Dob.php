@@ -32,7 +32,7 @@ class Dob extends B2bRegistrationDob
      * @return string
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function getHtmlExtraParams()
+    public function getHtmlExtraParams($date)
     {
         $extraParams = [
             "'validate-date':{'dateFormat': 'MM\dd\YYYY'}"
