@@ -364,6 +364,8 @@ return [
         'Smartwave_Megamenu' => 1,
         'Smartwave_Porto' => 1,
         'Smartwave_Socialfeeds' => 1,
+        'Swissup_Core' => 1,
+        'Swissup_SearchMysqlLegacy' => 1,
         'Temando_ShippingRemover' => 1
     ]
 ];
